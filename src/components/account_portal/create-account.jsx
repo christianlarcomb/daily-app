@@ -9,10 +9,85 @@ import { ReactComponent as GoogleLogo } from "../../assets/svgs/google-logo.svg"
 import { Link } from "react-router-dom";
 
 const SignupSectionContainer = styled.div`
-  display: grid;
-  place-items: center;
-  grid-template-rows: 15% 70% 15%;
-  min-width: 800px;
+    display: grid;
+    place-items: center;
+    grid-template-rows: 15% 70% 15%;
+    min-width: 800px;
+`
+
+const SubmitButton = styled.div`
+    background-color: #6AB26A;
+    border-style: none;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 8px;
+    height: 60px;
+    width: 100%;
+    font-size: 17px;
+    display: grid;
+    place-items: center;
+    grid-column: 1 / 3;
+    
+    &:hover
+    {
+      filter: brightness(90%);
+      cursor: pointer;
+    }
+`
+
+const FormWrapper = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, minmax(min-content, 300px));
+    grid-auto-rows: max-content;
+    place-content: center;
+    row-gap: 20px;
+    column-gap: 40px;
+    
+    & > h1
+    {
+      grid-column: 1 / 3;
+      font-weight: 600;
+    }
+    
+    & > a:nth-of-type(1)
+    {
+    background-color: black;
+    }
+
+    & > a:nth-of-type(2)
+    {
+        background-color: #4285F4;
+    }
+    
+    & > form
+    {
+        grid-column: 1 / 3;
+        display: grid;
+        column-gap: 40px;
+        row-gap: 20px;
+        grid-template-columns: repeat(2, minmax(min-content, 300px));
+    }
+    
+    & > form > div
+    {
+        display: grid;
+        row-gap: 5px;
+    }
+    
+    & > form > div:nth-of-type(3), & > form > div:nth-of-type(4)
+    {
+        grid-column: 1 / 3;
+    }
+    
+    & > form > div:nth-of-type(5)
+    {
+        grid-column: 1 / 3;
+        display: grid;
+        grid-auto-flow: column;
+        column-gap: 20px;
+        align-items: center;
+    }
 `
 
 class SignupSection extends React.Component
@@ -22,7 +97,24 @@ class SignupSection extends React.Component
     {
         super(props);
 
-        this.state = {  }
+        this.state =
+        {
+            values: {
+                name: '',
+                username: '',
+                email: '',
+                password: '',
+                checkbox: false
+            },
+
+            errorChecks: {
+                name: false,
+                username: false,
+                email: false,
+                password: false,
+                checkbox: false
+            }
+        }
 
         this.nameRef = React.createRef();
         this.usernameRef = React.createRef();
@@ -30,6 +122,50 @@ class SignupSection extends React.Component
         this.passwordRef = React.createRef();
         this.checkboxRef = React.createRef();
     }
+
+    handleInput = (event) =>
+    {
+        const target = event.target;
+        const targetName = target.name;
+
+        /* Logically Updating State */
+        targetName === 'checkbox' ? this.setState({
+            values:
+            {
+                name: this.state.values.name,
+                username: this.state.values.username,
+                email: this.state.values.email,
+                password: this.state.values.password,
+                checkbox: !this.state.values.checkbox
+            }
+        }) : this.setState({
+            values:
+            {
+                name: targetName.toString()     === "name" ? target.value : this.state.values.name,
+                username: targetName.toString() === "username" ? target.value : this.state.values.username,
+                email: targetName.toString()    === "email" ? target.value : this.state.values.email,
+                password: targetName.toString() === "password" ? target.value : this.state.values.password,
+                checkbox: this.state.values.checkbox
+            }
+        });
+    }
+
+    inputValidation = () =>
+    {
+
+    }
+
+    handleCreateAccount = () =>
+    {
+
+
+
+        /* TODO: Utilize this debug */
+        [this.state.values].map(item => {
+            console.log(item)
+        })
+    }
+
 
     render()
     {
@@ -46,7 +182,7 @@ class SignupSection extends React.Component
                         </div>
                     </div>
 
-                    <div id="sign-up-form">
+                    <FormWrapper>
 
                         <h1>Sign up</h1>
 
@@ -67,33 +203,60 @@ class SignupSection extends React.Component
                         </div>
 
                         <form>
+                            <div>
+                                <label ref={this.nameRef}>Full Name</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    id="full-name"
+                                    value={this.state.values.name}
+                                    onChange={this.handleInput}
+                                />
+                            </div>
+                            <div>
+                                <label ref={this.usernameRef}>Username</label>
+                                <input
+                                    type="text"
+                                    name="username"
+                                    id="username"
+                                    value={this.state.values.username}
+                                    onChange={this.handleInput}/>
+                            </div>
+                            <div>
+                                <label ref={this.emailRef}>Email</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    value={this.state.values.email}
+                                    onChange={this.handleInput}
+                                />
+                            </div>
+                            <div>
+                                <label ref={this.passwordRef}>Password</label>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    id="password"
+                                    value={this.state.values.password}
+                                    onChange={this.handleInput}
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    ref={this.checkboxRef}
+                                    name="checkbox"
+                                    type="checkbox"
+                                    value={this.state.values.checkbox}
+                                    onChange={this.handleInput}
+                                />
+                                <label htmlFor="checkbox">Creating an account means you are okay with our Terms of Service, Privacy Policy, and our default Notification Settings policies.</label>
+                            </div>
 
-                            <div>
-                                <label ref={this.nameRef} htmlFor="full-name">Full Name</label>
-                                <input type="text" id="full-name"/>
-                            </div>
-                            <div>
-                                <label ref={this.usernameRef} htmlFor="username">Username</label>
-                                <input type="text" id="username"/>
-                            </div>
-                            <div>
-                                <label ref={this.emailRef} htmlFor="email">Email</label>
-                                <input type="email" id="email"/>
-                            </div>
-                            <div>
-                                <label ref={this.passwordRef} htmlFor="password">Password</label>
-                                <input type="password" id="password"/>
-                            </div>
-                            <div>
-                                <input ref={this.checkboxRef} type="checkbox"/>
-                                <label htmlFor="checkbox">Creating an account means you are okay with our Terms of Service, Privacy Policy, and our default Notification Settings.</label>
-                            </div>
-
-                            <button>Create Account</button>
-
+                            <SubmitButton onClick={this.handleCreateAccount}>Create Account</SubmitButton>
                         </form>
 
-                    </div>
+                    </FormWrapper>
 
                     <div id="captcha-protection">
                         <p>
