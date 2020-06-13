@@ -40,7 +40,7 @@ const SubmitButton = styled.div`
 
 const FormContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(2, minmax(min-content, 300px));
+    grid-template-columns: repeat(2, minmax(min-content, 250px));
     grid-auto-rows: max-content;
     place-content: center;
     row-gap: 20px;
@@ -70,7 +70,7 @@ const FormWrapper = styled.div`
     display: grid;
     column-gap: 40px;
     row-gap: 20px;
-    grid-template-columns: repeat(2, minmax(min-content, 300px));
+    grid-template-columns: repeat(2, minmax(min-content, 250px));
    
     /* Styling Input Fields */
     & > div
@@ -193,13 +193,13 @@ class SignupSection extends React.Component
         });
     }
 
-    inputValidation = () =>
+    errorChecking = () =>
     {
         const objects = this.state.values;
 
-        let nameCheck = null
+        let nameCheck     = null
         let usernameCheck = null
-        let emailCheck = null
+        let emailCheck    = null
         let passwordCheck = null
         let checkboxCheck = null
 
@@ -221,21 +221,29 @@ class SignupSection extends React.Component
                 password: passwordCheck,
                 checkbox: checkboxCheck
             }
-        })
-
+        }, this.errorPrevention)
     }
 
-    handleCreateAccount = () =>
+    errorPrevention = () => {
+        const { name, username, email, password, checkbox } = this.state.errorChecks
+        const errorVals = [ name, username, email, password, checkbox ]
+
+        let errorFound = false
+        errorVals.map(errorVal => { if(errorVal){ errorFound = true }})
+
+        if(!errorFound) { this.captchaManagement() } else { console.log("A required input has been left unfulfilled!") }
+    }
+
+    captchaManagement = () =>
     {
-        /* Input Validation */
-        this.inputValidation()
 
-        /* If Error, Prevent From Continuing */
-        const objects = this.state.errorChecks
-        for (let [value] of Object.entries(objects)) {if(value === '' || value === false) return}
+        /* DEBUG */
+        console.log("All inputs fulfilled!")
 
-        /* Run the Captcha!! */
-        console.log("This fired!")
+        /* TODO: Insert reCAPTCHA then handle response (send request to server) */
+
+
+        /*
         Axios.post('http://localhost:8080/api/v1/users/create',
             {
                 email: this.state.values.email,
@@ -270,6 +278,16 @@ class SignupSection extends React.Component
                 }
                 console.log(error.config);
             });
+         */
+    }
+
+    handleCreateAccount = () =>
+    {
+
+        this.errorChecking()
+
+
+
 
     }
 
