@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import '../../styles/portal_panels/create-account.css'
 import '../../styles/global_styles/portal_shared.css'
 
+import Axios from 'axios'
+
 import { ReactComponent as AppleLogo } from "../../assets/svgs/apple-logo.svg";
 import { ReactComponent as GoogleLogo } from "../../assets/svgs/google-logo.svg";
 
@@ -36,7 +38,7 @@ const SubmitButton = styled.div`
     }
 `
 
-const FormWrapper = styled.div`
+const FormContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(2, minmax(min-content, 300px));
     grid-auto-rows: max-content;
@@ -60,33 +62,80 @@ const FormWrapper = styled.div`
         background-color: #4285F4;
     }
     
-    & > form
-    {
-        grid-column: 1 / 3;
-        display: grid;
-        column-gap: 40px;
-        row-gap: 20px;
-        grid-template-columns: repeat(2, minmax(min-content, 300px));
-    }
-    
-    & > form > div
+`
+
+const FormWrapper = styled.div`
+
+    grid-column: 1 / 3;
+    display: grid;
+    column-gap: 40px;
+    row-gap: 20px;
+    grid-template-columns: repeat(2, minmax(min-content, 300px));
+   
+    /* Styling Input Fields */
+    & > div
     {
         display: grid;
         row-gap: 5px;
     }
     
-    & > form > div:nth-of-type(3), & > form > div:nth-of-type(4)
+    & > div:nth-of-type(3), & > div:nth-of-type(4)
     {
         grid-column: 1 / 3;
     }
     
-    & > form > div:nth-of-type(5)
+    & > div:nth-of-type(5)
     {
         grid-column: 1 / 3;
         display: grid;
         grid-auto-flow: column;
         column-gap: 20px;
         align-items: center;
+    }
+    
+    & > div > input
+    {
+      transition: background-color 0.12s ease, border 0.12s ease;
+    }
+    
+    & > div:nth-child(1) > input:focus, 
+    & > div:nth-child(2) > input:focus, 
+    & > div:nth-child(3) > input:focus,
+    & > div:nth-child(4) > input:focus
+    {
+        background-color: #E9F0ED;
+        border-color: #A6C5BA;
+        outline: none;
+    }
+
+    /* Styling Errors */
+    & > div:nth-child(1) > input 
+    {
+        background-color: ${prop => prop.errorStates.name ? "#F2D5D5" : "#E9F0ED" };
+        border-color: ${prop => prop.errorStates.name ? "red" : "#A6C5BA" };
+    }
+  
+    & > div:nth-child(2) > input 
+    {
+    background-color: ${prop => prop.errorStates.username ? "#F2D5D5" : "#E9F0ED" };
+        border-color: ${prop => prop.errorStates.username ? "red" : "#A6C5BA" };
+    }
+    
+    & > div:nth-child(3) > input 
+    {
+    background-color: ${prop => prop.errorStates.email ? "#F2D5D5" : "#E9F0ED" };
+        border-color: ${prop => prop.errorStates.email ? "red" : "#A6C5BA" };
+    }
+    
+    & > div:nth-child(4) > input 
+    {
+    background-color: ${prop => prop.errorStates.password ? "#F2D5D5" : "#E9F0ED" };
+        border-color: ${prop => prop.errorStates.password ? "red" : "#A6C5BA" };
+    }
+    
+    & > div:nth-child(5) > input 
+    {
+    
     }
 `
 
@@ -108,19 +157,13 @@ class SignupSection extends React.Component
             },
 
             errorChecks: {
-                name: false,
+                name: false ,
                 username: false,
                 email: false,
                 password: false,
                 checkbox: false
             }
         }
-
-        this.nameRef = React.createRef();
-        this.usernameRef = React.createRef();
-        this.emailRef = React.createRef();
-        this.passwordRef = React.createRef();
-        this.checkboxRef = React.createRef();
     }
 
     handleInput = (event) =>
@@ -152,18 +195,82 @@ class SignupSection extends React.Component
 
     inputValidation = () =>
     {
+        const objects = this.state.values;
+
+        let nameCheck = null
+        let usernameCheck = null
+        let emailCheck = null
+        let passwordCheck = null
+        let checkboxCheck = null
+
+        /* Error Checking Inputs */
+        for (let [key, value] of Object.entries(objects))
+        {
+            if      (key === "name")     { nameCheck     = value === "" }
+            else if (key === "username") { usernameCheck = value === "" }
+            else if (key === "email")    { emailCheck    = value === "" }
+            else if (key === "password") { passwordCheck = value === "" }
+            else if (key === "checkbox") { checkboxCheck = value === false }
+        }
+
+        this.setState({
+            errorChecks: {
+                name:     nameCheck,
+                username: usernameCheck,
+                email:    emailCheck,
+                password: passwordCheck,
+                checkbox: checkboxCheck
+            }
+        })
 
     }
 
     handleCreateAccount = () =>
     {
+        /* Input Validation */
+        this.inputValidation()
 
+        /* If Error, Prevent From Continuing */
+        const objects = this.state.errorChecks
+        for (let [value] of Object.entries(objects)) {if(value === '' || value === false) return}
 
+        /* Run the Captcha!! */
+        console.log("This fired!")
+        Axios.post('http://localhost:8080/api/v1/users/create',
+            {
+                email: this.state.values.email,
+                name: this.state.values.name,
+                username: this.state.values.username,
+                address:
+                    {
+                        street: '',
+                        apt: '',
+                        city: '',
+                        state: '',
+                        postal: '',
+                        country: '',
+                    },
+                password: this.state.values.password
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                    // http.ClientRequest in node.js
+                    console.log(error.request);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
 
-        /* TODO: Utilize this debug */
-        [this.state.values].map(item => {
-            console.log(item)
-        })
     }
 
 
@@ -182,7 +289,7 @@ class SignupSection extends React.Component
                         </div>
                     </div>
 
-                    <FormWrapper>
+                    <FormContainer>
 
                         <h1>Sign up</h1>
 
@@ -202,9 +309,9 @@ class SignupSection extends React.Component
                             <hr/>
                         </div>
 
-                        <form>
+                        <FormWrapper id="df7f-2fj2" errorStates={this.state.errorChecks}>
                             <div>
-                                <label ref={this.nameRef}>Full Name</label>
+                                <label>Full Name</label>
                                 <input
                                     type="text"
                                     name="name"
@@ -214,7 +321,7 @@ class SignupSection extends React.Component
                                 />
                             </div>
                             <div>
-                                <label ref={this.usernameRef}>Username</label>
+                                <label>Username</label>
                                 <input
                                     type="text"
                                     name="username"
@@ -223,7 +330,7 @@ class SignupSection extends React.Component
                                     onChange={this.handleInput}/>
                             </div>
                             <div>
-                                <label ref={this.emailRef}>Email</label>
+                                <label>Email</label>
                                 <input
                                     type="email"
                                     name="email"
@@ -233,7 +340,7 @@ class SignupSection extends React.Component
                                 />
                             </div>
                             <div>
-                                <label ref={this.passwordRef}>Password</label>
+                                <label>Password</label>
                                 <input
                                     type="password"
                                     name="password"
@@ -244,7 +351,6 @@ class SignupSection extends React.Component
                             </div>
                             <div>
                                 <input
-                                    ref={this.checkboxRef}
                                     name="checkbox"
                                     type="checkbox"
                                     value={this.state.values.checkbox}
@@ -254,9 +360,9 @@ class SignupSection extends React.Component
                             </div>
 
                             <SubmitButton onClick={this.handleCreateAccount}>Create Account</SubmitButton>
-                        </form>
+                        </FormWrapper>
 
-                    </FormWrapper>
+                    </FormContainer>
 
                     <div id="captcha-protection">
                         <p>
