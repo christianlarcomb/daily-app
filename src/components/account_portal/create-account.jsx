@@ -3,18 +3,31 @@ import styled from 'styled-components'
 import '../../styles/portal_panels/create-account.css'
 import '../../styles/global_styles/portal_shared.css'
 
-import Axios from 'axios'
+import axios from 'axios'
+import ReCaptcha from 'react-google-recaptcha'
 
 import { ReactComponent as AppleLogo } from "../../assets/svgs/apple-logo.svg";
 import { ReactComponent as GoogleLogo } from "../../assets/svgs/google-logo.svg";
 
-import { Link } from "react-router-dom";
+import { BrowserRouter, Link, Redirect } from "react-router-dom";
 
 const SignupSectionContainer = styled.div`
     display: grid;
     place-items: center;
+    min-width: 800px;
+    position: relative;
+    height: 100vh;
+    width: 100%;
+`
+
+const SignupSectionWrapper = styled.div`
+    height: 100%;
+    display: grid;
+    place-items: center;
     grid-template-rows: 15% 70% 15%;
     min-width: 800px;
+    width: 100%;
+    position: relative;
 `
 
 const SubmitButton = styled.div`
@@ -139,6 +152,38 @@ const FormWrapper = styled.div`
     }
 `
 
+const ReCaptchaContainer = styled.div`
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  opacity: ${props => props.enabledState ? '100' : '0'};
+  z-index: ${props => props.enabledState ? '3' : '0'};
+  transition: opacity 0.15s ease;
+  
+  & > div:nth-child(1)
+  {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  }
+  
+  & > div:nth-child(1) > div:nth-child(1)
+  {
+    display: grid;
+    grid-template-rows: 2fr 3fr;
+    max-width: 400px;
+    height: 150px;
+    place-items: center;
+  }
+  
+  & > div:nth-child(1) > div:nth-child(1) > span
+  {
+    font-size: 20px;
+  }
+`
+
 class SignupSection extends React.Component
 {
 
@@ -148,6 +193,13 @@ class SignupSection extends React.Component
 
         this.state =
         {
+            isLoggedIn: false,
+
+            captcha: {
+                enabled: false,
+                failed: false
+            },
+
             values: {
                 name: '',
                 username: '',
@@ -193,6 +245,8 @@ class SignupSection extends React.Component
         });
     }
 
+    handleCreateAccount = () => { this.errorChecking() }
+
     errorChecking = () =>
     {
         const objects = this.state.values;
@@ -213,6 +267,7 @@ class SignupSection extends React.Component
             else if (key === "checkbox") { checkboxCheck = value === false }
         }
 
+        /* After setting state, call error prevention function */
         this.setState({
             errorChecks: {
                 name:     nameCheck,
@@ -224,27 +279,28 @@ class SignupSection extends React.Component
         }, this.errorPrevention)
     }
 
-    errorPrevention = () => {
+    errorPrevention = () =>
+    {
         const { name, username, email, password, checkbox } = this.state.errorChecks
         const errorVals = [ name, username, email, password, checkbox ]
 
         let errorFound = false
         errorVals.map(errorVal => { if(errorVal){ errorFound = true }})
 
-        if(!errorFound) { this.captchaManagement() } else { console.log("A required input has been left unfulfilled!") }
+        /* No Errors Found? Continue function flow */
+        if(!errorFound) {
+            this.setState({
+                captcha: { enabled: true, failed: false }
+            })
+        } else {
+            console.log("A required input has been left unfulfilled!")
+        }
     }
 
-    captchaManagement = () =>
+    captchaSuccess = () =>
     {
-
-        /* DEBUG */
-        console.log("All inputs fulfilled!")
-
-        /* TODO: Insert reCAPTCHA then handle response (send request to server) */
-
-
-        /*
-        Axios.post('http://localhost:8080/api/v1/users/create',
+        /* Requesting to create a user... It will either approved or ignored */
+        axios.post('http://localhost:8080/api/v1/users/create',
             {
                 email: this.state.values.email,
                 name: this.state.values.name,
@@ -260,7 +316,18 @@ class SignupSection extends React.Component
                     },
                 password: this.state.values.password
             })
-            .catch(function (error) {
+
+            /* Upon Request Success */
+            /* Store Access & Refresh Token via cookies!!! */
+            .then(res =>
+            {
+                console.log(res)
+                this.setState({ isLoggedIn: true })
+            })
+
+            /* Upon Request Error */
+            .catch(error =>
+            {
                 if (error.response) {
                     // The request was made and the server responded with a status code
                     // that falls out of the range of 2xx
@@ -278,119 +345,148 @@ class SignupSection extends React.Component
                 }
                 console.log(error.config);
             });
-         */
     }
 
-    handleCreateAccount = () =>
+    onChange = (value) =>
+    {
+        console.log("Captcha Value:",value)
+    }
+
+    onCaptchaError = () =>
     {
 
-        this.errorChecking()
-
-
-
-
     }
 
+    loggedInRedirect = () => { if(this.state.isLoggedIn) {return <Redirect exact strict to="/panels/main"/>} }
 
     render()
     {
         return (
             <>
+
+                {/* If the user is logged in, redirect them to their panels! */}
+                { this.loggedInRedirect() }
+
                 <SignupSectionContainer>
 
-                    <div id="sign-in-container">
-                        <div id="sign-in-wrapper">
+                    <ReCaptchaContainer enabledState={this.state.captcha.enabled}>
+                        <div>
+                            <div>
+                                <span>One more thing...</span>
+                                <ReCaptcha
+                                    sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY_V2}
+                                    onChange={this.captchaSuccess}
+                                    onError={() => this.setState({
+                                        captcha: {
+                                            enabled: false,
+                                            failed: true
+                                        }
+                                    })}
+                                />
+                            </div>
+                        </div>
+                    </ReCaptchaContainer>
+
+                    <SignupSectionWrapper>
+
+                        <div id="sign-in-container">
+                            <div id="sign-in-wrapper">
+                                <p>
+                                    Already a member?&nbsp;
+                                    <Link to="/account/login">Sign in</Link>
+                                </p>
+                            </div>
+                        </div>
+
+                        <FormContainer>
+
+                            <h1>Sign up</h1>
+
+                            <a className="platform-button" href="/">
+                                <AppleLogo/>
+                                <p>Sign up with Apple</p>
+                            </a>
+
+                            <a className="platform-button" href="/">
+                                <GoogleLogo/>
+                                <p>Sign up with Google</p>
+                            </a>
+
+                            <div className="or-divider">
+                                <hr/>
+                                    Or
+                                <hr/>
+                            </div>
+
+                            <FormWrapper id="df7f-2fj2" errorStates={this.state.errorChecks}>
+
+                                <div>
+                                    <label>Full Name</label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        id="full-name"
+                                        value={this.state.values.name}
+                                        onChange={this.handleInput}
+                                    />
+                                </div>
+                                <div>
+                                    <label>Username</label>
+                                    <input
+                                        type="text"
+                                        name="username"
+                                        id="username"
+                                        value={this.state.values.username}
+                                        onChange={this.handleInput}/>
+                                </div>
+                                <div>
+                                    <label>Email</label>
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        id="email"
+                                        value={this.state.values.email}
+                                        onChange={this.handleInput}
+                                    />
+                                </div>
+                                <div>
+                                    <label>Password</label>
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        id="password"
+                                        value={this.state.values.password}
+                                        onChange={this.handleInput}
+                                    />
+                                </div>
+                                <div>
+                                    <input
+                                        name="checkbox"
+                                        type="checkbox"
+                                        value={this.state.values.checkbox}
+                                        onChange={this.handleInput}
+                                    />
+                                    <label htmlFor="checkbox">Creating an account means you are okay with our Terms of Service, Privacy Policy, and our default Notification Settings policies.</label>
+                                </div>
+
+                                <SubmitButton onClick={this.handleCreateAccount}>Create Account</SubmitButton>
+
+
+                            </FormWrapper>
+
+                        </FormContainer>
+
+                        <div id="captcha-protection">
                             <p>
-                                Already a member?&nbsp;
-                                <Link to="/account/login">Sign in</Link>
+                                This site is protected by reCAPTCHA and the Google&nbsp;
+                                <a href="">Privacy Policy</a>&nbsp;
+                                and&nbsp;
+                                <a href="https://google.com/">Terms of Service</a>&nbsp;
+                                apply.
                             </p>
                         </div>
-                    </div>
 
-                    <FormContainer>
-
-                        <h1>Sign up</h1>
-
-                        <a className="platform-button" href="/">
-                            <AppleLogo/>
-                            <p>Sign up with Apple</p>
-                        </a>
-
-                        <a className="platform-button" href="/">
-                            <GoogleLogo/>
-                            <p>Sign up with Google</p>
-                        </a>
-
-                        <div className="or-divider">
-                            <hr/>
-                                Or
-                            <hr/>
-                        </div>
-
-                        <FormWrapper id="df7f-2fj2" errorStates={this.state.errorChecks}>
-                            <div>
-                                <label>Full Name</label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    id="full-name"
-                                    value={this.state.values.name}
-                                    onChange={this.handleInput}
-                                />
-                            </div>
-                            <div>
-                                <label>Username</label>
-                                <input
-                                    type="text"
-                                    name="username"
-                                    id="username"
-                                    value={this.state.values.username}
-                                    onChange={this.handleInput}/>
-                            </div>
-                            <div>
-                                <label>Email</label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    value={this.state.values.email}
-                                    onChange={this.handleInput}
-                                />
-                            </div>
-                            <div>
-                                <label>Password</label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    value={this.state.values.password}
-                                    onChange={this.handleInput}
-                                />
-                            </div>
-                            <div>
-                                <input
-                                    name="checkbox"
-                                    type="checkbox"
-                                    value={this.state.values.checkbox}
-                                    onChange={this.handleInput}
-                                />
-                                <label htmlFor="checkbox">Creating an account means you are okay with our Terms of Service, Privacy Policy, and our default Notification Settings policies.</label>
-                            </div>
-
-                            <SubmitButton onClick={this.handleCreateAccount}>Create Account</SubmitButton>
-                        </FormWrapper>
-
-                    </FormContainer>
-
-                    <div id="captcha-protection">
-                        <p>
-                            This site is protected by reCAPTCHA and the Google&nbsp;
-                            <a href="">Privacy Policy</a>&nbsp;
-                            and&nbsp;
-                            <a href="https://google.com/">Terms of Service</a>&nbsp;
-                            apply.
-                        </p>
-                    </div>
+                    </SignupSectionWrapper>
 
                 </SignupSectionContainer>
             </>
