@@ -14,7 +14,7 @@ Content-Type: application/json
 
 POST http://localhost:8080/api/v1/users/create
 Content-Type: application/json
-Authorization: Basic
+Authorization: Basic dfkdfjsghlskhsdflhsdflhjsf
 
 {
   "name": "Jack Frost",

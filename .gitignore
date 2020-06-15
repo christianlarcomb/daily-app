@@ -20,9 +20,8 @@
 /src/assets
 /src/logo.svg
 
-# RestAPI
-#   - gitignore the backend
-#/src/api
+# Server / RestAPI
+/src/api
 
 # misc
 .env

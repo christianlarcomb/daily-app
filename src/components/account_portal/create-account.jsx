@@ -289,12 +289,14 @@ class SignupSection extends React.Component
         errorVals.map(errorVal => { if(errorVal){ errorFound = true }})
 
         /* No Errors Found? Continue function flow */
-        if(!errorFound) {
+        if(!errorFound)
+        {
             this.setState({
                 captcha: { enabled: true, failed: false }
             })
         } else {
-            console.log("A required input has been left unfulfilled!")
+            /* DEBUG: Checking if input error prevention is working */
+            //console.log("A required input has been left unfulfilled!")
         }
     }
 
@@ -302,11 +304,11 @@ class SignupSection extends React.Component
     {
 
         /* TODAY'S TO-DO LIST */
-        /* TODO: Implement Server and Client Logic for handling reCAPTCHA tokens */
         /* TODO: Implement live username check either with socket or requests */
         /* TODO: Get started on CSS for main panel then move directly to settings panels for editing */
 
-        console.log("Token Value:", value)
+        /* DEBUG: Checking if the debug value is working */
+        //console.log("Token Value:", value)
 
         this.setState( { renderCaptcha: false })
 

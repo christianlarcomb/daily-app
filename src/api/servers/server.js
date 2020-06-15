@@ -59,7 +59,15 @@ app.post('/api/v1/users/create', reCaptchaVerification, mongodbDataUpload, async
         /* Upon Middleware Success: Generate access token and return it as a response! */
         const accessToken = jwt.sign(req.user.toObject(), process.env.ACCESS_TOKEN_SECRET)
 
-        res.status(201).send( {
+        console.log({
+            'Daily Response': {
+                status: 201,
+                statusText: 'Account Creation Success',
+                access_token: accessToken
+            }
+        })
+
+        res.status(201).send({
             'Daily Response': {
                 status: 201,
                 statusText: 'Account Creation Success',
@@ -219,9 +227,7 @@ async function reCaptchaVerification(req, res, next)
                 }
             })
         }
-
     }
-
 }
 
 async function mongodbDataUpload(req, res, next) {
