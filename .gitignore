@@ -17,10 +17,12 @@
 /public/logo512.png
 
 # src elements
-/src/api
 /src/assets
 /src/logo.svg
 
+# RestAPI
+#   - gitignore the backend
+#/src/api
 
 # misc
 .env

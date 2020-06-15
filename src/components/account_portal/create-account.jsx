@@ -193,6 +193,7 @@ class SignupSection extends React.Component
 
         this.state =
         {
+            renderCaptcha: true,
             isLoggedIn: false,
 
             captcha: {
@@ -297,92 +298,117 @@ class SignupSection extends React.Component
         }
     }
 
-    captchaSuccess = () =>
+    captchaSuccess = value =>
     {
+
+        /* TODAY'S TO-DO LIST */
+        /* TODO: Implement Server and Client Logic for handling reCAPTCHA tokens */
+        /* TODO: Implement live username check either with socket or requests */
+        /* TODO: Get started on CSS for main panel then move directly to settings panels for editing */
+
+        console.log("Token Value:", value)
+
+        this.setState( { renderCaptcha: false })
+
         /* Requesting to create a user... It will either approved or ignored */
-        axios.post('http://localhost:8080/api/v1/users/create',
-            {
-                email: this.state.values.email,
-                name: this.state.values.name,
-                username: this.state.values.username,
-                address:
-                    {
-                        street: '',
-                        apt: '',
-                        city: '',
-                        state: '',
-                        postal: '',
-                        country: '',
-                    },
-                password: this.state.values.password
-            })
+        try {
+            axios.post('http://localhost:8080/api/v1/users/create',
+                {
+                    email: this.state.values.email,
+                    name: this.state.values.name,
+                    username: this.state.values.username,
+                    address:
+                        {
+                            street: '',
+                            apt: '',
+                            city: '',
+                            state: '',
+                            postal: '',
+                            country: '',
+                        },
+                    password: this.state.values.password
+                },
+                {
+                    headers:
+                        {
+                            authorization: `basic ${value}`
+                        }
+                })
 
-            /* Upon Request Success */
-            /* Store Access & Refresh Token via cookies!!! */
-            .then(res =>
-            {
-                console.log(res)
-                this.setState({ isLoggedIn: true })
-            })
+                /* Upon Request Success */
+                /* Store Access & Refresh Token via cookies!!! */
+                .then(res =>
+                {
+                    /* DEBUG: Display response from Daily backend... */
+                    //console.log(res)
 
-            /* Upon Request Error */
-            .catch(error =>
-            {
-                if (error.response) {
-                    // The request was made and the server responded with a status code
-                    // that falls out of the range of 2xx
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                } else if (error.request) {
-                    // The request was made but no response was received
-                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                    // http.ClientRequest in node.js
-                    console.log(error.request);
-                } else {
-                    // Something happened in setting up the request that triggered an Error
-                    console.log('Error', error.message);
-                }
-                console.log(error.config);
-            });
+                    /* Intentional Secret Welcome Message */
+                    console.log('Account Creation Success! Welcome!')
+
+                    /* Setting the local state 'isLoggedIn' to redirect the user to main panels. */
+                    this.setState({ isLoggedIn: true })
+                })
+
+                /* Upon Request Error */
+                .catch(error =>
+                {
+                    if (error.response) {
+                        // The request was made and the server responded with a status code
+                        // that falls out of the range of 2xx
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        // The request was made but no response was received
+                        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                        // http.ClientRequest in node.js
+                        console.log(error.request);
+                    } else {
+                        // Something happened in setting up the request that triggered an Error
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                });
+
+        } catch (e)
+        {
+            console.log("Client-Server Async Request Error:", e)
+        }
+
     }
 
-    onChange = (value) =>
-    {
-        console.log("Captcha Value:",value)
-    }
-
-    onCaptchaError = () =>
-    {
-
-    }
-
-    loggedInRedirect = () => { if(this.state.isLoggedIn) {return <Redirect exact strict to="/panels/main"/>} }
 
     render()
     {
+
+
         return (
             <>
 
-                {/* If the user is logged in, redirect them to their panels! */}
-                { this.loggedInRedirect() }
+                { this.state.isLoggedIn ? <Redirect exact strict to="/panels/main"/> : <></> }
 
                 <SignupSectionContainer>
 
                     <ReCaptchaContainer enabledState={this.state.captcha.enabled}>
                         <div>
                             <div>
-                                <span>One more thing...</span>
-                                <ReCaptcha
-                                    sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY_V2}
-                                    onChange={this.captchaSuccess}
-                                    onError={() => this.setState({
-                                        captcha: {
-                                            enabled: false,
-                                            failed: true
-                                        }
-                                    })}
-                                />
+
+                                { this.state.renderCaptcha ?
+                                    <>
+                                        <span>One more thing...</span>
+                                        <ReCaptcha
+                                            sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY_V2}
+                                            onChange={this.captchaSuccess}
+                                            onError={() => this.setState({
+                                                captcha: {
+                                                    enabled: false,
+                                                    failed: true
+                                                }})}
+                                            onExpired={() => console.log('Google reCAPTCHA expired... Try again.')}
+                                        />
+                                    </> :
+                                <></>
+                                }
                             </div>
                         </div>
                     </ReCaptchaContainer>

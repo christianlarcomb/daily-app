@@ -49,7 +49,6 @@ class AccountPortal extends React.Component
     {
         return (
             <>
-                { /* TODO: Fix .gitignore and make sure repo doesn't have sensitive data... */ }
                 <PrimaryContainer>
 
                     <ImagePanel>
