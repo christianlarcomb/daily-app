@@ -31,7 +31,7 @@ We've covered what you can do with Daily App and why our app is a lifestyle. Let
 <br/>
 
 ### Show me the power! 
-(Packages that power Daily App)
+(Libraries and packages we utilize.)
 
 | Package| Link |
 | --- | --- |
