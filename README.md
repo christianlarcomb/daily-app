@@ -46,3 +46,20 @@ We've covered what you can do with Daily App and why our app is a lifestyle. Let
 | GitHub/Git  | https://github.com/ |
 | Styled-Components  | https://www.npmjs.com/package/styled-components |
 | Googles reCAPTCHA  | https://www.npmjs.com/package/react-google-recaptcha |
+
+<br/>
+
+### Now for the questions. 
+```js
+console.log({
+    'Daily Response': 
+    {
+        status: 200,
+        message: "Well... Where do I begin?",
+        errors: []
+    }    
+})
+```
+Well, if you're asking questions like this RestAPI response, you're in the right place. 
+
+Actually. I need to get back to work, I'll get back to this README.md later. <3
