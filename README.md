@@ -8,8 +8,8 @@ Daily App empowers you to take your personal business and leap to the stars offe
 to run your business. **Daily** App at its core is capable of handling the vast majority, if not all, of your businesses needs:
 <br/><br/>
 
-### Features
-What our app strives to be the best at ;)
+### Daily App's Ambitions and Powers
+(What our app strives to be the best at 😍)
 
 - [x] Community Messaging.
 - [x] Private Messaging.
@@ -26,12 +26,11 @@ What our app strives to be the best at ;)
 - [x] Simplicity.
 - [x] Security. Financially and otherwise.
 
-We've covered what you can do with Daily App and why our app is a lifestyle. Let's look into what powers Daily.
 <br/>
 <br/>
 
 ### Show me the power! 
-(Libraries and packages we utilize.)
+(Libraries and packages we utilize 😎)
 
 | Package| Link |
 | --- | --- |
@@ -49,7 +48,8 @@ We've covered what you can do with Daily App and why our app is a lifestyle. Let
 
 <br/>
 
-### Now for the questions. 
+### Premium Questions. 
+(Essentially a glorified Q. and A.😉)
 ```js
 console.log({
     'Daily Response': 
