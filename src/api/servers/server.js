@@ -14,13 +14,15 @@ const app = express()
 // Allows your server to utilize json
 app.use(express.json())
 
-app.use((req, res, next) => {
+app.use((req, res, next) =>
+{
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Headers', '*')
     next()
 })
 
-app.use((req, res, next) => {
+app.use((req, res, next) =>
+{
     res.setTimeout(10000, () => {
         console.log("Request has timed out")
         res.send(408);

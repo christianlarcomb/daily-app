@@ -1,68 +1,48 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Daily App - Daily.com
 
-## Available Scripts
+**Daily App** © 2020<br/>
+Made with <3 by **Christian Larcomb**
 
-In the project directory, you can run:
+## Frontend
+Daily App empowers you to take your personal business and leap to the stars offering an unparalleled network and set of tools 
+to run your business. **Daily** App at its core is capable of handling the vast majority, if not all, of your businesses needs:
+<br/><br/>
 
-### `npm start`
+### Features
+What our app strives to be the best at ;)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [x] Community Messaging.
+- [x] Private Messaging.
+- [x] Product Pages.
+- [x] Product Advertisements.
+- [x] Marketing Tools.
+- [x] Personal Email with extension @daily.com.
+- [x] Order(s) Management.
+- [x] Scheduling Tools.
+- [x] Mobile and Desktop Notifications.
+- [x] Reminders.
+- [x] Automated messaging for new clients.
+- [x] Affordability.
+- [x] Simplicity.
+- [x] Security. Financially and otherwise.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+We've covered what you can do with Daily App and why our app is a lifestyle. Let's look into what powers Daily.
+<br/>
+<br/>
 
-### `npm test`
+### Show me the power! 
+(Packages that power Daily App)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+| Package| Link |
+| --- | --- |
+| React  | https://reactjs.org/ |
+| React-Redux  | https://www.npmjs.com/package/react-redux |
+| Express  | https://expressjs.com/ |
+| Axios  | https://www.npmjs.com/package/axios |
+| BCrypt  | https://www.npmjs.com/package/bcryptjs |
+| JWT  | https://www.npmjs.com/package/jsonwebtoken |
+| Mongoose  | https://www.npmjs.com/package/mongoose |
+| DotEnv  | https://www.npmjs.com/package/dotenv |
+| GitHub/Git  | https://github.com/ |
+| Styled-Components  | https://www.npmjs.com/package/styled-components |
+| Googles reCAPTCHA  | https://www.npmjs.com/package/react-google-recaptcha |
