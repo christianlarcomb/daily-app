@@ -14,25 +14,42 @@ const app = express()
 // Allows your server to utilize json
 app.use(express.json())
 
+/* Access Header Middleware */
+/* TODO: Adjust these access restrictions before release */
 app.use((req, res, next) =>
 {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Headers', '*')
+    res.header('Access-Control-Allow-Methods', '*')
     next()
 })
 
-app.use((req, res, next) =>
-{
-    res.setTimeout(10000, () => {
-        console.log("Request has timed out")
-        res.send(408);
+/* TODO: Fix this timeout middleware to function properly! */
+/* Fix this middleware */
+/*
+    app.use((req, res) =>
+    {
+        res.setTimeout(30000, () =>
+        {
+            console.log({
+                'Daily Response': {
+                    status: 408,
+                    statusText: 'Request has timed out',
+                }
+            })
+
+            res.status(408).send({
+                'Daily Response': {
+                    status: 408,
+                    statusText: 'Request has timed out',
+                }
+            }).end();
+        })
     })
-    next()
-})
+ */
 
-
-
-// Connecting to the database
+/* MongoDB Connection */
+/* TODO: Change the dbName to DailyApp once prepared */
 mongoose.connect('mongodb+srv://admin:'
     +process.env.MONGODB_CLUSTER_PASS+
     '@cluster0-zxxok.mongodb.net/test?retryWrites=true&w=majority',
@@ -45,12 +62,20 @@ mongoose.connect('mongodb+srv://admin:'
 // USER MONGO SCHEMA
 const User = require('../models/user')
 
-/*************************/
+
+/* ROUTES */
+/*************************************************************************************************/
 
 // Gets the account panels and is authorized with middle wear
 app.get('/api/v1/panels/@me', authenticateToken, (req, res) =>
 {
-    res.json({test:'its functioning'})
+    res.status(200).send({
+        'Daily Response': {
+            status: 200,
+            statusText: 'Panel Data Retrieval Success',
+            user: req.user
+        }
+    })
 })
 
 // Creating a new user
@@ -75,12 +100,23 @@ app.post('/api/v1/users/create', reCaptchaVerification, mongodbDataUpload, async
                 statusText: 'Account Creation Success',
                 access_token: accessToken
             }
-        })
+        }).end()
 
     } catch (e)
     {
-        console.log(e)
-        res.status(500).send('Something went wrong...')
+        console.log({
+            'Daily Response': {
+                status: 500,
+                statusText: 'Critical Request Error'
+            }
+        })
+
+        res.status(500).send({
+            'Daily Response': {
+                status: 500,
+                statusText: 'Critical Request Error'
+            }
+        })
         return res.end()
     }
 })
@@ -200,8 +236,7 @@ async function reCaptchaVerification(req, res, next)
 
                 .catch(err =>
                 {
-                    /* Something went wrong sending request to Google's API */
-                    //console.log(err)
+                    /* Status Notification to Console */
                     console.log({
                         'Daily Response': {
                             status: 500,
@@ -210,6 +245,7 @@ async function reCaptchaVerification(req, res, next)
                         }
                     })
 
+                    /* Status Notification to Request - Ending Request */
                     res.status(500).send({
                         'Daily Response': {
                             status: 500,
@@ -221,6 +257,7 @@ async function reCaptchaVerification(req, res, next)
                 })
 
         } catch (e) {
+            /* Status Notification to Console */
             console.log({
                 'Daily Response': {
                     status: 500,
@@ -228,6 +265,14 @@ async function reCaptchaVerification(req, res, next)
                     errors: e,
                 }
             })
+
+            res.status(500).send({
+                'Daily Response': {
+                    status: 500,
+                    statusText: 'Internal Server Error',
+                    errors: e,
+                }
+            }).end()
         }
     }
 }
@@ -268,6 +313,7 @@ async function mongodbDataUpload(req, res, next) {
 
         .then(mongoRes => {
 
+            /* Status Notification to Console */
             console.log({
                 'Daily Response': {
                     status: 200,
@@ -282,6 +328,7 @@ async function mongodbDataUpload(req, res, next) {
 
         .catch(err => {
 
+            /* Status Notification to Console */
             console.log({
                 'Daily Response': {
                     status: 501,
@@ -290,6 +337,7 @@ async function mongodbDataUpload(req, res, next) {
                 }
             })
 
+            /* Status Notification to Request - Ending Request */
             res.status(501).send({
                 'Daily Response': {
                     status: 501,
@@ -317,22 +365,59 @@ function authenticateToken(req, res, next)
     const token = authHeader && authHeader.split(' ')[1]
 
     // Check if the token is there
-    if(token == null) return res.status(401).send('Authorization Header Missing')
-
-    // Verify the JWT token and handle it accordingly
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) =>
+    if(token == null)
     {
-        // Check if their was an error validating the token
-        if(err) return res.status(403).send('Invalid Token')
+        /* Status Notification to Console */
+        console.log({
+            'Daily Response': {
+                status: 401,
+                statusText: 'Daily Error',
+                errors: [
+                    {
+                        message: 'Missing Authentication Header'
+                    }
+                ],
+            }
+        })
 
-        // Set the req user as the user who sent the auth token
-        req.user = user
+        /* Status Notification to Console */
+        return res.status(401).send({
+            'Daily Response': {
+                status: 401,
+                statusText: 'Daily Error',
+                errors: [
+                    {
+                        message: 'Missing Authentication Header'
+                    }
+                ],
+            }
+        })
 
-        // Exit authentication flow
-        next()
-    })
+    } else {
 
+        /* Verifying Java Web Token */
+        /* TODO: Check the verification process of the JWT and make sure they're functioning */
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) =>
+        {
+            // Check if their was an error validating the token
+            if(err) return res.status(403).send('Invalid Token').end()
+
+            // Set the req user as the user who sent the auth token
+            req.user = user
+
+            // Exit authentication flow
+            console.log('Request authentication continuing even after failing...')
+            next()
+        })
+
+    }
 }
 
 // Starting the server on this port
-app.listen(8080)
+app.listen(8080, () => {
+    console.log({
+        'Daily Response': {
+            message: 'Daily Node.js Backend is Live!',
+        }
+    })
+})

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+/* TODO: Enhance the user schema by adding many more data points. */
 const userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     email:String,

@@ -11,7 +11,7 @@ import { ReactComponent as GoogleLogo } from "../../assets/svgs/google-logo.svg"
 
 import { BrowserRouter, Link, Redirect } from "react-router-dom";
 
-const SignupSectionContainer = styled.div`
+const InfoSectionContainer = styled.div`
     display: grid;
     place-items: center;
     min-width: 800px;
@@ -20,7 +20,7 @@ const SignupSectionContainer = styled.div`
     width: 100%;
 `
 
-const SignupSectionWrapper = styled.div`
+const InfoSectionWrapper = styled.div`
     height: 100%;
     display: grid;
     place-items: center;
@@ -389,7 +389,7 @@ class SignupSection extends React.Component
 
                 { this.state.isLoggedIn ? <Redirect exact strict to="/panels/main"/> : <></> }
 
-                <SignupSectionContainer>
+                <InfoSectionContainer>
 
                     <ReCaptchaContainer enabledState={this.state.captcha.enabled}>
                         <div>
@@ -415,7 +415,7 @@ class SignupSection extends React.Component
                         </div>
                     </ReCaptchaContainer>
 
-                    <SignupSectionWrapper>
+                    <InfoSectionWrapper>
 
                         <div id="sign-in-container">
                             <div id="sign-in-wrapper">
@@ -504,6 +504,7 @@ class SignupSection extends React.Component
 
                         </FormContainer>
 
+                        {/* TODO: Fix this text section to have proper links */}
                         <div id="captcha-protection">
                             <p>
                                 This site is protected by reCAPTCHA and the Google&nbsp;
@@ -514,9 +515,9 @@ class SignupSection extends React.Component
                             </p>
                         </div>
 
-                    </SignupSectionWrapper>
+                    </InfoSectionWrapper>
 
-                </SignupSectionContainer>
+                </InfoSectionContainer>
             </>
         )
     }

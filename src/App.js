@@ -12,6 +12,7 @@ import './styles/App.css';
 import AccountPortal from './components/account_portal/'
 import ErrorPages from "./components/error";
 import Lander from './components/lander'
+import PanelsContainer from './components/panels_container'
 
 function App()
 {
@@ -19,6 +20,12 @@ function App()
           <Switch>
               <Route path="/" exact component={Lander}/>
               <Route path="/account" component={AccountPortal}/>
+              <Route path="/panels" component={PanelsContainer}/>
+
+              {/*
+                Default Error Page
+                TODO: Implement Error Page with Specific Error ID's and Messages
+              */}
               <Route component={ErrorPages}/>
           </Switch>
   );
