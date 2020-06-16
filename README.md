@@ -3,12 +3,12 @@
 **Daily App** © 2020<br/>
 Made with <3 by **Christian Larcomb**
 
-## Frontend
+## Daily App's Ambitions and Powers
 Daily App empowers you to take your personal business and leap to the stars offering an unparalleled network and set of tools 
 to run your business. **Daily** App at its core is capable of handling the vast majority, if not all, of your businesses needs:
 <br/><br/>
 
-### Daily App's Ambitions and Powers
+### Features
 (What our app strives to be the best at 😍)
 
 - [x] Community Messaging.
