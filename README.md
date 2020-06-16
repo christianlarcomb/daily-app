@@ -8,7 +8,7 @@ Daily App empowers you to take your personal business and leap to the stars offe
 to run your business. **Daily** App at its core is capable of handling the vast majority, if not all, of your businesses needs:
 <br/><br/>
 
-### Features
+### Features 
 (What our app strives to be the best at 😍)
 
 - [x] Community Messaging.
@@ -55,7 +55,12 @@ console.log({
     'Daily Response': 
     {
         status: 200,
-        message: "Well... Where do I begin?",
+        questions: [
+            "Well... Where do I begin?",
+            "How can I help?",
+            "I've messed up! Who can I ask for help?",
+            "I'm unsure about a commit, can you code review for me?"
+        ],
         errors: []
     }    
 })
