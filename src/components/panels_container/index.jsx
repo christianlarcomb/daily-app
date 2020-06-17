@@ -13,6 +13,7 @@ import { ReactComponent as SettingsSvg } from '../../assets/svgs/menu_bar/settin
 
 const StyledToolTip = styled(ReactTooltip)`
   background-color: white !important;
+  opacity: 100 !important;
   border-radius: 8px !important;
   height: 40px !important;
   border-style: solid !important;
@@ -159,49 +160,55 @@ const MiscBar = styled.div`
   
   & > div
   {
-    background-color: var(--lgt-2);
-    border-radius: 100%;
     height: 42px;
     width: 42px;
-    display: grid;
-    place-items: center;
-    transition: background-color 0.05s ease;
+    position: relative;
+    
+    & > div:nth-child(1)
+    {
+        background-color: var(--lgt-2);
+        border-radius: 100%;
+        height: 100%;
+        width: 100%;
+        display: grid;
+        place-items: center;
+        transition: background-color 0.05s ease;
+    }
+    
   }
   
-  & > div > svg
-  {
-    transition: fill 0.05s ease;
-  }
+  /* All wrappers have pointer cursor */
+  & > div > div:nth-child(1):hover { cursor: pointer; }
   
-  & > div:hover
-  {
-    background-color: #dfe6e3;
-    cursor: pointer;
-  }
+  /* All wrappers svg have fill transitions */
+  & > div > div > svg { transition: fill 0.05s ease; }
   
   /* Dynamic Rendering of Notification Button */
-  & > div:nth-child(1) > svg
+  & > div:nth-child(1) > div:nth-child(1) 
   { 
-    transform: rotate(-16deg); 
-    fill: ${props => props.selected.notifications ? '#fff' : '#a6c5ba'}
-  }
-  & > div:nth-child(1) 
-  { 
-    background-color: ${props => props.selected.notifications ? '#6ab26a' : '#e9f0ed'} 
+    background-color: ${props => props.selected.notifications ? '#6ab26a' : '#e9f0ed'};
+    
+    & > svg 
+    {
+        transform: rotate(-16deg); 
+        fill: ${props => props.selected.notifications ? '#fff' : '#a6c5ba'};
+    }
   }
   
   /* Dynamic Rendering of Settings Button */
-  & > div:nth-child(2) > svg
+  
+  & > div:nth-child(2) > div:nth-child(1) 
   { 
-    fill: ${props => props.selected.settings_menu ? '#fff' : '#a6c5ba'}
-  }
-  & > div:nth-child(2) 
-  { 
-    background-color: ${props => props.selected.settings_menu ? '#6ab26a' : '#e9f0ed'} 
+    background-color: ${props => props.selected.settings_menu ? '#6ab26a' : '#e9f0ed'};
+    
+    & > svg
+    {
+      fill: ${props => props.selected.settings_menu ? '#fff' : '#a6c5ba'}
+    }
   }
   
   /* Dynamic Rendering of Profile Button */
-  & > div:nth-child(3) 
+  & > div:nth-child(3)  > div:nth-child(1) 
   { 
     border-style: solid;
     border-color: ${props => props.selected.profile_menu ? '#6ab26a' : 'rgba(0,0,0,0)'};
@@ -209,14 +216,128 @@ const MiscBar = styled.div`
     transition: border-color 0.05s ease
   }
   
-  & > div > svg
+  & > div > div > svg
   {
     fill: var(--lgt-3);
     height: 20px;
   }
 `
 
-/* TODO: Complete necessary panels for back-end development */
+const MiscBarMenu = styled.div`
+    position: absolute              !important;
+    bottom: 0                       !important;
+    left: 60px                      !important;
+    background-color: white;
+    min-height: 50px                !important;
+    max-height: 550px               !important;
+    border-color: #E8E8E8;
+    border-radius: 18px             !important;
+    border-style: solid             !important;
+    border-width: 1.5px             !important;
+    width: 300px                    !important;
+    transition: opacity 0.05s ease  !important;
+    overflow-y: hidden;
+    -webkit-filter: drop-shadow(0px 12px 10px rgba(0, 0, 0, 0.05));
+            filter: drop-shadow(0px 12px 10px rgba(0, 0, 0, 0.05));
+`
+
+const NotificationMenu = styled(MiscBarMenu)`
+    opacity: ${props => props.selected.notifications ? 100 : 0};
+`
+
+const SettingsMenu = styled(MiscBarMenu)`
+
+    opacity: ${props => props.selected.settings_menu ? 100 : 0};
+    padding: 0 15px;
+    
+    /* User + Login */
+    & > div
+    {
+      display: grid;
+      height: 54px;
+      grid-template-columns: 34px 1fr;
+      grid-gap: 10px;
+      
+      /* Icon Box */
+      & > div:nth-child(1) {
+        display: grid;
+        align-items: center;  
+        
+        & > div:nth-child(1)
+        {
+            height: 34px;
+            width: 100%;
+            border-radius: 100%;
+            overflow: hidden;
+            background-color: #D8D8D8;
+        }
+      }
+      
+      /* Text Box */
+      & > div:nth-child(2) {
+        
+      }
+    }
+    
+    /* Generalized Selections */
+    & > div:nth-child(1)
+    {
+      display: grid;
+      height: 64px;
+      grid-template-columns: 48px 1fr;
+      grid-gap: 10px;
+      
+      /* Image Box */
+      & > div:nth-child(1) {
+        display: grid;
+        align-items: center;
+        
+        
+        & > div:nth-child(1)
+        {
+            height: 48px;
+            width: 100%;
+            border-radius: 100%;
+            overflow: hidden;
+            
+        }
+      }
+      
+      /* Text Box */
+      & > div:nth-child(2) {
+        
+      }
+    }
+    
+    & > div:last-of-type
+    {
+      height: 40px;
+      display: grid;
+      place-items: center;
+      grid-template-columns: 1fr;
+      
+      & > span
+      {
+        font-size: 12px;
+        color: #b4bbb8;
+        padding-bottom: 6px;
+      }
+    }
+`
+
+const MenuDivider = styled.div`
+  width: 100% !important;
+  height: 1px !important;
+  background-color: #E8E8E8 !important;
+  border-radius: 100px !important;
+  opacity: 1 !important;
+`
+
+const ProfileMenu = styled(MiscBarMenu)`
+    opacity: ${props => props.selected.profile_menu ? 100 : 0};
+`
+
+/* TODO: Complete the sidebar */
 class PanelsContainer extends React.Component
 {
 
@@ -247,6 +368,8 @@ class PanelsContainer extends React.Component
 
                 <PrimaryContainer>
 
+                    {/* Contains all misc. menus */}
+
                     <PrimarySidebar>
 
                         <div>
@@ -257,8 +380,8 @@ class PanelsContainer extends React.Component
                             <MenuBarWrapper selected={this.state.panel_selected}>
 
                                 {/* Explore Highlight */}
-
                                 <div>
+                                    {/* Highlight Bar */}
                                     <div/>
 
                                     <div data-tip data-for="explore" onClick={() => {this.setState({panel_selected: {explore: true, shop: false, chat: false}})}}>
@@ -273,6 +396,7 @@ class PanelsContainer extends React.Component
 
                                 {/* Shop Highlight */}
                                 <div>
+                                    {/* Highlight Bar */}
                                     <div/>
 
                                     <div data-tip data-for="shop" onClick={() => {this.setState({panel_selected: {explore: false, shop: true, chat: false}})}}>
@@ -287,6 +411,7 @@ class PanelsContainer extends React.Component
 
                                 {/* Chat Highlight */}
                                 <div>
+                                    {/* Highlight Bar */}
                                     <div/>
 
                                     <div data-tip data-for="chat" onClick={() => {this.setState({panel_selected: {explore: false, shop: false, chat: true}})}}>
@@ -303,20 +428,127 @@ class PanelsContainer extends React.Component
                         </MenuBarContainer>
 
                         <MiscBar selected={this.state.misc_selected}>
-                            {/* Notification Button */}
-                            <div onClick={() => this.setState({ misc_selected: { notifications: !this.state.misc_selected.notifications, settings_menu: false, profile_menu: false } })}>
-                                <NotificationBellSvg/>
+
+                            {/* Notification Button Container */}
+                            <div>
+
+                                {/* Notification Button Wrapper */}
+                                <div onClick={() => this.setState({ misc_selected: { notifications: !this.state.misc_selected.notifications, settings_menu: false, profile_menu: false } })}>
+                                    <NotificationBellSvg/>
+                                </div>
+
+                                <NotificationMenu selected={this.state.misc_selected}>
+
+                                </NotificationMenu>
                             </div>
 
-                            {/* Settings Button */}
-                            <div onClick={() => this.setState({ misc_selected: { notifications: false, settings_menu: !this.state.misc_selected.settings_menu, profile_menu: false } })}>
-                                <SettingsSvg/>
+                            {/* Settings Button Container */}
+                            <div>
+                                <div onClick={() => this.setState({ misc_selected: { notifications: false, settings_menu: !this.state.misc_selected.settings_menu, profile_menu: false } })}>
+                                    <SettingsSvg/>
+                                </div>
+
+                                <SettingsMenu selected={this.state.misc_selected}>
+
+                                    {/* User or Login Section */}
+                                    <div>
+                                        <div>
+                                            <div>
+
+                                            </div>
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+
+                                    <MenuDivider/>
+
+                                    <div>
+                                        <div>
+                                            <div>
+
+                                            </div>
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+
+                                    <MenuDivider/>
+
+                                    <div>
+                                        <div>
+                                            <div>
+
+                                            </div>
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div>
+                                            <div>
+
+                                            </div>
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div>
+                                            <div>
+
+                                            </div>
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div>
+                                            <div>
+
+                                            </div>
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div>
+                                            <div>
+
+                                            </div>
+                                        </div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <span>Privacy • Terms • Advertising • Ad Choices • Cookies • More | DailyApp © 2020</span>
+                                    </div>
+
+                                </SettingsMenu>
                             </div>
 
-                            {/* Profile Button */}
-                            <div onClick={() => this.setState({ misc_selected: { notifications: false, settings_menu: false, profile_menu: !this.state.misc_selected.profile_menu } })}>
+                            {/* Profile Button Container */}
+                            <div>
+
+                                <div onClick={() => this.setState({ misc_selected: { notifications: false, settings_menu: false, profile_menu: !this.state.misc_selected.profile_menu } })}>
+                                </div>
+
+                                <ProfileMenu selected={this.state.misc_selected}/>
 
                             </div>
+
                         </MiscBar>
 
                     </PrimarySidebar>
