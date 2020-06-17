@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import '../../styles/portal_panels/login-account.css'
 import '../../styles/global_styles/portal_shared.css'
 
-import { ReactComponent as AppleLogo } from "../../assets/svgs/apple-logo.svg";
-import { ReactComponent as GoogleLogo } from "../../assets/svgs/google-logo.svg";
+import { ReactComponent as AppleLogo } from "../../assets/svgs/apple-google-etc/apple-logo.svg";
+import { ReactComponent as GoogleLogo } from "../../assets/svgs/apple-google-etc/google-logo.svg";
 
 import { Link } from "react-router-dom";
 

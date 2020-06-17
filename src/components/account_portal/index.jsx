@@ -6,7 +6,7 @@ import '../../styles/global_styles/portal_shared.css'
 import CreateAccount from "./create-account";
 import LoginAccount from "./login-account";
 
-import { ReactComponent as CompanyLogo } from "../../assets/svgs/company-logo.svg";
+import { ReactComponent as CompanyLogo } from "../../assets/svgs/daily/daily_full.svg";
 
 import {
     BrowserRouter as Router,
@@ -38,7 +38,7 @@ const SidePanelContent = styled.div`
     grid-row: 1 / 2;
     z-index: 2;
     
-    & > svg { height: 45px }
+    & > svg { height: 42px; fill: white }
     & > h1 { font-size: 2.5em }
 `
 

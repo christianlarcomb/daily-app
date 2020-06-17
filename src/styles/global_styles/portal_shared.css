@@ -2,16 +2,15 @@
 
 :root
 {
-  --luck-mustard: #E6BD49;
-  --stone-plate: #666666;
-  --artist-canvas: #F2F2F2;
-  --agave: #50947D;
-  --blue-berry: #5772A1;
-  --almost-salmon: #DD6B50;
-  --inactive-clr: #cdcdcd;
-  --cream-back: #F2F2F2;
-  --green: #86CF86;
+    --lgt-1: #fff;
+    --lgt-2: #e9f0ed;
+    --lgt-3: #a6c5ba;
 
+    --drk-1: #2c2f33;
+    --drk-2: #3e4a46;
+    --drk-3: #69837b;
+
+    --primary-grn: #6ab26a;
 }
 
 *
@@ -30,7 +29,7 @@
 
 body 
 {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #side-panel-content
@@ -63,7 +62,7 @@ body
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     z-index: 1;
-    background-color: var(--green);
+    background-color: var(--primary-grn);
     filter: opacity(75%);
 }
 

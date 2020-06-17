@@ -6,8 +6,8 @@ import '../../styles/global_styles/portal_shared.css'
 import axios from 'axios'
 import ReCaptcha from 'react-google-recaptcha'
 
-import { ReactComponent as AppleLogo } from "../../assets/svgs/apple-logo.svg";
-import { ReactComponent as GoogleLogo } from "../../assets/svgs/google-logo.svg";
+import { ReactComponent as AppleLogo } from "../../assets/svgs/apple-google-etc/apple-logo.svg";
+import { ReactComponent as GoogleLogo } from "../../assets/svgs/apple-google-etc/google-logo.svg";
 
 import { BrowserRouter, Link, Redirect } from "react-router-dom";
 
@@ -31,7 +31,7 @@ const InfoSectionWrapper = styled.div`
 `
 
 const SubmitButton = styled.div`
-    background-color: #6AB26A;
+    background-color: var(--primary-grn);
     border-style: none;
     color: white;
     padding-left: 15px;
@@ -58,6 +58,7 @@ const FormContainer = styled.div`
     place-content: center;
     row-gap: 20px;
     column-gap: 40px;
+    min-height: 570px;
     
     & > h1
     {
@@ -182,6 +183,20 @@ const ReCaptchaContainer = styled.div`
   {
     font-size: 20px;
   }
+`
+
+const CaptchaProtection = styled.div`
+    display: grid;
+    grid-template-columns: minmax(100px, 450px);
+    place-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 14px;
+    
+    & > a
+    {
+      color: blue;    
+    }
 `
 
 class SignupSection extends React.Component
@@ -505,15 +520,15 @@ class SignupSection extends React.Component
                         </FormContainer>
 
                         {/* TODO: Fix this text section to have proper links */}
-                        <div id="captcha-protection">
+                        <CaptchaProtection>
                             <p>
                                 This site is protected by reCAPTCHA and the Google&nbsp;
-                                <a href="">Privacy Policy</a>&nbsp;
+                                <a href="https://google.com/">Privacy Policy</a>&nbsp;
                                 and&nbsp;
                                 <a href="https://google.com/">Terms of Service</a>&nbsp;
                                 apply.
                             </p>
-                        </div>
+                        </CaptchaProtection>
 
                     </InfoSectionWrapper>
 
