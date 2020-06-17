@@ -1,14 +1,33 @@
 import React from "react";
 import styled from "styled-components";
 import {Route, Redirect} from "react-router-dom";
+import ReactTooltip from "react-tooltip";
 
+/* SVGs */
 import { ReactComponent as MugLogoSvg } from '../../assets/svgs/daily/daily_mug.svg';
-
 import { ReactComponent as ExploreSvg } from '../../assets/svgs/menu_bar/explore.svg';
 import { ReactComponent as PriceTagSvg } from '../../assets/svgs/menu_bar/price-tag.svg';
 import { ReactComponent as ChatSvg } from '../../assets/svgs/menu_bar/chat-bubbles.svg';
 import { ReactComponent as NotificationBellSvg } from '../../assets/svgs/menu_bar/notification-bell.svg';
 import { ReactComponent as SettingsSvg } from '../../assets/svgs/menu_bar/settings-cog.svg';
+
+const StyledToolTip = styled(ReactTooltip)`
+  background-color: white !important;
+  border-radius: 8px !important;
+  height: 40px !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-color: #d7dedb !important;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+  font-size: 15px !important;
+  color: var(--drk-2) !important;
+  place-items: center !important;
+  transition: opacity 0.1s ease !important;
+  #data-arrow-color
+  {
+    background-color: #2c2f33;
+  }
+`
 
 const PrimaryContainer = styled.div`
   display: grid;
@@ -146,18 +165,48 @@ const MiscBar = styled.div`
     width: 42px;
     display: grid;
     place-items: center;
+    transition: background-color 0.05s ease;
+  }
+  
+  & > div > svg
+  {
+    transition: fill 0.05s ease;
   }
   
   & > div:hover
   {
-    transition: background-color 0.05s ease;
     background-color: #dfe6e3;
     cursor: pointer;
   }
   
-  & > div:nth-child(1) > svg:nth-child(1)
-  {
-    transform: rotate(25deg);
+  /* Dynamic Rendering of Notification Button */
+  & > div:nth-child(1) > svg
+  { 
+    transform: rotate(-16deg); 
+    fill: ${props => props.selected.notifications ? '#fff' : '#a6c5ba'}
+  }
+  & > div:nth-child(1) 
+  { 
+    background-color: ${props => props.selected.notifications ? '#6ab26a' : '#e9f0ed'} 
+  }
+  
+  /* Dynamic Rendering of Settings Button */
+  & > div:nth-child(2) > svg
+  { 
+    fill: ${props => props.selected.settings_menu ? '#fff' : '#a6c5ba'}
+  }
+  & > div:nth-child(2) 
+  { 
+    background-color: ${props => props.selected.settings_menu ? '#6ab26a' : '#e9f0ed'} 
+  }
+  
+  /* Dynamic Rendering of Profile Button */
+  & > div:nth-child(3) 
+  { 
+    border-style: solid;
+    border-color: ${props => props.selected.profile_menu ? '#6ab26a' : 'rgba(0,0,0,0)'};
+    border-width: 2px;
+    transition: border-color 0.05s ease
   }
   
   & > div > svg
@@ -182,7 +231,7 @@ class PanelsContainer extends React.Component
                 shop: false,
                 chat: false
             },
-            misc_enabled:
+            misc_selected:
                 {
                     notifications: false,
                     settings_menu: false,
@@ -212,11 +261,13 @@ class PanelsContainer extends React.Component
                                 <div>
                                     <div/>
 
-                                    <div onClick={() => {this.setState({panel_selected: {explore: true, shop: false, chat: false}})}}>
+                                    <div data-tip data-for="explore" onClick={() => {this.setState({panel_selected: {explore: true, shop: false, chat: false}})}}>
 
                                         { this.state.panel_selected.explore ? <Redirect to="/panels/explore"/> : <></> }
                                         <ExploreSvg/>
                                     </div>
+
+                                    <StyledToolTip id="explore" type="light" place="right" effect="solid" arrowColor="transparent">Explore</StyledToolTip>
 
                                 </div>
 
@@ -224,36 +275,46 @@ class PanelsContainer extends React.Component
                                 <div>
                                     <div/>
 
-                                    <div onClick={() => {this.setState({panel_selected: {explore: false, shop: true, chat: false}})}}>
+                                    <div data-tip data-for="shop" onClick={() => {this.setState({panel_selected: {explore: false, shop: true, chat: false}})}}>
 
                                         { this.state.panel_selected.shop ? <Redirect to="/panels/shop"/> : <></> }
                                         <PriceTagSvg/>
                                     </div>
+
+                                    <StyledToolTip id="shop" type="light" place="right" effect="solid" arrowColor="transparent">Shop</StyledToolTip>
+
                                 </div>
 
                                 {/* Chat Highlight */}
                                 <div>
                                     <div/>
 
-                                    <div onClick={() => {this.setState({panel_selected: {explore: false, shop: false, chat: true}})}}>
+                                    <div data-tip data-for="chat" onClick={() => {this.setState({panel_selected: {explore: false, shop: false, chat: true}})}}>
 
                                         { this.state.panel_selected.chat ? <Redirect to="/panels/chat"/> : <></> }
                                         <ChatSvg/>
                                     </div>
+
+                                    <StyledToolTip id="chat" type="light" place="right" effect="solid" arrowColor="transparent">Chat</StyledToolTip>
 
                                 </div>
 
                             </MenuBarWrapper>
                         </MenuBarContainer>
 
-                        <MiscBar>
-                            <div>
+                        <MiscBar selected={this.state.misc_selected}>
+                            {/* Notification Button */}
+                            <div onClick={() => this.setState({ misc_selected: { notifications: !this.state.misc_selected.notifications, settings_menu: false, profile_menu: false } })}>
                                 <NotificationBellSvg/>
                             </div>
-                            <div>
+
+                            {/* Settings Button */}
+                            <div onClick={() => this.setState({ misc_selected: { notifications: false, settings_menu: !this.state.misc_selected.settings_menu, profile_menu: false } })}>
                                 <SettingsSvg/>
                             </div>
-                            <div>
+
+                            {/* Profile Button */}
+                            <div onClick={() => this.setState({ misc_selected: { notifications: false, settings_menu: false, profile_menu: !this.state.misc_selected.profile_menu } })}>
 
                             </div>
                         </MiscBar>
