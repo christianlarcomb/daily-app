@@ -26,9 +26,9 @@ const PrimarySidebar = styled.div`
   
   & > div:nth-child(1)
   {
-    height: 80%;
-    width: 100%;
-    border-radius: 0 10px 10px 0;
+    height: 46px;
+    width: 46px;
+    border-radius: 100%;
     display: grid;
     place-content: center;
     background-color: #6ab26a;
@@ -36,14 +36,14 @@ const PrimarySidebar = styled.div`
   
   & > div:nth-child(1) > svg
   {
-    height: 28px;
-    width: 28px;
+    height: 24px;
+    width: 24px;
     fill: var(--lgt-1);
-    padding-right: 6px;
+    padding-right: 3px;
   }
 `
 
-const MenuBarFloat = styled.div`
+const MenuBarContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
@@ -51,7 +51,7 @@ const MenuBarFloat = styled.div`
   place-items: center;
 `
 
-const MenuBar = styled.div`
+const MenuBarWrapper = styled.div`
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   place-items: center;
@@ -59,7 +59,29 @@ const MenuBar = styled.div`
   height: 385px;
   width: 100%;
   
-  & > div 
+  /* Styling the parent containers */
+  & > div
+  {
+    display: grid;
+    grid-template-columns: 4px 1fr;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    position: relative;
+    place-items: center;
+  }
+  
+  /* Styling the clicked highlight */
+  & > div > div:nth-child(1)
+  {
+    background-color: var(--primary-grn);
+    height: 90%;
+    width: 4px;
+    border-radius: 0 4px 4px 0;
+  }
+  
+  /* Styling the highlighted portion of the buttons */
+  & > div > div:nth-child(2)
   {
     height: 90%;
     width: 90%;
@@ -69,18 +91,44 @@ const MenuBar = styled.div`
     transition: background-color 0.05s ease;
   }
   
-  & > div:hover
+  & > div > div:nth-child(2):hover
   {
     background-color: var(--lgt-2);
     cursor: pointer;
   }
   
-  & > div > svg
+  & > div > div:nth-child(2) > svg
   {
     height: 26px;
     fill: var(--lgt-3);
   }
   
+  /* Dynamic Global Light Animation */
+  & > div > div:nth-child(1) 
+  { transition: opacity 0.1s ease; }
+  
+  & > div > div:nth-child(2) > svg
+  { transition: fill 0.1s ease; }
+  
+  /* Dynamic Elements Rendered by State */
+  & > div:nth-child(1) > div:nth-child(1) 
+  { 
+    background-color: var(--primary-grn);
+    opacity: ${props => props.selected.explore ? 100 : 0};
+  }
+  & > div:nth-child(1) > div:nth-child(2) > svg { fill: ${props => props.selected.explore ? '#6ab26a' : '#a6c5ba'}; }
+  
+  & > div:nth-child(2) > div:nth-child(1) {
+    background-color: var(--primary-grn);
+    opacity: ${props => props.selected.shop ? 100 : 0};
+  }
+  & > div:nth-child(2) > div:nth-child(2) > svg { fill: ${props => props.selected.shop ? '#6ab26a' : '#a6c5ba'}; }
+  
+  & > div:nth-child(3) > div:nth-child(1) {
+    background-color: var(--primary-grn);
+    opacity: ${props => props.selected.chat ? 100 : 0};
+  }
+  & > div:nth-child(3) > div:nth-child(2) > svg { fill: ${props => props.selected.chat ? '#6ab26a' : '#a6c5ba'}; }
 `
 
 const MiscBar = styled.div`
@@ -120,55 +168,111 @@ const MiscBar = styled.div`
 `
 
 /* TODO: Complete necessary panels for back-end development */
-function PanelsContainer()
+class PanelsContainer extends React.Component
 {
-    return(
-        <>
-            <PrimaryContainer>
 
-                <PrimarySidebar>
+    constructor(props) {
+        super(props);
 
-                    <div>
-                        <MugLogoSvg/>
-                    </div>
+        this.state =
+        {
+            panel_selected:
+            {
+                explore: true,
+                shop: false,
+                chat: false
+            },
+            misc_enabled:
+                {
+                    notifications: false,
+                    settings_menu: false,
+                    profile_menu: false
+                }
+        }
+    }
 
-                    <MenuBarFloat>
-                        <MenuBar>
-                            <div onClick={() => { return <Redirect to="/panels/explore"/> }}>
-                                <ExploreSvg/>
-                            </div>
-                            <div onClick={() => { return <Redirect to="/panels/shop"/> }}>
-                                <PriceTagSvg/>
-                            </div>
-                            <div onClick={() => { return <Redirect to="/panels/chat"/> }}>
-                                <ChatSvg/>
-                            </div>
-                        </MenuBar>
-                    </MenuBarFloat>
+    render()
+    {
+        return(
+            <>
 
-                    <MiscBar>
+                <PrimaryContainer>
+
+                    <PrimarySidebar>
+
                         <div>
-                            <NotificationBellSvg/>
+                            <MugLogoSvg/>
                         </div>
-                        <div>
-                            <SettingsSvg/>
-                        </div>
-                        <div>
 
-                        </div>
-                    </MiscBar>
+                        <MenuBarContainer>
+                            <MenuBarWrapper selected={this.state.panel_selected}>
 
-                </PrimarySidebar>
+                                {/* Explore Highlight */}
 
-                { /* Conditionally rendering the route specifically */ }
+                                <div>
+                                    <div/>
 
-                <Route path="/panels/explore" exact component={''}/>
-                <Route path="/panels/shop" exact component={''}/>
-                <Route path="/panels/messenger" exact component={''}/>
+                                    <div onClick={() => {this.setState({panel_selected: {explore: true, shop: false, chat: false}})}}>
 
-            </PrimaryContainer>
-        </>
-    )
+                                        { this.state.panel_selected.explore ? <Redirect to="/panels/explore"/> : <></> }
+                                        <ExploreSvg/>
+                                    </div>
+
+                                </div>
+
+                                {/* Shop Highlight */}
+                                <div>
+                                    <div/>
+
+                                    <div onClick={() => {this.setState({panel_selected: {explore: false, shop: true, chat: false}})}}>
+
+                                        { this.state.panel_selected.shop ? <Redirect to="/panels/shop"/> : <></> }
+                                        <PriceTagSvg/>
+                                    </div>
+                                </div>
+
+                                {/* Chat Highlight */}
+                                <div>
+                                    <div/>
+
+                                    <div onClick={() => {this.setState({panel_selected: {explore: false, shop: false, chat: true}})}}>
+
+                                        { this.state.panel_selected.chat ? <Redirect to="/panels/chat"/> : <></> }
+                                        <ChatSvg/>
+                                    </div>
+
+                                </div>
+
+                            </MenuBarWrapper>
+                        </MenuBarContainer>
+
+                        <MiscBar>
+                            <div>
+                                <NotificationBellSvg/>
+                            </div>
+                            <div>
+                                <SettingsSvg/>
+                            </div>
+                            <div>
+
+                            </div>
+                        </MiscBar>
+
+                    </PrimarySidebar>
+
+                    { /* Conditionally rendering the route specifically */ }
+
+
+                    <Route path="/panels/explore" exact component={''}/>
+                    <Route path="/panels/shop" exact component={''}/>
+                    <Route path="/panels/messenger" exact component={''}/>
+
+                </PrimaryContainer>
+            </>
+        )
+    }
+
+
 }
 
 export default PanelsContainer
