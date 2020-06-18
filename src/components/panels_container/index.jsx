@@ -3,13 +3,25 @@ import styled from "styled-components";
 import {Route, Redirect} from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 
-/* SVGs */
+/* Logo SVG */
 import { ReactComponent as MugLogoSvg } from '../../assets/svgs/daily/daily_mug.svg';
-import { ReactComponent as ExploreSvg } from '../../assets/svgs/menu_bar/explore.svg';
-import { ReactComponent as PriceTagSvg } from '../../assets/svgs/menu_bar/price-tag.svg';
-import { ReactComponent as ChatSvg } from '../../assets/svgs/menu_bar/chat-bubbles.svg';
-import { ReactComponent as NotificationBellSvg } from '../../assets/svgs/menu_bar/notification-bell.svg';
-import { ReactComponent as SettingsSvg } from '../../assets/svgs/menu_bar/settings-cog.svg';
+
+/* Menu Bar SVGs */
+import { ReactComponent as ExploreSvg } from '../../assets/svgs/ui/explore.svg';
+import { ReactComponent as PriceTagSvg } from '../../assets/svgs/ui/price-tag.svg';
+import { ReactComponent as ChatSvg } from '../../assets/svgs/ui/chat-bubbles.svg';
+
+/* Misc. bar SVGs */
+import { ReactComponent as NotificationBellSvg } from '../../assets/svgs/ui/notification-bell.svg';
+import { ReactComponent as SettingsSvg } from '../../assets/svgs/ui/settings-cog.svg';
+
+/* Settings Menu Specific SVGs */
+import { ReactComponent as FeedbackSvg } from '../../assets/svgs/ui/feedback.svg'
+import { ReactComponent as DevelopersSvg } from '../../assets/svgs/ui/developer_icon.svg';
+import { ReactComponent as HelpAndSupportSvg } from '../../assets/svgs/ui/help_and_support.svg'
+import { ReactComponent as DarkModeSvg } from '../../assets/svgs/ui/dark_mode_moon.svg'
+import { ReactComponent as LogoutSvg } from '../../assets/svgs/ui/logout_door.svg'
+
 
 const StyledToolTip = styled(ReactTooltip)`
   background-color: white !important;
@@ -234,8 +246,9 @@ const MiscBarMenu = styled.div`
     border-radius: 18px             !important;
     border-style: solid             !important;
     border-width: 1.5px             !important;
-    width: 300px                    !important;
+    width: 325px                    !important;
     transition: opacity 0.05s ease  !important;
+    padding: 0 6px                 !important;
     overflow-y: hidden;
     -webkit-filter: drop-shadow(0px 12px 10px rgba(0, 0, 0, 0.05));
             filter: drop-shadow(0px 12px 10px rgba(0, 0, 0, 0.05));
@@ -248,42 +261,61 @@ const NotificationMenu = styled(MiscBarMenu)`
 const SettingsMenu = styled(MiscBarMenu)`
 
     opacity: ${props => props.selected.settings_menu ? 100 : 0};
-    padding: 0 15px;
     
-    /* User + Login */
+    /* Generalized */
     & > div
     {
       display: grid;
       height: 54px;
       grid-template-columns: 34px 1fr;
       grid-gap: 10px;
+      padding: 0 10px;
+      
+      &:hover
+      {
+        background-color: #f5f5f5;
+        cursor: pointer;
+        border-radius: 12px;
+        transition: background-color 0.1s ease;
+      }
       
       /* Icon Box */
       & > div:nth-child(1) {
         display: grid;
         align-items: center;  
         
+        /* SVG Wrapper */
         & > div:nth-child(1)
         {
-            height: 34px;
+            height: 32px;
             width: 100%;
             border-radius: 100%;
             overflow: hidden;
             background-color: #D8D8D8;
+            display: grid;
+            place-items: center;
+            
+            & > svg
+            {
+              height: auto;
+              width: 16px;
+              fill: #676767;
+            }
         }
       }
       
       /* Text Box */
-      & > div:nth-child(2) {
+      & > div:nth-child(2) 
+      {
         
       }
     }
     
-    /* Generalized Selections */
+    /* User + Login */
     & > div:nth-child(1)
     {
-      display: grid;
       height: 64px;
+      margin: 5px 0;
       grid-template-columns: 48px 1fr;
       grid-gap: 10px;
       
@@ -309,28 +341,44 @@ const SettingsMenu = styled(MiscBarMenu)`
       }
     }
     
+    /* Feedback Item Margin */
+    & > div:nth-child(3) { margin: 5px 0; }
+    
+    /* Settings Item Margin */
+    & > div:nth-child(5) { margin-top: 5px; }
+    
+    /* Disclaimer Styles */
     & > div:last-of-type
     {
-      height: 40px;
-      display: grid;
-      place-items: center;
-      grid-template-columns: 1fr;
+      height: 42px;
+      display: block !important;
+      
+      &:hover
+      {
+        background-color: white;
+        cursor: auto;
+      }
       
       & > span
       {
+        display: block;
+        height: auto;
         font-size: 12px;
-        color: #b4bbb8;
-        padding-bottom: 6px;
+        margin-top: 2px;
+        color: #696969;
+        
+        & > a { cursor: pointer }
       }
     }
 `
 
 const MenuDivider = styled.div`
-  width: 100% !important;
+  width: auto !important;
   height: 1px !important;
   background-color: #E8E8E8 !important;
   border-radius: 100px !important;
   opacity: 1 !important;
+  margin: 0 8px !important;
 `
 
 const ProfileMenu = styled(MiscBarMenu)`
@@ -467,7 +515,7 @@ class PanelsContainer extends React.Component
                                     <div>
                                         <div>
                                             <div>
-
+                                                <FeedbackSvg/>
                                             </div>
                                         </div>
                                         <div>
@@ -480,7 +528,7 @@ class PanelsContainer extends React.Component
                                     <div>
                                         <div>
                                             <div>
-
+                                                <SettingsSvg/>
                                             </div>
                                         </div>
                                         <div>
@@ -491,7 +539,7 @@ class PanelsContainer extends React.Component
                                     <div>
                                         <div>
                                             <div>
-
+                                                <DevelopersSvg/>
                                             </div>
                                         </div>
                                         <div>
@@ -502,7 +550,7 @@ class PanelsContainer extends React.Component
                                     <div>
                                         <div>
                                             <div>
-
+                                                <HelpAndSupportSvg/>
                                             </div>
                                         </div>
                                         <div>
@@ -513,7 +561,7 @@ class PanelsContainer extends React.Component
                                     <div>
                                         <div>
                                             <div>
-
+                                                <DarkModeSvg/>
                                             </div>
                                         </div>
                                         <div>
@@ -524,7 +572,7 @@ class PanelsContainer extends React.Component
                                     <div>
                                         <div>
                                             <div>
-
+                                                <LogoutSvg/>
                                             </div>
                                         </div>
                                         <div>
@@ -533,7 +581,7 @@ class PanelsContainer extends React.Component
                                     </div>
 
                                     <div>
-                                        <span>Privacy • Terms • Advertising • Ad Choices • Cookies • More | DailyApp © 2020</span>
+                                        <span><a>Privacy</a> • <a>Terms</a> • <a>Advertising</a> • <a>Ad Choices</a> • <a>Cookies</a> <br/>DailyApp © 2020</span>
                                     </div>
 
                                 </SettingsMenu>
