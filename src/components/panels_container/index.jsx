@@ -268,7 +268,7 @@ const SettingsMenu = styled(MiscBarMenu)`
       display: grid;
       height: 54px;
       grid-template-columns: 34px 1fr;
-      grid-gap: 10px;
+      grid-gap: 12px;
       padding: 0 10px;
       
       &:hover
@@ -307,7 +307,26 @@ const SettingsMenu = styled(MiscBarMenu)`
       /* Text Box */
       & > div:nth-child(2) 
       {
+        display: grid;
+        align-items: center;
+        height: 36px;
+        align-self: center;
         
+        & > span:nth-child(1) 
+        {
+        font-size: 16px;
+        font-weight: 500;
+        }
+        
+        & > span:nth-child(2) 
+        {
+        font-size: 12px;
+        }
+        
+        & > div
+        {
+          
+        }
       }
     }
     
@@ -500,83 +519,108 @@ class PanelsContainer extends React.Component
 
                                     {/* User or Login Section */}
                                     <div>
+                                        {/* Image Section */}
                                         <div>
                                             <div>
 
                                             </div>
                                         </div>
-                                        <div>
 
+                                        {/* Text Section */}
+                                        <div>
+                                            <span>Christian Larcomb</span>
+                                            <span>View user profile.</span>
                                         </div>
                                     </div>
 
                                     <MenuDivider/>
 
                                     <div>
+                                        {/* Icon Section */}
                                         <div>
                                             <div>
                                                 <FeedbackSvg/>
                                             </div>
                                         </div>
-                                        <div>
 
+                                        {/* Text Section */}
+                                        <div>
+                                            <span>Provide Feedback</span>
+                                            <span>Help us make our app even better!</span>
                                         </div>
                                     </div>
 
                                     <MenuDivider/>
 
                                     <div>
+                                        {/* Icon Section */}
                                         <div>
                                             <div>
                                                 <SettingsSvg/>
                                             </div>
                                         </div>
-                                        <div>
 
+                                        {/* Text Section */}
+                                        <div>
+                                            <span>Settings</span>
                                         </div>
                                     </div>
 
                                     <div>
+                                        {/* Icon Section */}
                                         <div>
                                             <div>
                                                 <DevelopersSvg/>
                                             </div>
                                         </div>
-                                        <div>
 
+                                        {/* Text Section */}
+                                        <div>
+                                            <span>Developers</span>
                                         </div>
                                     </div>
 
                                     <div>
+                                        {/* Icon Section */}
                                         <div>
                                             <div>
                                                 <HelpAndSupportSvg/>
                                             </div>
                                         </div>
-                                        <div>
 
+                                        {/* Text Section */}
+                                        <div>
+                                            <span>Help & Support</span>
                                         </div>
                                     </div>
 
                                     <div>
+                                        {/* Icon Section */}
                                         <div>
                                             <div>
                                                 <DarkModeSvg/>
                                             </div>
                                         </div>
-                                        <div>
 
+                                        {/* Text Section */}
+                                        <div>
+                                            <span>
+                                                Dark Mode
+                                            </span>
                                         </div>
                                     </div>
 
                                     <div>
+                                        {/* Icon Section */}
                                         <div>
                                             <div>
                                                 <LogoutSvg/>
                                             </div>
                                         </div>
-                                        <div>
 
+                                        {/* Text Section */}
+                                        <div>
+                                            <span>Logout</span>
                                         </div>
                                     </div>
 
