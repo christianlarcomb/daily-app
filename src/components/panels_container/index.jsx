@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {Route, Redirect} from "react-router-dom";
 import ReactTooltip from "react-tooltip";
+import ToggleButton from '../toggles/ToggleButton'
 
 /* Logo SVG */
 import { ReactComponent as MugLogoSvg } from '../../assets/svgs/daily/daily_mug.svg';
@@ -366,6 +367,20 @@ const SettingsMenu = styled(MiscBarMenu)`
     /* Settings Item Margin */
     & > div:nth-child(5) { margin-top: 5px; }
     
+    /* Styling Dark Mode Toggle */
+    & > div:nth-child(8) > div:nth-child(2)
+    { 
+      display: grid;
+      grid-template-columns: 1fr 42px;
+    }
+    
+    /* Styling Dark Mode Toggle */
+    & > div:nth-child(8):hover 
+    { 
+    cursor: auto; 
+    background-color: white 
+    }
+    
     /* Disclaimer Styles */
     & > div:last-of-type
     {
@@ -607,6 +622,8 @@ class PanelsContainer extends React.Component
                                             <span>
                                                 Dark Mode
                                             </span>
+
+                                            <ToggleButton/>
                                         </div>
                                     </div>
 
