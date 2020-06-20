@@ -36,7 +36,6 @@ function ToggleButton()
 {
     /* Getting state from redux */
     let toggled = useSelector(state => state.uiManager.ui.darkMode)
-    console.log("Current:",toggled)
 
     return (
         <>

@@ -48,6 +48,7 @@ const PrimaryContainer = styled.div`
   grid-template-columns: 60px 1fr;
   height: 100vh;
   min-height: 700px;
+  background-color: ${props => props.theme.one};
 `
 
 const PrimarySidebar = styled.div`
@@ -240,10 +241,10 @@ const MiscBarMenu = styled.div`
     position: absolute              !important;
     bottom: 0                       !important;
     left: 60px                      !important;
-    background-color: white;
+    background-color: ${props => props.theme.one};
     min-height: 50px                !important;
     max-height: 550px               !important;
-    border-color: #E8E8E8;
+    border-color: ${props => props.theme.borderColor};
     border-radius: 18px             !important;
     border-style: solid             !important;
     border-width: 1.5px             !important;
@@ -251,6 +252,7 @@ const MiscBarMenu = styled.div`
     transition: opacity 0.05s ease  !important;
     padding: 0 6px                 !important;
     overflow-y: hidden;
+    color: ${props => props.theme.primaryText};
     -webkit-filter: drop-shadow(0px 12px 10px rgba(0, 0, 0, 0.05));
             filter: drop-shadow(0px 12px 10px rgba(0, 0, 0, 0.05));
 `
@@ -274,7 +276,7 @@ const SettingsMenu = styled(MiscBarMenu)`
       
       &:hover
       {
-        background-color: #f5f5f5;
+        background-color: ${props => props.theme.buttonHover};
         cursor: pointer;
         border-radius: 12px;
         transition: background-color 0.1s ease;
@@ -378,7 +380,8 @@ const SettingsMenu = styled(MiscBarMenu)`
     & > div:nth-child(8):hover 
     { 
     cursor: auto; 
-    background-color: white 
+    background-color: ${props => props.theme.darkModeButton} 
+    transition: background-color 0.1s ease;
     }
     
     /* Disclaimer Styles */
