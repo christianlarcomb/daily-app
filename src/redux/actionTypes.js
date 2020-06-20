@@ -1,4 +1,2 @@
-export const USER_LOGIN =  'USER_LOGIN';
-export const USER_LOGOUT = 'USER_LOGOUT';
-export const TOGGLE_LIGHTMODE = 'TOGGLE_LIGHTMODE';
-export const TOGGLE_DARKMODE =  'TOGGLE_DARKMODE';
+export const USER_STATUS =  'USER_STATUS';
+export const DARK_MODE_TOGGLED =  'DARK_MODE_TOGGLED';

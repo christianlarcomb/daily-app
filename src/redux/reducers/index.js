@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import themeToggle from './themeToggle'
-import userManagement from './userManagement'
+import uiManager from './uiManager'
+import userManager from './userManager'
 
-export default combineReducers({themeToggle, userManagement})
+export default combineReducers({uiManager, userManager})

@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
+import { darkModeToggled, userLoggedIn } from "../../redux/actions";
+import { useSelector } from "react-redux";
+import store from "../../redux/store";
 
 /* CSS Components */
 const SwitchContainer = styled.div`
@@ -14,6 +17,7 @@ const ButtonBack = styled.div`
     height: 100%;
     width: 100%;
     background-color: ${props => props.toggled ? '#5A9B5A' : '#CDCDCD'};
+    transition: background-color 0.1s ease;
 `
 
 const ButtonSwitch = styled.div`
@@ -24,17 +28,22 @@ const ButtonSwitch = styled.div`
     background-color: #fff;
     border-radius: 100px;
     left: ${props => props.toggled ? '16px' : '1px'};
+    transition: left 0.1s ease;
 `
 
 /* Primary Function */
-function ToggleButton(props)
+function ToggleButton()
 {
+    /* Getting state from redux */
+    let toggled = useSelector(state => state.uiManager.ui.darkMode)
+    console.log("Current:",toggled)
+
     return (
         <>
-            <SwitchContainer onClick={props.handleClick}>
+            <SwitchContainer onClick={() => { store.dispatch(darkModeToggled(!toggled)) }}>
 
-                <ButtonSwitch toggled={props.toggled}/>
-                <ButtonBack toggled={props.toggled}/>
+                <ButtonSwitch toggled={toggled}/>
+                <ButtonBack toggled={toggled}/>
 
             </SwitchContainer>
         </>

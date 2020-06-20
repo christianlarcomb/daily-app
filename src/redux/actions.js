@@ -1,33 +1,15 @@
-import { USER_LOGIN, USER_LOGOUT, TOGGLE_LIGHTMODE, TOGGLE_DARKMODE } from './actionTypes'
+import { USER_STATUS, DARK_MODE_TOGGLED } from './actionTypes'
 
-export const userLogin = () =>
-{
-    return
-    {
-        type: USER_LOGIN
+export const userLoggedIn = (boolean) => ({
+    type: USER_STATUS,
+    payload: {
+        isLoggedIn: boolean
     }
-}
+})
 
-export const userLogout = () =>
-{
-    return
-    {
-        type: USER_LOGOUT
+export const darkModeToggled = (boolean) => ({
+    type: DARK_MODE_TOGGLED,
+    payload: {
+        darkModeToggled: boolean
     }
-}
-
-export const toggleDarkmode = () =>
-{
-    return
-    {
-        type: TOGGLE_DARKMODE
-    }
-}
-
-export const toggleLightmode = () =>
-{
-    return
-    {
-        type: TOGGLE_LIGHTMODE
-    }
-}
+})
