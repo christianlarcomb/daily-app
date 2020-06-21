@@ -37,10 +37,8 @@ const StyledToolTip = styled(ReactTooltip)`
   color: var(--drk-2) !important;
   place-items: center !important;
   transition: opacity 0.1s ease !important;
-  #data-arrow-color
-  {
-    background-color: #2c2f33;
-  }
+  
+  #data-arrow-color {background-color: #2c2f33;}
 `
 
 const PrimaryContainer = styled.div`
@@ -72,7 +70,7 @@ const PrimarySidebar = styled.div`
   {
     height: 24px;
     width: 24px;
-    fill: var(--lgt-1);
+    fill: ${props => props.theme.one};
     padding-right: 3px;
   }
 `
@@ -127,15 +125,11 @@ const MenuBarWrapper = styled.div`
   
   & > div > div:nth-child(2):hover
   {
-    background-color: var(--lgt-2);
+    background-color: ${props => props.theme.two};
     cursor: pointer;
   }
   
-  & > div > div:nth-child(2) > svg
-  {
-    height: 26px;
-    fill: var(--lgt-3);
-  }
+  & > div > div:nth-child(2) > svg { height: 26px; }
   
   /* Dynamic Global Light Animation */
   & > div > div:nth-child(1) 
@@ -150,23 +144,23 @@ const MenuBarWrapper = styled.div`
     background-color: var(--primary-grn);
     opacity: ${props => props.selected.explore ? 100 : 0};
   }
-  & > div:nth-child(1) > div:nth-child(2) > svg { fill: ${props => props.selected.explore ? '#6ab26a' : '#a6c5ba'}; }
+  
+  & > div:nth-child(1) > div:nth-child(2) > svg { fill: ${props => props.selected.explore ? '#6ab26a' : props.theme.menuBarHighlight}; }
   
   & > div:nth-child(2) > div:nth-child(1) {
     background-color: var(--primary-grn);
     opacity: ${props => props.selected.shop ? 100 : 0};
   }
-  & > div:nth-child(2) > div:nth-child(2) > svg { fill: ${props => props.selected.shop ? '#6ab26a' : '#a6c5ba'}; }
+  & > div:nth-child(2) > div:nth-child(2) > svg { fill: ${props => props.selected.shop ? '#6ab26a' : props.theme.menuBarHighlight}; }
   
   & > div:nth-child(3) > div:nth-child(1) {
     background-color: var(--primary-grn);
     opacity: ${props => props.selected.chat ? 100 : 0};
   }
-  & > div:nth-child(3) > div:nth-child(2) > svg { fill: ${props => props.selected.chat ? '#6ab26a' : '#a6c5ba'}; }
+  & > div:nth-child(3) > div:nth-child(2) > svg { fill: ${props => props.selected.chat ? '#6ab26a' : props.theme.menuBarHighlight}; }
 `
 
 const MiscBar = styled.div`
-
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   place-items: center;
@@ -188,7 +182,6 @@ const MiscBar = styled.div`
         place-items: center;
         transition: background-color 0.05s ease;
     }
-    
   }
   
   /* All wrappers have pointer cursor */
@@ -198,31 +191,30 @@ const MiscBar = styled.div`
   & > div > div > svg { transition: fill 0.05s ease; }
   
   /* Dynamic Rendering of Notification Button */
-  & > div:nth-child(1) > div:nth-child(1) 
-  { 
-    background-color: ${props => props.selected.notifications ? '#6ab26a' : '#e9f0ed'};
+  & > div:nth-child(1) > div:nth-child(1)
+  {
+    background-color: ${props => props.selected.notifications ? '#6ab26a' : props.theme.two};
     
     & > svg 
     {
-        transform: rotate(-16deg); 
-        fill: ${props => props.selected.notifications ? '#fff' : '#a6c5ba'};
+        transform: rotate(-16deg);
+        fill: ${props => props.selected.notifications ? props.theme.one : props.theme.smlRoundedSvgPrimary};
     }
   }
   
   /* Dynamic Rendering of Settings Button */
-  
   & > div:nth-child(2) > div:nth-child(1) 
   { 
-    background-color: ${props => props.selected.settings_menu ? '#6ab26a' : '#e9f0ed'};
+    background-color: ${props => props.selected.settings_menu ? '#6ab26a' : props.theme.two};
     
     & > svg
     {
-      fill: ${props => props.selected.settings_menu ? '#fff' : '#a6c5ba'}
+      fill: ${props => props.selected.settings_menu ? props.theme.one : props.theme.smlRoundedSvgPrimary}
     }
   }
   
   /* Dynamic Rendering of Profile Button */
-  & > div:nth-child(3)  > div:nth-child(1) 
+  & > div:nth-child(3) > div:nth-child(1) 
   { 
     border-style: solid;
     border-color: ${props => props.selected.profile_menu ? '#6ab26a' : 'rgba(0,0,0,0)'};
@@ -291,7 +283,7 @@ const SettingsMenu = styled(MiscBarMenu)`
         & > div:nth-child(1)
         {
             height: 32px;
-            width: 100%;
+            width: 32px;
             border-radius: 100%;
             overflow: hidden;
             background-color: #D8D8D8;
@@ -379,9 +371,9 @@ const SettingsMenu = styled(MiscBarMenu)`
     /* Styling Dark Mode Toggle */
     & > div:nth-child(8):hover 
     { 
-    cursor: auto; 
-    background-color: ${props => props.theme.darkModeButton} 
-    transition: background-color 0.1s ease;
+      cursor: auto; 
+      background-color: rgba(0,0,0,0); 
+      transition: background-color 0.1s ease;
     }
     
     /* Disclaimer Styles */

@@ -3,6 +3,11 @@ import styled from 'styled-components'
 import '../../styles/portal_panels/create-account.css'
 import '../../styles/global_styles/portal_shared.css'
 
+/* Redux Elements */
+import { userLoggedIn } from "../../redux/actions";
+import { useSelector } from "react-redux";
+import store from "../../redux/store";
+
 import axios from 'axios'
 import ReCaptcha from 'react-google-recaptcha'
 
@@ -199,6 +204,7 @@ const CaptchaProtection = styled.div`
     }
 `
 
+/* TODO: Find a way to implement redux here */
 class SignupSection extends React.Component
 {
 
@@ -362,7 +368,10 @@ class SignupSection extends React.Component
                     /* Intentional Secret Welcome Message */
                     console.log('Account Creation Success! Welcome!')
 
+                    /* TODO: Set redux state, not this components state then alter conditional renderings accordingly. */
                     /* Setting the local state 'isLoggedIn' to redirect the user to main panels. */
+                    store.dispatch(userLoggedIn(true))
+
                     this.setState({ isLoggedIn: true })
                 })
 
@@ -402,7 +411,7 @@ class SignupSection extends React.Component
         return (
             <>
 
-                { this.state.isLoggedIn ? <Redirect exact strict to="/panels/main"/> : <></> }
+                { this.state.isLoggedIn ? <Redirect exact strict to="/panels/explore"/> : <></> }
 
                 <InfoSectionContainer>
 

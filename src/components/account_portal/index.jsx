@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { useSelector } from "react-redux";
+
 import '../../styles/global_styles/portal_shared.css'
 
 import CreateAccount from "./create-account";
@@ -8,11 +10,13 @@ import LoginAccount from "./login-account";
 
 import { ReactComponent as CompanyLogo } from "../../assets/svgs/daily/daily_full.svg";
 
+/* React Router Dom */
 import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link,
+    Redirect
 } from 'react-router-dom'
 
 const PrimaryContainer = styled.div`
@@ -42,39 +46,43 @@ const SidePanelContent = styled.div`
     & > h1 { font-size: 2.5em }
 `
 
-class AccountPortal extends React.Component
+function AccountPortal()
 {
 
-    render()
-    {
-        return (
-            <>
-                <PrimaryContainer>
+    /* Getting isLoggedIn state from redux */
+    let isLoggedIn = useSelector(state => state.userManager.account_status.isLoggedIn)
 
-                    <ImagePanel>
+    return (
+        <>
+            {/* Redirect the user to the panels if they're logged in */}
+            { isLoggedIn ? <Redirect exact strict to="/panels/explore"/> : <></>  }
 
-                        <SidePanelContent>
+            <PrimaryContainer>
 
-                            <CompanyLogo/>
-                            <h1>It's a lifestyle.</h1>
+                <ImagePanel>
 
-                        </SidePanelContent>
+                    <SidePanelContent>
 
-                        <div id="side-panel-color"/>
+                        <CompanyLogo/>
+                        <h1>It's a lifestyle.</h1>
 
-                        <div id="side-panel-image"/>
+                    </SidePanelContent>
 
-                    </ImagePanel>
+                    <div id="side-panel-color"/>
 
-                    { /* Conditionally rendering the route specifically */ }
+                    <div id="side-panel-image"/>
 
-                    <Route path="/account/create" exact component={CreateAccount}/>
-                    <Route path="/account/login" exact component={LoginAccount}/>
+                </ImagePanel>
 
-                </PrimaryContainer>
-            </>
-        )
-    }
+                { /* Conditionally rendering the route specifically */ }
+
+                <Route path="/account/create" exact component={CreateAccount}/>
+                <Route path="/account/login" exact component={LoginAccount}/>
+
+            </PrimaryContainer>
+        </>
+    )
+
 }
 
 export default AccountPortal

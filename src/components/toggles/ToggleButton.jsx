@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
-import { darkModeToggled, userLoggedIn } from "../../redux/actions";
+
+/* Redux Elements */
+import { darkModeToggled } from "../../redux/actions";
 import { useSelector } from "react-redux";
 import store from "../../redux/store";
 
