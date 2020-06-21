@@ -359,20 +359,32 @@ class SignupSection extends React.Component
                 })
 
                 /* Upon Request Success */
-                /* Store Access & Refresh Token via cookies!!! */
                 .then(res =>
                 {
-                    /* DEBUG: Display response from Daily backend... */
-                    //console.log(res)
-
                     /* Intentional Secret Welcome Message */
                     console.log('Account Creation Success! Welcome!')
 
-                    /* TODO: Set redux state, not this components state then alter conditional renderings accordingly. */
-                    /* Setting the local state 'isLoggedIn' to redirect the user to main panels. */
-                    store.dispatch(userLoggedIn(true))
+                    /* Getting Tokens from Request */
+                    const accessToken = res.data['Daily Response'].access_token
+                    const refreshToken = res.data['Daily Response'].refresh_token
 
-                    this.setState({ isLoggedIn: true })
+                    /* Second Multipliers */
+                    const hourMultiplier = 3600;
+                    const dayMultiplier = 86400;
+
+                    /* Cookie Expiration */
+                    const shortAccessCookie = 2 * hourMultiplier;
+                    const longAccessCookie = 60 * dayMultiplier;
+
+                    console.log("Access Token Cookies:",accessToken)
+
+                    /* COOKIE STORAGE FOR NUMEROUS DATA POINTS */
+                    /* Storing Access and Refresh Java Web-Token in Cookies */
+                    document.cookie = `jwtat=${accessToken}; max-age=${shortAccessCookie}`
+                    document.cookie = `jwtrt=${refreshToken}; max-age=${longAccessCookie}`
+
+                    /* Create Account / Login Success and setting Redux state */
+                    store.dispatch(userLoggedIn(true))
                 })
 
                 /* Upon Request Error */
@@ -381,9 +393,9 @@ class SignupSection extends React.Component
                     if (error.response) {
                         // The request was made and the server responded with a status code
                         // that falls out of the range of 2xx
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
+                        console.log(error.response.data)
+                        console.log(error.response.status)
+                        console.log(error.response.headers)
                     } else if (error.request) {
                         // The request was made but no response was received
                         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of

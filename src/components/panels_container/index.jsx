@@ -25,20 +25,18 @@ import { ReactComponent as LogoutSvg } from '../../assets/svgs/ui/logout_door.sv
 
 
 const StyledToolTip = styled(ReactTooltip)`
-  background-color: white !important;
+  background-color: ${props => props.theme.one} !important;
   opacity: 100 !important;
   border-radius: 8px !important;
   height: 40px !important;
   border-style: solid !important;
-  border-width: 1px !important;
-  border-color: #d7dedb !important;
+  border-width: 1.5px !important;
+  border-color: ${props => props.theme.borderColor} !important;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
   font-size: 15px !important;
-  color: var(--drk-2) !important;
+  color: ${props => props.theme.primaryText} !important;
   place-items: center !important;
   transition: opacity 0.05s ease !important;
-  
-  #data-arrow-color {background-color: #2c2f33;}
 `
 
 const PrimaryContainer = styled.div`

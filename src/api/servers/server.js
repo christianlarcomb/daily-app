@@ -25,49 +25,25 @@ app.use((req, res, next) =>
 })
 
 /* TODO: Fix this timeout middleware to function properly! */
-/* Fix this middleware */
-/*
-    app.use((req, res) =>
-    {
-        res.setTimeout(30000, () =>
-        {
-            console.log({
-                'Daily Response': {
-                    status: 408,
-                    statusText: 'Request has timed out',
-                }
-            })
-
-            res.status(408).send({
-                'Daily Response': {
-                    status: 408,
-                    statusText: 'Request has timed out',
-                }
-            }).end();
-        })
-    })
- */
 
 /* MongoDB Connection */
-/* TODO: Change the dbName to DailyApp once prepared */
 mongoose.connect('mongodb+srv://admin:'
     +process.env.MONGODB_CLUSTER_PASS+
     '@cluster0-zxxok.mongodb.net/test?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        dbName: 'Juubii'
+        dbName: 'DailyApp'
     })
 
 // USER MONGO SCHEMA
 const User = require('../models/user')
 
-
 /* ROUTES */
 /*************************************************************************************************/
 
 // Gets the account panels and is authorized with middle wear
-app.get('/api/v1/panels/@me', authenticateToken, (req, res) =>
+app.get('/api/v1/panels/@me', authenticateAccessToken, (req, res) =>
 {
     res.status(200).send({
         'Daily Response': {
@@ -79,17 +55,32 @@ app.get('/api/v1/panels/@me', authenticateToken, (req, res) =>
 })
 
 // Creating a new user
-app.post('/api/v1/users/create', reCaptchaVerification, mongodbDataUpload, async (req, res) =>
+app.post('/api/v1/users/create', reCaptchaVerification, mongodbUserUpload, async (req, res) =>
 {
     try
     {
+
+        const userObject = req.user.toObject()
+
+        /* Filtered Object for JSON Web-Token */
+        const userObjectFiltered =
+            {
+                ...userObject,
+                password: null
+            };
+
+        /* debugging */
+        console.log(userObjectFiltered)
+
         /* Upon Middleware Success: Generate access token and return it as a response! */
-        const accessToken = jwt.sign(req.user.toObject(), process.env.ACCESS_TOKEN_SECRET)
+        const refreshToken = jwt.sign(userObjectFiltered, process.env.REFRESH_TOKEN_SECRET);
+        const accessToken = jwt.sign(userObjectFiltered, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '2h'});
 
         console.log({
             'Daily Response': {
                 status: 201,
                 statusText: 'Account Creation Success',
+                refresh_token: refreshToken,
                 access_token: accessToken
             }
         })
@@ -98,6 +89,7 @@ app.post('/api/v1/users/create', reCaptchaVerification, mongodbDataUpload, async
             'Daily Response': {
                 status: 201,
                 statusText: 'Account Creation Success',
+                refresh_token: refreshToken,
                 access_token: accessToken
             }
         }).end()
@@ -277,7 +269,7 @@ async function reCaptchaVerification(req, res, next)
     }
 }
 
-async function mongodbDataUpload(req, res, next) {
+async function mongodbUserUpload(req, res, next) {
 
     console.log('MongoDB: Encrypting data then uploading...')
 
@@ -349,15 +341,7 @@ async function mongodbDataUpload(req, res, next) {
 
 }
 
-/*
-* Responsible for user authentication with Java Web Tokens
-* @param req
-* @param res
-* @param next
-*
-* @returns authenticated user as req
-*/
-function authenticateToken(req, res, next)
+function authenticateAccessToken(req, res, next)
 {
     const authHeader = req.headers['authorization']
 
@@ -409,7 +393,6 @@ function authenticateToken(req, res, next)
             console.log('Request authentication continuing even after failing...')
             next()
         })
-
     }
 }
 

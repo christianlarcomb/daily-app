@@ -75,7 +75,6 @@ function AccountPortal()
                 </ImagePanel>
 
                 { /* Conditionally rendering the route specifically */ }
-
                 <Route path="/account/create" exact component={CreateAccount}/>
                 <Route path="/account/login" exact component={LoginAccount}/>
 

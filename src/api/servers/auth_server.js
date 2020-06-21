@@ -23,19 +23,41 @@ mongoose.connect('mongodb+srv://admin:' +process.env.MONGODB_CLUSTER_PASS+'@clus
 // USER MONGO SCHEMA
 const User = require('../models/user')
 
-/*
-* Utilizes complex password encryption to verify the credentials of the logging in user.
-*
-* @param { email: ..., password:... }
-*
-* @async
-*/
+let refreshTokenList = []
+
+app.get('/api/v1/authentication/gen/access-token', authenticateRefreshToken, (req, res) => {
+
+    // Getting the reCAPTCHA token from the request
+    const authHeader = req.headers['authorization']
+    // Parsing the authentication token from reCAPTCHA
+    const refreshToken = authHeader && authHeader.split(' ')[1]
+
+    /* Checking whether the refresh token is there and whether it exists on the server side */
+    if(refreshToken == null) return res.status(401).send('Refresh Token Missing').end()
+    if(!refreshTokenList.includes(refreshToken)) return res.status(403).send('Refresh token is not valid').end()
+
+    /* The refresh token is found - attempting to generate an access token */
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+        if(err) return res.status(403).send('could not verify refresh token').end()
+
+        /* Creating access token with a simplified user object */
+        const accessToken = generateAccessToken(user)
+
+        return res.status(200).send({
+            'Daily Response': {
+                status: 200,
+                message: 'Access Token Generated',
+                access_token: accessToken
+            }
+        }).end()
+
+    })
+})
+
 app.post('/api/v1/users/login', verifyUserPassword, (req, res) =>
 {
-
     // After verifying the user, send back the access tokens.
     res.status(200).send({ accessToken: req.accessToken, refreshToken: req.refreshToken})
-
 })
 
 async function verifyUserPassword(req, res, next)
@@ -48,8 +70,20 @@ async function verifyUserPassword(req, res, next)
             try
             {
 
+                /* Raw Object for Verification */
+                const userObjectRaw = doc[0].toObject()
+
+                /* Filtered Object for JSON Web-Token */
+                const userObjectFiltered =
+                {
+                    ...userObjectRaw,
+                    password: null
+                }
+
+                console.log(userObjectFiltered)
+
                 // If the passwords match
-                if(await bcrypt.compare(req.body.password, doc[0].password))
+                if(await bcrypt.compare(req.body.password, userObjectRaw.password))
                 {
 
                     // Serializing the user if found and sending it back as an access token
@@ -63,19 +97,91 @@ async function verifyUserPassword(req, res, next)
                     next()
 
                 } else {
-                    return res.status(500).send('Invalid Credentials')
+                    return res.status(500).send('Invalid Credentials').end()
                 }
 
-            } catch (e) { return console.log(e)}
+            } catch (e) {
+                console.log(e)
+                return res.status(500).send('Fatal Server Error Caused the request to cancel.').end()
+            }
 
         })
 
         .catch(err => res.status(500).send('Gate 3'))
 }
 
+function authenticateRefreshToken(req, res, next)
+{
+    const authHeader = req.headers['authorization']
+
+    // Check if the authHeader exists -> set info to token variable
+    const token = authHeader && authHeader.split(' ')[1]
+
+    // Check if the token is there
+    if(token == null)
+    {
+        /* Status Notification to Console */
+        console.log({
+            'Daily Response': {
+                status: 401,
+                statusText: 'Daily Error',
+                errors: [
+                    {
+                        message: 'Missing Authentication Header'
+                    }
+                ],
+            }
+        })
+
+        /* Status Notification to Console */
+        return res.status(401).send({
+            'Daily Response': {
+                status: 401,
+                statusText: 'Daily Error',
+                errors: [
+                    {
+                        message: 'Missing Authentication Header'
+                    }
+                ],
+            }
+        })
+
+    } else {
+
+        /* Verifying Java Web Token */
+        /* TODO: Check the verification process of the JWT and make sure they're functioning */
+        jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (err, user) =>
+        {
+            // Check if their was an error validating the token
+            if(err)
+            {
+
+                return res.status(403).send({
+                    'Daily Response': {
+                        status: 403,
+                        statusText: 'Daily Error',
+                        errors: [
+                            {
+                                message: 'Invalid Refresh Token'
+                            }
+                        ],
+                    }
+                }).end()
+
+            } else {
+                // Set the req user as the user who sent the auth token
+                req.user = user
+
+                next()
+            }
+        })
+    }
+}
+
+/* Function handles generating a new refresh token */
 function generateAccessToken(user)
 {
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s'})
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '2h'})
 }
 
 // Starting the server on this port
