@@ -36,7 +36,7 @@ const StyledToolTip = styled(ReactTooltip)`
   font-size: 15px !important;
   color: var(--drk-2) !important;
   place-items: center !important;
-  transition: opacity 0.1s ease !important;
+  transition: opacity 0.05s ease !important;
   
   #data-arrow-color {background-color: #2c2f33;}
 `
@@ -133,10 +133,10 @@ const MenuBarWrapper = styled.div`
   
   /* Dynamic Global Light Animation */
   & > div > div:nth-child(1) 
-  { transition: opacity 0.1s ease; }
+  { transition: opacity 0.05s ease; }
   
   & > div > div:nth-child(2) > svg
-  { transition: fill 0.1s ease; }
+  { transition: fill 0.05s ease; }
   
   /* Dynamic Elements Rendered by State */
   & > div:nth-child(1) > div:nth-child(1) 
@@ -245,8 +245,8 @@ const MiscBarMenu = styled.div`
     padding: 0 6px                 !important;
     overflow-y: hidden;
     color: ${props => props.theme.primaryText};
-    -webkit-filter: drop-shadow(0px 12px 10px rgba(0, 0, 0, 0.05));
-            filter: drop-shadow(0px 12px 10px rgba(0, 0, 0, 0.05));
+    -webkit-filter: drop-shadow(0px 8px 6px rgba(0, 0, 0, 0.08));
+            filter: drop-shadow(0px 8px 6px rgba(0, 0, 0, 0.08));
 `
 
 const NotificationMenu = styled(MiscBarMenu)`
@@ -271,7 +271,7 @@ const SettingsMenu = styled(MiscBarMenu)`
         background-color: ${props => props.theme.buttonHover};
         cursor: pointer;
         border-radius: 12px;
-        transition: background-color 0.1s ease;
+        transition: background-color 0.05s ease;
       }
       
       /* Icon Box */
@@ -373,7 +373,7 @@ const SettingsMenu = styled(MiscBarMenu)`
     { 
       cursor: auto; 
       background-color: rgba(0,0,0,0); 
-      transition: background-color 0.1s ease;
+      transition: background-color 0.05s ease;
     }
     
     /* Disclaimer Styles */
@@ -384,7 +384,7 @@ const SettingsMenu = styled(MiscBarMenu)`
       
       &:hover
       {
-        background-color: white;
+        background-color: rgba(0,0,0,0);
         cursor: auto;
       }
       
@@ -404,7 +404,7 @@ const SettingsMenu = styled(MiscBarMenu)`
 const MenuDivider = styled.div`
   width: auto !important;
   height: 1px !important;
-  background-color: #E8E8E8 !important;
+  background-color: ${props => props.theme.borderColor} !important;
   border-radius: 100px !important;
   opacity: 1 !important;
   margin: 0 8px !important;
