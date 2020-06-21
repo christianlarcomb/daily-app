@@ -286,7 +286,7 @@ const SettingsMenu = styled(MiscBarMenu)`
             width: 32px;
             border-radius: 100%;
             overflow: hidden;
-            background-color: #D8D8D8;
+            background-color: ${props => props.theme.menuIconBack};
             display: grid;
             place-items: center;
             
@@ -294,7 +294,7 @@ const SettingsMenu = styled(MiscBarMenu)`
             {
               height: auto;
               width: 16px;
-              fill: #676767;
+              fill: ${props => props.theme.menuIconSvg};
             }
         }
       }

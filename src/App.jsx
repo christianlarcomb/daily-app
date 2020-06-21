@@ -43,7 +43,10 @@ function App()
         smlRoundedSvgPrimary: !toggled ? '#A6C5BA' : '#69837B',
         smlRoundedBtnBack: !toggled ?    '#E9F0ED' : '#3E4A46',
 
-        menuBarHighlight: !toggled ?     '#a6c5ba' : '#69837b'
+        menuBarHighlight: !toggled ?     '#a6c5ba' : '#69837b',
+
+        menuIconSvg: !toggled ?     '#676767' : '#D8D8D8',
+        menuIconBack: !toggled ?     '#D8D8D8' : '#676767'
     }
 
     return (
