@@ -9,15 +9,26 @@ const mongoose = require('mongoose')
 
 // Express app initialized
 const app = express()
+
 // Allows your server to utilize json
 app.use(express.json())
+
+/* Access Header Middleware */
+/* TODO: Adjust these access restrictions before release */
+app.use((req, res, next) =>
+{
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', '*')
+    res.header('Access-Control-Allow-Methods', '*')
+    next()
+})
 
 // Connecting to the database
 mongoose.connect('mongodb+srv://admin:' +process.env.MONGODB_CLUSTER_PASS+'@cluster0-zxxok.mongodb.net/test?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        dbName: 'Juubii'
+        dbName: 'DailyApp'
     })
 
 // USER MONGO SCHEMA
@@ -25,7 +36,7 @@ const User = require('../models/user')
 
 let refreshTokenList = []
 
-app.get('/api/v1/authentication/gen/access-token', authenticateRefreshToken, (req, res) => {
+app.post('/api/v1/authentication/gen/access-token', authenticateRefreshToken, (req, res) => {
 
     // Getting the reCAPTCHA token from the request
     const authHeader = req.headers['authorization']
@@ -38,18 +49,30 @@ app.get('/api/v1/authentication/gen/access-token', authenticateRefreshToken, (re
 
     /* The refresh token is found - attempting to generate an access token */
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-        if(err) return res.status(403).send('could not verify refresh token').end()
 
-        /* Creating access token with a simplified user object */
-        const accessToken = generateAccessToken(user)
+        if(err)
+        {
 
-        return res.status(200).send({
-            'Daily Response': {
-                status: 200,
-                message: 'Access Token Generated',
-                access_token: accessToken
-            }
-        }).end()
+            return res.status(500).send({
+                'Daily Response': {
+                    status: 500,
+                    message: 'Could not verify refresh token.'
+                }
+            }).end()
+
+        } else {
+
+            /* Creating access token with a simplified user object */
+            const accessToken = generateAccessToken(user)
+
+            return res.status(200).send({
+                'Daily Response': {
+                    status: 200,
+                    message: 'Access Token Generated',
+                    access_token: accessToken
+                }
+            }).end()
+        }
 
     })
 })
@@ -185,4 +208,10 @@ function generateAccessToken(user)
 }
 
 // Starting the server on this port
-app.listen(8090)
+app.listen(8090, () => {
+    console.log({
+        'Daily Response': {
+            message: 'DailyApp authorization server is Live!',
+        }
+    })
+})

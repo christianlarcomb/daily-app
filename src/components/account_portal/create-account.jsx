@@ -80,7 +80,6 @@ const FormContainer = styled.div`
     {
         background-color: #4285F4;
     }
-    
 `
 
 const FormWrapper = styled.div`
@@ -335,6 +334,7 @@ class SignupSection extends React.Component
 
         /* Requesting to create a user... It will either approved or ignored */
         try {
+
             axios.post('http://localhost:8080/api/v1/users/create',
                 {
                     email: this.state.values.email,
@@ -369,19 +369,18 @@ class SignupSection extends React.Component
                     const refreshToken = res.data['Daily Response'].refresh_token
 
                     /* Second Multipliers */
-                    const hourMultiplier = 3600;
-                    const dayMultiplier = 86400;
+                    const hourMultiplier =      60 * 60 * 1000;
+                    const dayMultiplier  = 24 * 60 * 60 * 1000;
 
-                    /* Cookie Expiration */
-                    const shortAccessCookie = 2 * hourMultiplier;
-                    const longAccessCookie = 60 * dayMultiplier;
+                    const refreshExpiresIn = new Date(Date.now() + 30 * dayMultiplier)
+                    const accessExpiresIn  = new Date(Date.now() + 2 * hourMultiplier)
 
                     console.log("Access Token Cookies:",accessToken)
 
                     /* COOKIE STORAGE FOR NUMEROUS DATA POINTS */
                     /* Storing Access and Refresh Java Web-Token in Cookies */
-                    document.cookie = `jwtat=${accessToken}; max-age=${shortAccessCookie}`
-                    document.cookie = `jwtrt=${refreshToken}; max-age=${longAccessCookie}`
+                    document.cookie = `jwtat=${accessToken}; expires=${accessExpiresIn.toUTCString()}; path=/`
+                    document.cookie = `jwtrt=${refreshToken}; expires=${refreshExpiresIn.toUTCString()}; path=/`
 
                     /* Create Account / Login Success and setting Redux state */
                     store.dispatch(userLoggedIn(true))

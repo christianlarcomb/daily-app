@@ -384,14 +384,29 @@ function authenticateAccessToken(req, res, next)
         jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) =>
         {
             // Check if their was an error validating the token
-            if(err) return res.status(403).send('Invalid Token').end()
+            if(err) {
 
-            // Set the req user as the user who sent the auth token
-            req.user = user
+                return res.status(403).send({
+                    'Daily Response': {
+                        status: 403,
+                        statusText: 'Daily Error',
+                        errors: [
+                            {
+                                message: 'Invalid access token!'
+                            }
+                        ],
+                    }
+                }).end()
 
-            // Exit authentication flow
-            console.log('Request authentication continuing even after failing...')
-            next()
+            } else {
+
+                // Set the req user as the user who sent the auth token
+                req.user = user
+
+                // Exit authentication flow
+                console.log('Request authentication continuing even after failing...')
+                next()
+            }
         })
     }
 }
@@ -400,7 +415,7 @@ function authenticateAccessToken(req, res, next)
 app.listen(8080, () => {
     console.log({
         'Daily Response': {
-            message: 'Daily Node.js Backend is Live!',
+            message: 'DailyApp Node.js Backend is Live!',
         }
     })
 })

@@ -111,7 +111,7 @@ const cookieManagement = async () =>
             .then(res => {
                 console.log(res)
 
-                /* Create Account / Login Success and setting Redux state */
+                /* Create Account & Login Success - Setting Redux state */
                 store.dispatch(userLoggedIn(true))
 
                 /* Storing Access and Refresh Java Web-Token in Cookies */
@@ -131,6 +131,7 @@ const cookieManagement = async () =>
 
                 return "Error"
             })
+
         } catch (e) {
             console.log("Error:",e)
 
