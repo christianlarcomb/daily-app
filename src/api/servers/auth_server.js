@@ -24,7 +24,7 @@ app.use((req, res, next) =>
 })
 
 // Connecting to the database
-mongoose.connect('mongodb+srv://admin:' +process.env.MONGODB_CLUSTER_PASS+'@cluster0-zxxok.mongodb.net/test?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://admin:'+process.env.MONGODB_CLUSTER_PASS+'@cluster0-zxxok.mongodb.net/test?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -33,8 +33,7 @@ mongoose.connect('mongodb+srv://admin:' +process.env.MONGODB_CLUSTER_PASS+'@clus
 
 // USER MONGO SCHEMA
 const User = require('../models/user')
-
-let refreshTokenList = []
+const RefreshToken = require('../models/refresh-tokens')
 
 app.post('/api/v1/authentication/gen/access-token', authenticateRefreshToken, (req, res) => {
 
@@ -44,37 +43,62 @@ app.post('/api/v1/authentication/gen/access-token', authenticateRefreshToken, (r
     const refreshToken = authHeader && authHeader.split(' ')[1]
 
     /* Checking whether the refresh token is there and whether it exists on the server side */
-    if(refreshToken == null) return res.status(401).send('Refresh Token Missing').end()
-    if(!refreshTokenList.includes(refreshToken)) return res.status(403).send('Refresh token is not valid').end()
-
-    /* The refresh token is found - attempting to generate an access token */
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-
-        if(err)
-        {
-
-            return res.status(500).send({
-                'Daily Response': {
-                    status: 500,
-                    message: 'Could not verify refresh token.'
-                }
-            }).end()
-
-        } else {
-
-            /* Creating access token with a simplified user object */
-            const accessToken = generateAccessToken(user)
-
-            return res.status(200).send({
-                'Daily Response': {
-                    status: 200,
-                    message: 'Access Token Generated',
-                    access_token: accessToken
-                }
-            }).end()
+    if(refreshToken == null) return res.status(401).send({
+        'Daily Response': {
+            status: 401,
+            message: 'Missing Refresh Token.'
         }
+    }).end()
 
-    })
+    /* TODO: Implement database logic to check against */
+    RefreshToken.find({refreshToken: refreshToken})
+        .exec()
+
+        /* It was found */
+        .then(() => {
+
+            /* The refresh token is found - attempting to generate an access token */
+            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+
+                if(err)
+                {
+
+                    return res.status(500).send({
+                        'Daily Response': {
+                            status: 500,
+                            message: 'Could not verify refresh token.'
+                        }
+                    }).end()
+
+                } else {
+
+                    /* Creating access token with a simplified user object */
+                    const accessToken = generateAccessToken(user)
+
+                    return res.status(200).send({
+                        'Daily Response': {
+                            status: 200,
+                            message: 'Access Token Generated',
+                            access_token: accessToken
+                        }
+                    }).end()
+                }
+
+            })
+        })
+
+        .catch(e => {
+
+            res.status(403).send({
+                'Daily Response': {
+                    status: 403,
+                    message: 'Invalid Refresh Token.',
+                    error: e
+                }
+            }).end()
+
+        })
+
 })
 
 app.post('/api/v1/users/login', verifyUserPassword, (req, res) =>
@@ -103,6 +127,7 @@ async function verifyUserPassword(req, res, next)
                     password: null
                 }
 
+                /* Debugging the doc */
                 console.log(userObjectFiltered)
 
                 // If the passwords match
@@ -130,7 +155,7 @@ async function verifyUserPassword(req, res, next)
 
         })
 
-        .catch(err => res.status(500).send('Gate 3'))
+        .catch(err => res.status(500).send('Gate 3').end())
 }
 
 function authenticateRefreshToken(req, res, next)

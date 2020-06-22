@@ -36,8 +36,9 @@ mongoose.connect('mongodb+srv://admin:'
         dbName: 'DailyApp'
     })
 
-// USER MONGO SCHEMA
+// MONGO SCHEMAS
 const User = require('../models/user')
+const RefreshToken = require('../models/refresh-tokens')
 
 /* ROUTES */
 /*************************************************************************************************/
@@ -55,33 +56,21 @@ app.get('/api/v1/panels/@me', authenticateAccessToken, (req, res) =>
 })
 
 // Creating a new user
-app.post('/api/v1/users/create', reCaptchaVerification, mongodbUserUpload, async (req, res) =>
+app.post('/api/v1/users/create',
+    reCaptchaVerification,
+    mongodbUserUpload,
+    generateTokens,
+    mongodbTokenUpload, async (req, res) =>
 {
     try
     {
-
-        const userObject = req.user.toObject()
-
-        /* Filtered Object for JSON Web-Token */
-        const userObjectFiltered =
-            {
-                ...userObject,
-                password: null
-            };
-
-        /* debugging */
-        console.log(userObjectFiltered)
-
-        /* Upon Middleware Success: Generate access token and return it as a response! */
-        const refreshToken = jwt.sign(userObjectFiltered, process.env.REFRESH_TOKEN_SECRET);
-        const accessToken = jwt.sign(userObjectFiltered, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '2h'});
 
         console.log({
             'Daily Response': {
                 status: 201,
                 statusText: 'Account Creation Success',
-                refresh_token: refreshToken,
-                access_token: accessToken
+                refresh_token: req.refreshToken,
+                access_token: req.accessToken
             }
         })
 
@@ -89,8 +78,8 @@ app.post('/api/v1/users/create', reCaptchaVerification, mongodbUserUpload, async
             'Daily Response': {
                 status: 201,
                 statusText: 'Account Creation Success',
-                refresh_token: refreshToken,
-                access_token: accessToken
+                refresh_token: req.refreshToken,
+                access_token: req.accessToken
             }
         }).end()
 
@@ -269,9 +258,55 @@ async function reCaptchaVerification(req, res, next)
     }
 }
 
+async function mongodbTokenUpload(req, res, next){
+
+    const userObject = req.user.toObject()
+
+    /* Filtered Object for JSON Web-Token */
+    const userObjectFiltered =
+        {
+            ...userObject,
+            password: null
+        };
+
+    const refreshToken = new RefreshToken({
+        _id: new mongoose.Types.ObjectId(),
+        refresh_token: req.refreshToken
+    })
+
+    refreshToken.save()
+        .then(mongoRes => {
+
+            console.log("Mongo Res:", mongoRes)
+
+            console.log({
+                'Daily Response': {
+                    status: 200,
+                    statusText: 'Token Upload Success',
+                    host: 'MongoDB'
+                }
+            })
+
+            next()
+        })
+
+        .catch(err => {
+            console.log("Mongo Err:", err)
+
+            return res.status(500).send({
+                'Daily Response': {
+                    status: 500,
+                    message: 'Error Uploading Tokens',
+                    host: 'MongoDB'
+                }
+            }).end()
+        })
+
+}
+
 async function mongodbUserUpload(req, res, next) {
 
-    console.log('MongoDB: Encrypting data then uploading...')
+    console.log('MongoDB: Encrypting user data then uploading...')
 
     // Hashing the users password through the request
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
@@ -339,6 +374,29 @@ async function mongodbUserUpload(req, res, next) {
             }).end()
         })
 
+}
+
+/* Requires the user object from mongo! */
+function generateTokens(req, res, next){
+
+    /* Getting the user object */
+    const userObject = req.user.toObject()
+
+    /* Filtered Object for JSON Web-Token */
+    const userObjectFiltered =
+        {
+            ...userObject,
+            password: null
+        };
+
+    /* Debugging */
+    console.log("Filtered user object:", userObjectFiltered)
+
+    /* Upon Middleware Success: Generate access token and return it as a response! */
+    req.refreshToken = jwt.sign(userObjectFiltered, process.env.REFRESH_TOKEN_SECRET);
+    req.accessToken  = jwt.sign(userObjectFiltered, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '2h'});
+
+    next()
 }
 
 function authenticateAccessToken(req, res, next)

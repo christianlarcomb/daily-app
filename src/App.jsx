@@ -87,40 +87,50 @@ function App()
 const cookieManagement = async () =>
 {
 
-    const hoursToSeconds = 3600;
-
     /* Checking and Verifying Users Refresh and Access Tokens */
     const cookies =
         document.cookie
             .split(';')
             .map(cookie => cookie.split('='))
-            .reduce((accumulator, [key, value]) => ({...accumulator, [key.trim()]: decodeURIComponent(value) }), {})
+            .reduce((accumulator, [key, value]) => ({...accumulator, [key.trim()]: decodeURIComponent(value) }),
+                {})
 
-    /* If the cookies are not null, check them */
+    /* If the refresh cookie is not null, check it */
     if(cookies.jwtrt != null)
     {
         /* Attempting to retrieve and access token if the  */
-        try {
-            axios.get('localhost:8090/api/v1/authentication/gen/access-token', {
-                headers:
-                    {
-                        authorization: `basic ${cookies.jwtrt}`
-                    }
+        try
+        {
+
+            /* Generating Access Tokens */
+            axios.get('http://localhost:8090/api/v1/authentication/gen/access-token', {
+                headers: { authorization: `basic ${cookies.jwtrt}` }
             })
 
             .then(res => {
+
+                /* Debugging */
                 console.log(res)
+
+                /* Second Multipliers */
+                const hourMultiplier = 60 * 60 * 1000;
+
+                /* Getting Tokens from Request */
+                const accessToken = res.data['Daily Response'].access_token
+
+                /* We only need to generate an access token as the refresh token is sufficient */
+                const accessExpiresIn = new Date(Date.now() + 2 * hourMultiplier)
+
+                /* Storing Access and Refresh Java Web-Token in Cookies */
+                document.cookie = `jwtat=${accessToken}; expires=${accessExpiresIn.toUTCString()}; path=/`
 
                 /* Create Account & Login Success - Setting Redux state */
                 store.dispatch(userLoggedIn(true))
 
-                /* Storing Access and Refresh Java Web-Token in Cookies */
-                document.cookie = `jwtat=${res.data['Daily Response'].access_token}; max-age=${2 * hoursToSeconds}`
-
                 return {
                     'Daily Response': {
                         status: 200,
-                        message: 'JWTRT found in cookies! Refresh token verified. User is logged in.'
+                        message: 'JWTRT found in cookies! Refresh token verified. Access token generated and stored.'
                     }
                 }
             })
