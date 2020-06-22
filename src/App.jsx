@@ -62,7 +62,7 @@ function App()
     useEffect(() => {
 
         /* Begin managing the state of the browsers cookies */
-        cookieManagement().then((e) => console.log(e))
+        cookieManagement()
 
     }, [])
 
@@ -133,17 +133,17 @@ const cookieManagement = async () =>
                         message: 'JWTRT found in cookies! Refresh token verified. Access token generated and stored.'
                     }
                 }
+
             })
 
             /* If something goes wrong with the post request */
             .catch(err => {
-                console.log(err)
-
-                return "Error"
+                /* Debugging */
+                //console.log(err)
             })
 
         } catch (e) {
-            console.log("Error:",e)
+            //console.log("Error:",e)
 
             return "Error"
         }

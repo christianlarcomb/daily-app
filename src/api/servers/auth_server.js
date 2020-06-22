@@ -35,7 +35,7 @@ mongoose.connect('mongodb+srv://admin:'+process.env.MONGODB_CLUSTER_PASS+'@clust
 const User = require('../models/user')
 const RefreshToken = require('../models/refresh-tokens')
 
-app.post('/api/v1/authentication/gen/access-token', authenticateRefreshToken, (req, res) => {
+app.get('/api/v1/authentication/gen/access-token', authenticateRefreshToken, (req, res) => {
 
     // Getting the reCAPTCHA token from the request
     const authHeader = req.headers['authorization']
@@ -43,62 +43,67 @@ app.post('/api/v1/authentication/gen/access-token', authenticateRefreshToken, (r
     const refreshToken = authHeader && authHeader.split(' ')[1]
 
     /* Checking whether the refresh token is there and whether it exists on the server side */
-    if(refreshToken == null) return res.status(401).send({
-        'Daily Response': {
-            status: 401,
-            message: 'Missing Refresh Token.'
-        }
-    }).end()
+    if(refreshToken != null) {
 
-    /* TODO: Implement database logic to check against */
-    RefreshToken.find({refreshToken: refreshToken})
-        .exec()
+        /* TODO: Implement database logic to check against */
+        RefreshToken.find({refresh_token: refreshToken})
+            .exec()
 
-        /* It was found */
-        .then(() => {
+            /* It was found */
+            .then(() => {
 
-            /* The refresh token is found - attempting to generate an access token */
-            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+                /* The refresh token is found - attempting to generate an access token */
+                jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
 
-                if(err)
-                {
+                    if(err)
+                    {
 
-                    return res.status(500).send({
-                        'Daily Response': {
-                            status: 500,
-                            message: 'Could not verify refresh token.'
-                        }
-                    }).end()
+                        return res.status(500).send({
+                            'Daily Response': {
+                                status: 500,
+                                message: 'Could not verify refresh token.'
+                            }
+                        }).end()
 
-                } else {
+                    } else {
 
-                    /* Creating access token with a simplified user object */
-                    const accessToken = generateAccessToken(user)
+                        /* Creating access token with a simplified user object */
+                        const accessToken = generateAccessToken(user)
 
-                    return res.status(200).send({
-                        'Daily Response': {
-                            status: 200,
-                            message: 'Access Token Generated',
-                            access_token: accessToken
-                        }
-                    }).end()
-                }
+                        return res.status(200).send({
+                            'Daily Response': {
+                                status: 200,
+                                message: 'Access Token Generated',
+                                access_token: accessToken
+                            }
+                        }).end()
+                    }
+
+                })
+            })
+
+            .catch(e => {
+
+                res.status(403).send({
+                    'Daily Response': {
+                        status: 403,
+                        message: 'Invalid Refresh Token.',
+                        error: e
+                    }
+                }).end()
 
             })
-        })
 
-        .catch(e => {
+    } else {
 
-            res.status(403).send({
-                'Daily Response': {
-                    status: 403,
-                    message: 'Invalid Refresh Token.',
-                    error: e
-                }
-            }).end()
+        return res.status(401).send({
+            'Daily Response': {
+                status: 401,
+                message: 'Missing Refresh Token.'
+            }
+        }).end()
 
-        })
-
+    }
 })
 
 app.post('/api/v1/users/login', verifyUserPassword, (req, res) =>
