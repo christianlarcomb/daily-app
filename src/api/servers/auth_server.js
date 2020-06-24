@@ -124,15 +124,15 @@ async function verifyUserPassword(req, res, next)
     const email = req.body.email
     const password = req.body.password
 
-    console.log("Email Provided:",email)
-    console.log("Password Provided:",password)
+    //console.log("Email Provided:",email)
+    //console.log("Password Provided:",password)
 
     /* If either of the required fields are missing, return error. */
     if(email !== undefined && password !== undefined)
     {
         /* Debug */
-        console.log("Both the password and email were not empty!")
-        console.log("Email Provided:", email)
+        //console.log("Both the password and email were not empty!")
+        //console.log("Email Provided:", email)
 
         /* Locate the user in MongoDB */
         User.find((err, docs) => {
@@ -146,12 +146,25 @@ async function verifyUserPassword(req, res, next)
                 // Trying comparing the passwords and setting the req variable | catch otherwise
                 if(doc === undefined || doc === [] || doc === null){
 
+                    console.log({
+                        'Daily Response': {
+                            status: 404,
+                            host: "MongoDB",
+                            errors: [
+                                {
+                                    message: 'User document not found!'
+                                }
+                            ],
+                        }
+                    })
+
                     return res.status(404).send({
                         'Daily Response': {
                             status: 404,
+                            host: "MongoDB",
                             errors: [
                                 {
-                                    message: 'Document not found!'
+                                    message: 'User document not found!'
                                 }
                             ],
                         }
