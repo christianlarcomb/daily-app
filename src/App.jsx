@@ -19,12 +19,7 @@ import { ThemeProvider } from "styled-components";
 import store from "./redux/store";
 import {userLoggedIn} from "./redux/actions";
 
-/* TODO: Implement a user-is-logged-in check and set the isLoggedIn state accordingly.
-*   - Verifying the JWT stored in cookies also prevents dated or corrupted data from persisting. */
-
-/* TODO: Find a way to get redux state with class components.
-*   - I need a class to utilize the componentDidMount functions */
-
+/* TODO: */
 function App()
 {
     /* Utilize this function to carry out necessary checks:
@@ -73,10 +68,7 @@ function App()
                 <Route path="/account" component={AccountPortal}/>
                 <Route path="/panels" component={PanelsContainer}/>
 
-                {/*
-                Default Error Page
-                TODO: Implement Error Page with Specific Error ID's and Messages
-                */}
+                {/* Default 404 Page */}
                 <Route component={ErrorPages}/>
             </Switch>
         </ThemeProvider>
@@ -84,8 +76,11 @@ function App()
 
 }
 
+/* Verifying the users refresh token and providing an access token accordingly. */
 const cookieManagement = async () =>
 {
+
+    /* TODO: Have a security professional look this over before release. */
 
     /* Checking and Verifying Users Refresh and Access Tokens */
     const cookies =
@@ -107,6 +102,7 @@ const cookieManagement = async () =>
                 headers: { authorization: `basic ${cookies.jwtrt}` }
             })
 
+            /* Upon success */
             .then(res => {
 
                 /* Debugging */
@@ -148,7 +144,11 @@ const cookieManagement = async () =>
             return "Error"
         }
 
+    /* If no tokens are found, make sure the isLoggedIn state is false */
     } else {
+
+        /* No State Found - Setting Redux state */
+        store.dispatch(userLoggedIn(false))
 
         return {
             'Daily Response': {

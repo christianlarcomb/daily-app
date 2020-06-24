@@ -203,7 +203,27 @@ const CaptchaProtection = styled.div`
     }
 `
 
-/* TODO: Find a way to implement redux here */
+const SwitchPanelContainer = styled.div`
+
+    position: relative;
+    width: 100%;
+    height: 100%;
+    
+    & > div 
+    {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      
+        & > a 
+        {
+          text-decoration: none;
+        }
+    
+    }
+    
+`
+
 class SignupSection extends React.Component
 {
 
@@ -214,7 +234,6 @@ class SignupSection extends React.Component
         this.state =
         {
             renderCaptcha: true,
-            isLoggedIn: false,
 
             captcha: {
                 enabled: false,
@@ -325,7 +344,6 @@ class SignupSection extends React.Component
 
         /* TODAY'S TO-DO LIST */
         /* TODO: Implement live username check either with socket or requests */
-        /* TODO: Get started on CSS for main panel then move directly to settings panels for editing */
 
         /* DEBUG: Checking if the debug value is working */
         //console.log("Token Value:", value)
@@ -418,11 +436,8 @@ class SignupSection extends React.Component
     render()
     {
 
-
         return (
             <>
-
-                { this.state.isLoggedIn ? <Redirect exact strict to="/panels/explore"/> : <></> }
 
                 <InfoSectionContainer>
 
@@ -452,14 +467,14 @@ class SignupSection extends React.Component
 
                     <InfoSectionWrapper>
 
-                        <div id="sign-in-container">
-                            <div id="sign-in-wrapper">
+                        <SwitchPanelContainer>
+                            <div>
                                 <p>
                                     Already a member?&nbsp;
                                     <Link to="/account/login">Sign in</Link>
                                 </p>
                             </div>
-                        </div>
+                        </SwitchPanelContainer>
 
                         <FormContainer>
 

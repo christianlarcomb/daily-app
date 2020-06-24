@@ -45,7 +45,7 @@ app.get('/api/v1/authentication/gen/access-token', authenticateRefreshToken, (re
     /* Checking whether the refresh token is there and whether it exists on the server side */
     if(refreshToken != null) {
 
-        /* TODO: Implement database logic to check against */
+        /* Checking MongoDB Collection for Refresh Tokens. */
         RefreshToken.find({refresh_token: refreshToken})
             .exec()
 
@@ -84,10 +84,10 @@ app.get('/api/v1/authentication/gen/access-token', authenticateRefreshToken, (re
 
             .catch(e => {
 
-                res.status(403).send({
+                res.status(401).send({
                     'Daily Response': {
-                        status: 403,
-                        message: 'Invalid Refresh Token.',
+                        status: 401,
+                        message: 'Refresh token not found.',
                         error: e
                     }
                 }).end()
@@ -106,7 +106,7 @@ app.get('/api/v1/authentication/gen/access-token', authenticateRefreshToken, (re
     }
 })
 
-app.post('/api/v1/users/login', verifyUserPassword, (req, res) =>
+app.post('/api/v1/users/login', reCaptchaVerification, verifyUserPassword, (req, res) =>
 {
     // After verifying the user, send back the access tokens.
     res.status(200).send({ accessToken: req.accessToken, refreshToken: req.refreshToken})
@@ -114,53 +114,96 @@ app.post('/api/v1/users/login', verifyUserPassword, (req, res) =>
 
 async function verifyUserPassword(req, res, next)
 {
-    User.find({email: req.body.email})
-        .exec()
-        .then(async function(doc)
-        {
-            // Trying comparing the passwords and setting the req variable | catch otherwise
-            try
+    const email = req.body.email
+    const password = req.body.password
+
+    console.log("Email Provided:",email)
+    console.log("Password Provided:",password)
+
+    /* If either of the required fields are missing, return error. */
+    if(email !== undefined && password !== undefined)
+    {
+        /* Debug */
+        console.log("Both the password and email were not empty!")
+
+        /* Locate the user in MongoDB */
+        User.find({email: email})
+            .exec()
+
+            .then(async function(doc)
             {
-
-                /* Raw Object for Verification */
-                const userObjectRaw = doc[0].toObject()
-
-                /* Filtered Object for JSON Web-Token */
-                const userObjectFiltered =
-                {
-                    ...userObjectRaw,
-                    password: null
-                }
-
-                /* Debugging the doc */
-                console.log(userObjectFiltered)
-
-                // If the passwords match
-                if(await bcrypt.compare(req.body.password, userObjectRaw.password))
+                // Trying comparing the passwords and setting the req variable | catch otherwise
+                try
                 {
 
-                    // Serializing the user if found and sending it back as an access token
-                    const accessToken = generateAccessToken(doc[0].toObject())
-                    const refreshToken = jwt.sign(doc[0].toObject(), process.env.REFRESH_TOKEN_SECRET)
+                    /* Raw Object for Verification */
+                    const userObjectRaw = doc[0].toObject()
 
-                    // Set user variable
-                    req.accessToken = accessToken
-                    req.refreshToken = refreshToken
+                    console.log()
 
-                    next()
+                    /* Filtered Object for JSON Web-Token */
+                    const userObjectFiltered =
+                        {
+                            ...userObjectRaw,
+                            password: null
+                        }
 
-                } else {
-                    return res.status(500).send('Invalid Credentials').end()
+                    /* Debugging the doc */
+                    console.log(userObjectFiltered)
+
+                    // If the passwords match
+                    if(await bcrypt.compare(req.body.password, userObjectRaw.password))
+                    {
+
+                        // Serializing the user if found and sending it back as an access token
+                        const accessToken = generateAccessToken(doc[0].toObject())
+                        const refreshToken = jwt.sign(doc[0].toObject(), process.env.REFRESH_TOKEN_SECRET)
+
+                        // Set user variable
+                        req.accessToken = accessToken
+                        req.refreshToken = refreshToken
+
+                        next()
+
+                    } else {
+                        return res.status(401).send({
+                            'Daily Response': {
+                                status: 401,
+                                errors: [
+                                    {
+                                        message: 'Invalid credentials.'
+                                    }
+                                ],
+                            }
+                        }).end()
+                    }
+
+                } catch (e) {
+                    console.log(e)
+                    return res.status(500).send('Fatal Server Error Caused the request to cancel.').end()
                 }
 
-            } catch (e) {
-                console.log(e)
-                return res.status(500).send('Fatal Server Error Caused the request to cancel.').end()
+            })
+
+            .catch(err => res.status(500).send('Gate 3').end())
+
+    } else {
+
+        console.log("Either the email or the password was empty!")
+        res.status(400).send({
+            'Daily Response': {
+                status: 400,
+                errors: [
+                    {
+                        message: 'Improper or missing credentials.'
+                    }
+                ],
             }
+        }).end();
 
-        })
+    }
 
-        .catch(err => res.status(500).send('Gate 3').end())
+
 }
 
 function authenticateRefreshToken(req, res, next)
@@ -228,6 +271,162 @@ function authenticateRefreshToken(req, res, next)
                 next()
             }
         })
+    }
+}
+
+async function reCaptchaVerification(req, res, next)
+{
+
+    // Getting the reCAPTCHA token from the request
+    const authHeader = req.headers['authorization']
+    // Parsing the authentication token from reCAPTCHA
+    const reCaptchaToken = authHeader && authHeader.split(' ')[1]
+
+    // Check if the token is there
+    if(reCaptchaToken == null)
+    {
+
+        /* Status Notification to Console */
+        console.log({
+            'Daily Response': {
+                status: 403,
+                statusText: 'Google API Error',
+                errors: [
+                    {
+                        message: 'Missing reCAPTCHA token.'
+                    }
+                ],
+            }
+        })
+
+        /* Status Notification to Request - Ending Request */
+        res.status(401).send({
+            'Daily Response': {
+                status: 403,
+                statusText: 'Google API Error',
+                errors: [
+                    {
+                        message: 'Missing reCAPTCHA token.'
+                    }
+                ],
+            }
+        }).end()
+
+    } else {
+
+        /* TODO: Perfect this Google verification request */
+        try{
+
+            /* Status Notification to Console */
+            console.log('Verifying reCAPTCHA -> Posting request to Google API...')
+
+            /* Creating the post request URL with required parameters */
+            const site_url = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.REACT_APP_RECAPTCHA_SECRET_KEY_V2}&response=${reCaptchaToken}`
+
+            /* Attempting the post request and handling the statuses accordingly */
+            await axios.post(site_url, {},
+                {
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+                })
+
+                .then(googleResponse =>
+                {
+                    /* Getting success boolean from Google's API response */
+                    const verifiedByGoogle = googleResponse.data.success
+
+                    /* DEBUG: Checking Googles response status */
+                    //console.log("Google Response:", googleResponse)
+
+                    /* If the token is not verified */
+                    if (!verifiedByGoogle)
+                    {
+
+                        /* Status Notification to Console */
+                        console.log({
+                            'Daily Response': {
+                                status: 403,
+                                statusText: 'Google API Error',
+                                errors: [
+                                    {
+                                        message: 'Invalid reCAPTCHA token.'
+                                    }
+                                ],
+                            }
+                        })
+
+                        /* Status Notification to Request - Ending Request */
+                        res.status(403).send({
+                            'Daily Response': {
+                                status: 403,
+                                statusText: 'Google API Error',
+                                errors: [
+                                    {
+                                        message: 'Invalid reCAPTCHA token.'
+                                    }
+                                ],
+                            }
+                        }).end()
+
+                    } else {
+
+                        /* Status Notification to Console */
+                        console.log({
+                            'Daily Response': {
+                                status: 200,
+                                statusText: 'Google API Success',
+                                errors: [
+                                    {
+                                        message: 'Valid reCAPTCHA token.'
+                                    }
+                                ],
+                            }
+                        })
+
+                        /* Return Control to Parent or Middleware Function*/
+                        next()
+                    }
+                })
+
+                .catch(err =>
+                {
+                    /* Status Notification to Console */
+                    console.log({
+                        'Daily Response': {
+                            status: 500,
+                            statusText: 'Google API Critical Error',
+                            errors: err,
+                        }
+                    })
+
+                    /* Status Notification to Request - Ending Request */
+                    res.status(500).send({
+                        'Daily Response': {
+                            status: 500,
+                            statusText: 'Google API Critical Error',
+                            errors: err,
+                        }
+                    }).end()
+
+                })
+
+        } catch (e) {
+            /* Status Notification to Console */
+            console.log({
+                'Daily Response': {
+                    status: 500,
+                    statusText: 'Internal Server Error',
+                    errors: e,
+                }
+            })
+
+            res.status(500).send({
+                'Daily Response': {
+                    status: 500,
+                    statusText: 'Internal Server Error',
+                    errors: e,
+                }
+            }).end()
+        }
     }
 }
 

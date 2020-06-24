@@ -8,6 +8,9 @@ const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 const axios = require('axios')
 
+const intformat = require('biguint-format')
+const FlakeId = require('flake-idgen')
+
 // Express app initialized
 const app = express()
 
@@ -311,13 +314,27 @@ async function mongodbUserUpload(req, res, next) {
     // Hashing the users password through the request
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
 
+    /* Getting DailyApp Relative Epoch Timestamp */
+    const DailyAppEpoch = new Date('January 1, 2020 00:00:00 GMT-05:00');
+    const DailyAppEpochSec = DailyAppEpoch.getTime();
+    const UnixEpoch = new Date();
+    const currentTimeStamp = UnixEpoch - DailyAppEpoch;
+
+    /* Generating ID snowflake */
+    const generatedSnowflake = new FlakeId({ epoch: parseInt(DailyAppEpochSec) })
+    const snowflakeInDecimal = intformat(generatedSnowflake.next(), 'dec');
+
+    /* Debugging */
+    console.log("Generated Flake:", generatedSnowflake)
+    console.log("In Decimal:", snowflakeInDecimal)
+
     // Creating the user mongo object from the User schema
     const user = new User({
-        _id: new mongoose.Types.ObjectId(),
+        _id: snowflakeInDecimal,
         email: req.body.email,
         name: req.body.name,
         username: req.body.username,
-        date_created_epoch: "4572524574545",
+        date_created_epoch: currentTimeStamp,
         address:
             {
                 street: '',

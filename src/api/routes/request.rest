@@ -7,8 +7,7 @@ POST http://localhost:8090/api/v1/users/login
 Content-Type: application/json
 
 {
-  "email": "MrRager@gmail.com",
-  "password": "friday"
+  "email": "MrRager@gmail.com"
 }
 ###
 

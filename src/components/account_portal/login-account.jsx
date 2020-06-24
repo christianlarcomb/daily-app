@@ -8,14 +8,149 @@ import { ReactComponent as AppleLogo } from "../../assets/svgs/apple-google-etc/
 import { ReactComponent as GoogleLogo } from "../../assets/svgs/apple-google-etc/google-logo.svg";
 
 import { Link } from "react-router-dom";
+import ReCaptcha from "react-google-recaptcha";
+import axios from "axios";
+import store from "../../redux/store";
+import {userLoggedIn} from "../../redux/actions";
 
 const LoginAccountContainer = styled.div`
   display: grid;
   place-items: center;
   grid-template-rows: 15% 70% 15%;
   min-width: 800px;
+  position: relative;
 `
 
+const ReCaptchaContainer = styled.div`
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  opacity: ${props => props.enabledState ? '100' : '0'};
+  z-index: ${props => props.enabledState ? '3' : '-1'};
+  transition: opacity 0.15s ease;
+  
+  & > div:nth-child(1)
+  {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  }
+  
+  & > div:nth-child(1) > div:nth-child(1)
+  {
+    display: grid;
+    grid-template-rows: 2fr 3fr;
+    max-width: 400px;
+    height: 150px;
+    place-items: center;
+  }
+  
+  & > div:nth-child(1) > div:nth-child(1) > span
+  {
+    font-size: 20px;
+  }
+`
+
+const SubmitButton = styled.div`
+    background-color: var(--primary-grn);
+    border-style: none;
+    color: white;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 8px;
+    height: 60px;
+    width: 100%;
+    font-size: 17px;
+    display: grid;
+    place-items: center;
+    grid-column: 1 / 3;
+    
+    &:hover
+    {
+      filter: brightness(90%);
+      cursor: pointer;
+    }
+`
+
+const SwitchPanelContainer = styled.div`
+
+    position: relative;
+    width: 100%;
+    height: 100%;
+    
+    & > div 
+    {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+    }
+`
+
+const FormContainer = styled.div`
+
+    display: grid;
+    grid-template-columns: repeat(2, minmax(min-content, 250px));
+    grid-auto-rows: max-content;
+    place-content: center;
+    row-gap: 20px;
+    column-gap: 40px;
+    
+    & > h1
+    
+    {
+     grid-column: 1 / 3;
+     font-weight: 600;
+    }
+    
+    & > a:nth-of-type(1) { background-color: black; }
+  
+    & > a:nth-of-type(2) { background-color: #4285F4; }
+`
+
+const FormWrapper = styled.div`
+
+    grid-column: 1 / 3;
+    display: grid;
+    column-gap: 40px;
+    row-gap: 30px;
+    grid-template-rows: 1fr 1fr 1fr;
+
+    & > div
+    {
+        display: grid;
+        row-gap: 5px;
+        grid-column: 1 / 3;
+    }
+    
+    & > div:nth-child(1) > input:focus, 
+    & > div:nth-child(2) > input:focus, 
+    & > div:nth-child(3) > input:focus,
+    & > div:nth-child(4) > input:focus
+    {
+        background-color: #E9F0ED;
+        border-color: #A6C5BA;
+        outline: none;
+    }
+
+    /* Styling Errors */
+    & > div:nth-child(1) > input 
+    {
+        background-color: ${prop => prop.errorStates.email ? "#F2D5D5" : "#E9F0ED" };
+        border-color: ${prop => prop.errorStates.email ? "red" : "#A6C5BA" };
+    }
+  
+    & > div:nth-child(2) > input 
+    {
+    background-color: ${prop => prop.errorStates.password ? "#F2D5D5" : "#E9F0ED" };
+        border-color: ${prop => prop.errorStates.password ? "red" : "#A6C5BA" };
+    }
+    
+    
+`
+
+/* TODO: Fix the styling of the links on the page -> Remove the underline. */
 class LoginAccount extends React.Component
 {
 
@@ -23,33 +158,212 @@ class LoginAccount extends React.Component
     {
         super(props);
 
-        this.state = {  }
+        this.state = {
+            renderCaptcha: true,
 
-        this.nameRef = React.createRef();
-        this.usernameRef = React.createRef();
-        this.emailRef = React.createRef();
-        this.passwordRef = React.createRef();
+            captcha: {
+                enabled: false,
+                failed: false
+            },
+
+            values: {
+                email: '',
+                password: ''
+            },
+
+            errorChecks: {
+                email: false,
+                password: false
+            }
+        }
+
+    }
+
+    handleSignIn = () => { this.errorChecking() }
+
+    errorChecking = () =>
+    {
+        const objects = this.state.values
+
+        let email          = null
+        let passwordCheck  = null
+
+        /* Error Checking Inputs */
+        for (let [key, value] of Object.entries(objects))
+        {
+            if      (key === "email") { email = value === "" }
+            else if (key === "password") { passwordCheck = value === "" }
+        }
+
+        /* After setting state, call error prevention function */
+        this.setState({
+            errorChecks: {
+                emailOrUsername: email,
+                password: passwordCheck
+            }
+        }, this.errorPrevention)
+    }
+
+    errorPrevention = () =>
+    {
+        const { email, password } = this.state.errorChecks
+        const errorVals = [ email, password ]
+
+        let errorFound = false
+        errorVals.map(errorVal => { if(errorVal){ errorFound = true }})
+
+        /* No Errors Found? Continue function flow */
+        if(!errorFound)
+        {
+            this.setState({
+                captcha: { enabled: true, failed: false }
+            })
+        }
+    }
+
+    handleInput = (event) =>
+    {
+        const target = event.target;
+        const targetName = target.name;
+
+        /* Logically Updating State */
+        this.setState({
+            values:
+                {
+                    email: targetName.toString() === "email" ? target.value : this.state.values.email,
+                    password: targetName.toString() === "password" ? target.value : this.state.values.password
+                }
+        });
+    }
+
+    captchaSuccess = value =>
+    {
+
+        /* TODAY'S TO-DO LIST */
+        /* TODO: Implement live username check either with socket or requests */
+
+        /* DEBUG: Checking if the debug value is working */
+        //console.log("Token Value:", value)
+
+        this.setState( { renderCaptcha: false })
+
+        /* Requesting to create a user... It will either approved or ignored */
+        try {
+
+            axios.post('http://localhost:8080/api/v1/users/login',
+                {
+                    email: this.state.values.email,
+                    password: this.state.values.password
+                },
+                {
+                    headers:
+                        {
+                            authorization: `basic ${value}`
+                        }
+                })
+
+                /* Upon Request Success */
+                .then(res =>
+                {
+                    /* Intentional Secret Welcome Message */
+                    console.log('Login Success! Welcome!')
+
+                    /* Getting Tokens from Request */
+                    const accessToken = res.data['Daily Response'].access_token
+                    const refreshToken = res.data['Daily Response'].refresh_token
+
+                    /* Second Multipliers */
+                    const hourMultiplier =      60 * 60 * 1000;
+                    const dayMultiplier  = 24 * 60 * 60 * 1000;
+
+                    const refreshExpiresIn = new Date(Date.now() + 30 * dayMultiplier)
+                    const accessExpiresIn  = new Date(Date.now() + 2 * hourMultiplier)
+
+                    console.log("Access Token Cookies:",accessToken)
+
+                    /* COOKIE STORAGE FOR NUMEROUS DATA POINTS */
+                    /* Storing Access and Refresh Java Web-Token in Cookies */
+                    document.cookie = `jwtat=${accessToken}; expires=${accessExpiresIn.toUTCString()}; path=/`
+                    document.cookie = `jwtrt=${refreshToken}; expires=${refreshExpiresIn.toUTCString()}; path=/`
+
+                    /* Create Account / Login Success and setting Redux state */
+                    store.dispatch(userLoggedIn(true))
+                })
+
+                /* Upon Request Error */
+                .catch(error =>
+                {
+                    if (error.response) {
+                        // The request was made and the server responded with a status code
+                        // that falls out of the range of 2xx
+                        console.log(error.response.data)
+                        console.log(error.response.status)
+                        console.log(error.response.headers)
+                    } else if (error.request) {
+                        // The request was made but no response was received
+                        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                        // http.ClientRequest in node.js
+                        console.log(error.request);
+                    } else {
+                        // Something happened in setting up the request that triggered an Error
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                });
+
+        } catch (e)
+        {
+            console.log("Client-Server Async Request Error:", e)
+        }
+
     }
 
     render()
     {
+        {/* TODO: Convert to using styled components and the logic from create-account. */}
         return (
             <>
+
                 <LoginAccountContainer>
 
-                    <div id="sign-in-container">
-                        <div id="sign-in-wrapper">
+                    <ReCaptchaContainer enabledState={this.state.captcha.enabled}>
+                        <div>
+                            <div>
+
+                                { this.state.renderCaptcha ?
+                                    <>
+                                        <span>One more thing...</span>
+                                        <ReCaptcha
+                                            sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY_V2}
+                                            onChange={this.captchaSuccess}
+                                            onError={() => this.setState({
+                                                captcha: {
+                                                    enabled: false,
+                                                    failed: true
+                                                }})}
+                                            onExpired={() => console.log('Google reCAPTCHA expired... Try again.')}
+                                        />
+                                    </> :
+                                    <></>
+                                }
+                            </div>
+                        </div>
+                    </ReCaptchaContainer>
+
+                    <SwitchPanelContainer>
+                        <div>
                             <p>
                                 New to Daily?&nbsp;
                                 <Link to="/account/create">Sign up</Link>
                             </p>
                         </div>
-                    </div>
+                    </SwitchPanelContainer>
 
-                    <div id="sign-in-form">
+                    <FormContainer>
 
                         <h1>Sign in</h1>
 
+                        {/* Implement the sign in with Apple and Sign in with Google feature */}
                         <a className="platform-button" href="bepis.com">
                             <AppleLogo/>
                             <p>Sign in with Apple</p>
@@ -66,19 +380,33 @@ class LoginAccount extends React.Component
                             <hr/>
                         </div>
 
-                        <form>
+                        <FormWrapper errorStates={this.state.errorChecks}>
                             <div>
-                                <label htmlFor="usernameoremail">Username or Email</label>
-                                <input ref={this.usernameRef} type="text" id="usernameoremail"/>
+                                <label>Email</label>
+                                <input
+                                    type="text"
+                                    name="email"
+                                    id="email"
+                                    value={this.state.values.email}
+                                    onChange={this.handleInput}
+                                />
                             </div>
                             <div>
-                                <label htmlFor="password">Password</label>
-                                <input ref={this.passwordRef} type="password" id="password"/>
+                                <label>Password</label>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    id="password"
+                                    value={this.state.values.password}
+                                    onChange={this.handleInput}
+                                />
                             </div>
-                            <button>Sign In</button>
-                        </form>
 
-                    </div>
+                            <SubmitButton onClick={this.handleSignIn}>Sign In</SubmitButton>
+
+                        </FormWrapper>
+
+                    </FormContainer>
 
                     <div id="captcha-protection">
                         <p>
