@@ -358,15 +358,6 @@ class SignupSection extends React.Component
                     email: this.state.values.email,
                     name: this.state.values.name,
                     username: this.state.values.username,
-                    address:
-                        {
-                            street: '',
-                            apt: '',
-                            city: '',
-                            state: '',
-                            postal: '',
-                            country: '',
-                        },
                     password: this.state.values.password
                 },
                 {

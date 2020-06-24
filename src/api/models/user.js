@@ -7,13 +7,23 @@ const userSchema = mongoose.Schema({
 
     credentials: {
 
+        core: {
+            username: String,
+            password:String
+        },
+
+        identity: {
+            name: String,
+            sex: String,
+            gender: String,
+            age: Number,
+            race: String
+        },
+
         emails: {
             account: String,
             business: String
         },
-
-        name: String,
-        password:String,
 
         address:
             {
@@ -32,12 +42,29 @@ const userSchema = mongoose.Schema({
         }
     },
 
-    date_created_epoch: String,
+    connectivity: {
+        following: Array,
+        followers: Array,
+        subscribers: Array
+    },
+
+    meta: {
+        ips: Array,
+        devices: Array,
+        geo_loc: String,
+        date_created_epoch: Number
+    },
+
+    recovery: {
+        email: String,
+        phone: Number,
+        recovery_codes: Array
+    },
 
     status:
         {
 
-            restrictions: {
+            restriction: {
                 banned: Boolean,
                 visible: Boolean,
                 muted: Boolean
@@ -59,6 +86,7 @@ const userSchema = mongoose.Schema({
 
             subscription:
                 {
+                    free: Boolean,
                     lite: Boolean,
                     pro: Boolean,
                     pro_plus: Boolean,

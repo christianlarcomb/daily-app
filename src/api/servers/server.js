@@ -335,27 +335,33 @@ async function mongodbUserUpload(req, res, next) {
 
     // Creating the user mongo object from the User schema
     const user = new User({
+
         _id: snowflakeInDecimal,
-        email: req.body.email,
-        name: req.body.name,
-        username: req.body.username,
-        date_created_epoch: customEpoch,
-        address:
-            {
-                street: '',
-                apt: '',
-                city: '',
-                state: '',
-                postal: '',
-                country: '',
+
+        credentials: {
+
+            core: {
+                username: req.body.username,
+                password: hashedPassword,
             },
-        password: hashedPassword,
-        memberships:
-            {
-                student: false,
-                lite: false,
-                pro: false
+
+            identity: {
+                name: req.body.name,
+            },
+
+            emails: { account: req.body.email },
+
+        },
+
+        meta: {
+            date_created_epoch: customEpoch,
+        },
+
+        status: {
+            subscriptions: {
+                free: true
             }
+        }
     })
 
     user.save()
@@ -401,19 +407,21 @@ async function mongodbUserUpload(req, res, next) {
 function generateTokens(req, res, next){
 
     /* Getting the user object */
-    const { _id, date_created_epoch,  } = req.user.toObject()
+    const { _id, meta  } = req.user.toObject()
+
+    //console.log("User object shown:", req.user.toObject())
 
     /* Filtered Object for JSON Web-Token */
     const JWTObject =
         {
             sub: "user",
             uuid: _id,
-            iat: date_created_epoch,
+            iat: meta.date_created_epoch,
             admin: false
         };
 
     /* Debugging */
-    console.log("JSON Web Token Details:", JWTObject)
+    //console.log("JSON Web Token Details:", JWTObject)
 
     /* Upon Middleware Success: Generate access token and return it as a response! */
     req.refreshToken = jwt.sign(JWTObject, process.env.REFRESH_TOKEN_SECRET);

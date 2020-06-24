@@ -6,6 +6,7 @@ const express = require('express')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
+const axios = require('axios')
 
 // Express app initialized
 const app = express()
@@ -108,8 +109,14 @@ app.get('/api/v1/authentication/gen/access-token', authenticateRefreshToken, (re
 
 app.post('/api/v1/users/login', reCaptchaVerification, verifyUserPassword, (req, res) =>
 {
-    // After verifying the user, send back the access tokens.
-    res.status(200).send({ accessToken: req.accessToken, refreshToken: req.refreshToken})
+    res.status(200).send({
+        'Daily Response': {
+            status: 200,
+            message: "Login success!",
+            access_token: req.accessToken,
+            refresh_token: req.refreshToken
+        }
+    }).end()
 })
 
 async function verifyUserPassword(req, res, next)
@@ -125,63 +132,85 @@ async function verifyUserPassword(req, res, next)
     {
         /* Debug */
         console.log("Both the password and email were not empty!")
+        console.log("Email Provided:", email)
 
         /* Locate the user in MongoDB */
-        User.find({email: email})
+        User.find((err, docs) => {
+            docs.filter((doc) => doc.credentials.emails.account === email)
+        })
+
             .exec()
 
             .then(async function(doc)
             {
                 // Trying comparing the passwords and setting the req variable | catch otherwise
-                try
-                {
+                if(doc === undefined || doc === [] || doc === null){
 
-                    /* Raw Object for Verification */
-                    const userObjectRaw = doc[0].toObject()
-
-                    console.log()
-
-                    /* Filtered Object for JSON Web-Token */
-                    const userObjectFiltered =
-                        {
-                            ...userObjectRaw,
-                            password: null
+                    return res.status(404).send({
+                        'Daily Response': {
+                            status: 404,
+                            errors: [
+                                {
+                                    message: 'Document not found!'
+                                }
+                            ],
                         }
+                    }).end()
 
-                    /* Debugging the doc */
-                    console.log(userObjectFiltered)
+                } else {
 
-                    // If the passwords match
-                    if(await bcrypt.compare(req.body.password, userObjectRaw.password))
+                    try
                     {
 
-                        // Serializing the user if found and sending it back as an access token
-                        const accessToken = generateAccessToken(doc[0].toObject())
-                        const refreshToken = jwt.sign(doc[0].toObject(), process.env.REFRESH_TOKEN_SECRET)
+                        /* Debug */
+                        //console.log("Document:",doc)
 
-                        // Set user variable
-                        req.accessToken = accessToken
-                        req.refreshToken = refreshToken
+                        /* Getting the user object */
+                        const { _id, credentials, meta } = doc[0].toObject()
 
-                        next()
+                        /* Filtered Object for JSON Web-Token */
+                        const JWTObject =
+                            {
+                                sub: "user",
+                                uuid: _id,
+                                iat: meta.date_created_epoch,
+                                admin: false
+                            };
 
-                    } else {
-                        return res.status(401).send({
-                            'Daily Response': {
-                                status: 401,
-                                errors: [
-                                    {
-                                        message: 'Invalid credentials.'
-                                    }
-                                ],
-                            }
-                        }).end()
+                        /* Checking the credentials provided by request against MongoDB */
+                        if(await bcrypt.compare(req.body.password, credentials.core.password))
+                        {
+
+                            // Serializing the user if found and sending it back as an access token
+                            const accessToken = generateAccessToken(JWTObject)
+                            const refreshToken = jwt.sign(JWTObject, process.env.REFRESH_TOKEN_SECRET)
+
+                            // Set user variable
+                            req.accessToken = accessToken
+                            req.refreshToken = refreshToken
+
+                            next()
+
+                        } else {
+                            return res.status(401).send({
+                                'Daily Response': {
+                                    status: 401,
+                                    errors: [
+                                        {
+                                            message: 'Invalid credentials.'
+                                        }
+                                    ],
+                                }
+                            }).end()
+                        }
+
+                    } catch (e) {
+                        console.log(e)
+                        return res.status(500).send('Fatal Server Error Caused the request to cancel.').end()
                     }
-
-                } catch (e) {
-                    console.log(e)
-                    return res.status(500).send('Fatal Server Error Caused the request to cancel.').end()
                 }
+
+
 
             })
 

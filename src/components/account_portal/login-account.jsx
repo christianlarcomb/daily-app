@@ -250,7 +250,7 @@ class LoginAccount extends React.Component
         /* Requesting to create a user... It will either approved or ignored */
         try {
 
-            axios.post('http://localhost:8080/api/v1/users/login',
+            axios.post('http://localhost:8090/api/v1/users/login',
                 {
                     email: this.state.values.email,
                     password: this.state.values.password
@@ -279,7 +279,7 @@ class LoginAccount extends React.Component
                     const refreshExpiresIn = new Date(Date.now() + 30 * dayMultiplier)
                     const accessExpiresIn  = new Date(Date.now() + 2 * hourMultiplier)
 
-                    console.log("Access Token Cookies:",accessToken)
+                    console.log("Access Token Cookies:", accessToken)
 
                     /* COOKIE STORAGE FOR NUMEROUS DATA POINTS */
                     /* Storing Access and Refresh Java Web-Token in Cookies */
@@ -288,6 +288,7 @@ class LoginAccount extends React.Component
 
                     /* Create Account / Login Success and setting Redux state */
                     store.dispatch(userLoggedIn(true))
+
                 })
 
                 /* Upon Request Error */
