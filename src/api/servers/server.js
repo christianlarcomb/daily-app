@@ -315,13 +315,18 @@ async function mongodbUserUpload(req, res, next) {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
 
     /* Getting DailyApp Relative Epoch Timestamp */
-    const DailyAppEpoch = new Date('January 1, 2020 00:00:00 GMT-05:00');
-    const DailyAppEpochSec = DailyAppEpoch.getTime();
-    const UnixEpoch = new Date();
-    const currentTimeStamp = UnixEpoch - DailyAppEpoch;
+    const DailyAppEpoch = new Date('January 1, 2020 00:00:00 GMT-05:00').getTime();
+    const currentEpoch = Date.now()
+    const customEpoch = currentEpoch - DailyAppEpoch;
+    /* To get the UNIX timestamp, just add the DailyApp epoch and done! */
+
+    /* Debugging EPOCH */
+    // console.log("DailyEpoch:",DailyAppEpoch)
+    // console.log("Current Epoch:",currentEpoch)
+    // console.log("Custom Epoch:",DailyAppEpoch,"-",currentEpoch,"=",customEpoch)
 
     /* Generating ID snowflake */
-    const generatedSnowflake = new FlakeId({ epoch: parseInt(DailyAppEpochSec) })
+    const generatedSnowflake = new FlakeId({ epoch: parseInt(DailyAppEpoch) })
     const snowflakeInDecimal = intformat(generatedSnowflake.next(), 'dec');
 
     /* Debugging */
@@ -334,7 +339,7 @@ async function mongodbUserUpload(req, res, next) {
         email: req.body.email,
         name: req.body.name,
         username: req.body.username,
-        date_created_epoch: currentTimeStamp,
+        date_created_epoch: customEpoch,
         address:
             {
                 street: '',
@@ -354,42 +359,41 @@ async function mongodbUserUpload(req, res, next) {
     })
 
     user.save()
+    .then(mongoRes => {
 
-        .then(mongoRes => {
-
-            /* Status Notification to Console */
-            console.log({
-                'Daily Response': {
-                    status: 200,
-                    statusText: 'MongoDB Success',
-                    results: mongoRes,
-                }
-            })
-
-            req.user = user
-            next()
+        /* Status Notification to Console */
+        console.log({
+            'Daily Response': {
+                status: 200,
+                statusText: 'MongoDB Success',
+                results: mongoRes,
+            }
         })
 
-        .catch(err => {
+        req.user = user
+        next()
+    })
 
-            /* Status Notification to Console */
-            console.log({
-                'Daily Response': {
-                    status: 501,
-                    statusText: 'MongoDB Error',
-                    errors: err,
-                }
-            })
+    .catch(err => {
 
-            /* Status Notification to Request - Ending Request */
-            res.status(501).send({
-                'Daily Response': {
-                    status: 501,
-                    statusText: 'MongoDB Error',
-                    errors: err,
-                }
-            }).end()
+        /* Status Notification to Console */
+        console.log({
+            'Daily Response': {
+                status: 501,
+                statusText: 'MongoDB Error',
+                errors: err,
+            }
         })
+
+        /* Status Notification to Request - Ending Request */
+        res.status(501).send({
+            'Daily Response': {
+                status: 501,
+                statusText: 'MongoDB Error',
+                errors: err,
+            }
+        }).end()
+    })
 
 }
 
@@ -397,21 +401,23 @@ async function mongodbUserUpload(req, res, next) {
 function generateTokens(req, res, next){
 
     /* Getting the user object */
-    const userObject = req.user.toObject()
+    const { _id, date_created_epoch,  } = req.user.toObject()
 
     /* Filtered Object for JSON Web-Token */
-    const userObjectFiltered =
+    const JWTObject =
         {
-            ...userObject,
-            password: null
+            sub: "user",
+            uuid: _id,
+            iat: date_created_epoch,
+            admin: false
         };
 
     /* Debugging */
-    console.log("Filtered user object:", userObjectFiltered)
+    console.log("JSON Web Token Details:", JWTObject)
 
     /* Upon Middleware Success: Generate access token and return it as a response! */
-    req.refreshToken = jwt.sign(userObjectFiltered, process.env.REFRESH_TOKEN_SECRET);
-    req.accessToken  = jwt.sign(userObjectFiltered, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '2h'});
+    req.refreshToken = jwt.sign(JWTObject, process.env.REFRESH_TOKEN_SECRET);
+    req.accessToken  = jwt.sign(JWTObject, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '2h'});
 
     next()
 }
