@@ -22,6 +22,8 @@ import { ReactComponent as DevelopersSvg } from '../../assets/svgs/ui/developer_
 import { ReactComponent as HelpAndSupportSvg } from '../../assets/svgs/ui/help_and_support.svg'
 import { ReactComponent as DarkModeSvg } from '../../assets/svgs/ui/dark_mode_moon.svg'
 import { ReactComponent as LogoutSvg } from '../../assets/svgs/ui/logout_door.svg'
+import store from "../../redux/store";
+import {userLoggedIn} from "../../redux/actions";
 
 
 const StyledToolTip = styled(ReactTooltip)`
@@ -436,6 +438,21 @@ class PanelsContainer extends React.Component
         }
     }
 
+    /* TODO: Implement tab history for a user to go back to where they were after signing in */
+    /* TODO: Find a way to redirect using function. */
+    handleLogout = () => {
+
+        /* Delete their access tokens */
+        document.cookie = "jwtat=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "jwtrt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+        /* Set the user as logged out for Redux */
+        store.dispatch(userLoggedIn(true))
+
+        console.log("This fired>")
+        return <Redirect exact strict to="/account/create"/>
+    }
+
     render()
     {
         return(
@@ -620,7 +637,7 @@ class PanelsContainer extends React.Component
                                         </div>
                                     </div>
 
-                                    <div>
+                                    <div onClick={this.handleLogout}>
                                         {/* Icon Section */}
                                         <div>
                                             <div>
