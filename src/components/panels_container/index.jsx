@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import {Route, Redirect} from "react-router-dom";
 import ReactTooltip from "react-tooltip";
@@ -26,6 +26,7 @@ import { ReactComponent as DarkModeSvg } from '../../assets/svgs/ui/dark_mode_mo
 import { ReactComponent as LogoutSvg } from '../../assets/svgs/ui/logout_door.svg'
 import store from "../../redux/store";
 import {userLoggedIn} from "../../redux/actions";
+import {useSelector} from "react-redux";
 
 
 const StyledToolTip = styled(ReactTooltip)`
@@ -86,6 +87,7 @@ const MenuBarContainer = styled.div`
 `
 
 const MenuBarWrapper = styled.div`
+
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   place-items: center;
@@ -163,6 +165,7 @@ const MenuBarWrapper = styled.div`
 `
 
 const MiscBar = styled.div`
+
   display: grid;
   grid-template-rows: repeat(3, 1fr);
   place-items: center;
@@ -174,6 +177,7 @@ const MiscBar = styled.div`
     width: 42px;
     position: relative;
     
+    /* Styling all Misc. buttons backs */
     & > div:nth-child(1)
     {
         background-color: var(--lgt-2);
@@ -207,11 +211,11 @@ const MiscBar = styled.div`
   /* Dynamic Rendering of Settings Button */
   & > div:nth-child(2) > div:nth-child(1) 
   { 
-    background-color: ${props => props.selected.settings_menu ? '#6ab26a' : props.theme.two};
+    background-color: ${props => props.selected.settings ? '#6ab26a' : props.theme.two};
     
     & > svg
     {
-      fill: ${props => props.selected.settings_menu ? props.theme.one : props.theme.smlRoundedSvgPrimary}
+      fill: ${props => props.selected.settings ? props.theme.one : props.theme.smlRoundedSvgPrimary}
     }
   }
   
@@ -219,7 +223,7 @@ const MiscBar = styled.div`
   & > div:nth-child(3) > div:nth-child(1) 
   { 
     border-style: solid;
-    border-color: ${props => props.selected.profile_menu ? '#6ab26a' : 'rgba(0,0,0,0)'};
+    border-color: ${props => props.selected.profile ? '#6ab26a' : 'rgba(0,0,0,0)'};
     border-width: 2px;
     transition: border-color 0.05s ease
   }
@@ -247,17 +251,17 @@ const MiscBarMenu = styled.div`
     padding: 0 6px                 !important;
     overflow-y: hidden;
     color: ${props => props.theme.primaryText};
-    -webkit-filter: drop-shadow(0px 8px 6px rgba(0, 0, 0, 0.08));
-            filter: drop-shadow(0px 8px 6px rgba(0, 0, 0, 0.08));
+    -webkit-filter: drop-shadow(0px 4px 1px rgba(0, 0, 0, 0.04));
+            filter: drop-shadow(0px 4px 1px rgba(0, 0, 0, 0.04));
 `
 
 const NotificationMenu = styled(MiscBarMenu)`
-    opacity: ${props => props.selected.notifications ? 100 : 0};
+    opacity: ${props => props.selected ? 100 : 0};
 `
 
-const SettingsMenu = styled(MiscBarMenu)`
+const SettingsMenuLoggedIn = styled(MiscBarMenu)`
 
-    opacity: ${props => props.selected.settings_menu ? 100 : 0};
+    opacity: ${props => props.selected ? 100 : 0};
     
     /* Generalized */
     & > div
@@ -403,6 +407,148 @@ const SettingsMenu = styled(MiscBarMenu)`
     }
 `
 
+const SettingsMenuLoggedOut = styled(MiscBarMenu)`
+
+    opacity: ${props => props.selected ? 100 : 0};
+    
+    /* Generalized */
+    & > div
+    {
+      display: grid;
+      height: 54px;
+      grid-template-columns: 34px 1fr;
+      grid-gap: 12px;
+      padding: 0 10px;
+      
+      &:hover
+      {
+        background-color: ${props => props.theme.buttonHover};
+        cursor: pointer;
+        border-radius: 12px;
+        transition: background-color 0.05s ease;
+      }
+      
+      /* Icon Box */
+      & > div:nth-child(1) {
+        display: grid;
+        align-items: center;  
+        
+        /* SVG Wrapper */
+        & > div:nth-child(1)
+        {
+            height: 32px;
+            width: 32px;
+            border-radius: 100%;
+            overflow: hidden;
+            background-color: ${props => props.theme.menuIconBack};
+            display: grid;
+            place-items: center;
+            
+            & > svg
+            {
+              height: auto;
+              width: 16px;
+              fill: ${props => props.theme.menuIconSvg};
+            }
+        }
+      }
+      
+      /* Text Box */
+      & > div:nth-child(2) 
+      {
+        display: grid;
+        align-items: center;
+        height: 36px;
+        align-self: center;
+        
+        & > span:nth-child(1) 
+        {
+        font-size: 16px;
+        font-weight: 500;
+        }
+        
+        & > span:nth-child(2) 
+        {
+        font-size: 12px;
+        }
+      }
+    }
+    
+    /* User + Login */
+    & > div:nth-child(1)
+    {
+      height: 64px;
+      margin: 5px 0;
+      grid-template-columns: 48px 1fr;
+      grid-gap: 10px;
+      
+      /* Image Box */
+      & > div:nth-child(1) {
+        display: grid;
+        align-items: center;
+        
+        
+        & > div:nth-child(1)
+        {
+            height: 48px;
+            width: 100%;
+            border-radius: 100%;
+            overflow: hidden;
+            
+        }
+      }
+    }
+    
+    /* Feedback Item Margin */
+    & > div:nth-child(3) { margin: 5px 0; }
+    
+    /* Feedback Item Margin */
+    & > div:nth-child(5) { margin-top: 5px; }
+    
+    /* Styling Dark Mode TOGGLE */
+    & > div:nth-child(6) > div:nth-child(2)
+    { 
+      display: grid;
+      grid-template-columns: 1fr 42px;
+    }
+    
+    /* Styling Dark Mode HOVER */
+    & > div:nth-child(6):hover 
+    { 
+      cursor: auto; 
+      background-color: rgba(0,0,0,0); 
+      transition: background-color 0.05s ease;
+    }
+    
+    /* Disclaimer Styles */
+    & > div:last-of-type
+    {
+      height: 42px;
+      display: block !important;
+      
+      &:hover
+      {
+        background-color: rgba(0,0,0,0);
+        cursor: auto;
+      }
+      
+      & > span
+      {
+        display: block;
+        height: auto;
+        font-size: 12px;
+        margin-top: 2px;
+        color: #696969;
+        
+        & > a { cursor: pointer }
+      }
+    }
+`
+
+const ProfileMenu = styled(MiscBarMenu)`
+    opacity: ${props => props.selected.profile ? 100 : 0};
+`
+
 const MenuDivider = styled.div`
   width: auto !important;
   height: 1px !important;
@@ -412,283 +558,391 @@ const MenuDivider = styled.div`
   margin: 0 8px !important;
 `
 
-const ProfileMenu = styled(MiscBarMenu)`
-    opacity: ${props => props.selected.profile_menu ? 100 : 0};
-`
 
 /* TODO: Complete the sidebar */
-class PanelsContainer extends React.Component
+function PanelsContainer()
 {
 
-    constructor(props) {
-        super(props);
+    /* STATE HOOKS */
+    /* Panel Selected */
+    let [explore, setExploreEnabled] = useState(true);
+    let [shop, setShopEnabled] = useState(false);
+    let [chat, setChatEnabled] = useState(false);
 
-        this.state =
-        {
-            panel_selected:
-            {
-                explore: true,
-                shop: false,
-                chat: false
-            },
-            misc_selected:
-                {
-                    notifications: false,
-                    settings_menu: false,
-                    profile_menu: false
-                }
-        }
-    }
+    /* Menu Selected */
+    let [notifications, setNotificationsEnabled] = useState(false);
+    let [settings, setSettingsEnabled] = useState(false);
+    let [profile, setProfileEnabled] = useState(false);
+
+    let isLoggedIn = useSelector(state => state.userManager.account_status.isLoggedIn)
 
     /* TODO: Implement tab history for a user to go back to where they were after signing in */
     /* TODO: Find a way to redirect using function. */
-    handleLogout = () =>
+    const handleLogout = () =>
     {
-
         /* Delete their access tokens */
         document.cookie = "jwtat=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie = "jwtrt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
         /* Set the user as logged out for Redux */
-        store.dispatch(userLoggedIn(true))
+        store.dispatch(userLoggedIn(false))
 
         /* Lastly: push notification */
         notify('Successfully logged out!')
+
+        return (<Redirect exact strict to="/account/login"/>)
     }
 
-    render()
+    const handleLogin = () => {
+        return (<Redirect exact strict to="/account/create"/>)
+    }
+
+
+    /* Whether the user is logged in or not, render the menu */
+    const renderSettingsMenu = () =>
     {
-        return(
-            <>
 
-                <Notifications options={ {icon: SuccessSvg } }/>
+        if(isLoggedIn)
+        {
 
-                <PrimaryContainer>
+            return (
+                <SettingsMenuLoggedIn selected={settings}>
 
-                    {/* Contains all misc. menus */}
-
-                    <PrimarySidebar>
-
+                    {/* User or Login Section */}
+                    <div>
+                        {/* Image Section */}
                         <div>
-                            <MugLogoSvg/>
+                            <div>
+
+                            </div>
                         </div>
 
-                        <MenuBarContainer>
-                            <MenuBarWrapper selected={this.state.panel_selected}>
+                        {/* Text Section */}
+                        <div>
+                            <span>Christian Larcomb</span>
+                            <span>View user profile.</span>
+                        </div>
+                    </div>
 
-                                {/* Explore Highlight */}
-                                <div>
-                                    {/* Highlight Bar */}
-                                    <div/>
+                    <MenuDivider/>
 
-                                    <div data-tip data-for="explore" onClick={() => {this.setState({panel_selected: {explore: true, shop: false, chat: false}})}}>
-
-                                        { this.state.panel_selected.explore ? <Redirect to="/panels/explore"/> : <></> }
-                                        <ExploreSvg/>
-                                    </div>
-
-                                    <StyledToolTip id="explore" type="light" place="right" effect="solid" arrowColor="transparent">Explore</StyledToolTip>
-
-                                </div>
-
-                                {/* Shop Highlight */}
-                                <div>
-                                    {/* Highlight Bar */}
-                                    <div/>
-
-                                    <div data-tip data-for="shop" onClick={() => {this.setState({panel_selected: {explore: false, shop: true, chat: false}})}}>
-
-                                        { this.state.panel_selected.shop ? <Redirect to="/panels/shop"/> : <></> }
-                                        <PriceTagSvg/>
-                                    </div>
-
-                                    <StyledToolTip id="shop" type="light" place="right" effect="solid" arrowColor="transparent">Shop</StyledToolTip>
-
-                                </div>
-
-                                {/* Chat Highlight */}
-                                <div>
-                                    {/* Highlight Bar */}
-                                    <div/>
-
-                                    <div data-tip data-for="chat" onClick={() => {this.setState({panel_selected: {explore: false, shop: false, chat: true}})}}>
-
-                                        { this.state.panel_selected.chat ? <Redirect to="/panels/chat"/> : <></> }
-                                        <ChatSvg/>
-                                    </div>
-
-                                    <StyledToolTip id="chat" type="light" place="right" effect="solid" arrowColor="transparent">Chat</StyledToolTip>
-
-                                </div>
-
-                            </MenuBarWrapper>
-                        </MenuBarContainer>
-
-                        <MiscBar selected={this.state.misc_selected}>
-
-                            {/* Notification Button Container */}
+                    <div>
+                        {/* Icon Section */}
+                        <div>
                             <div>
-
-                                {/* Notification Button Wrapper */}
-                                <div onClick={() => this.setState({ misc_selected: { notifications: !this.state.misc_selected.notifications, settings_menu: false, profile_menu: false } })}>
-                                    <NotificationBellSvg/>
-                                </div>
-
-                                <NotificationMenu selected={this.state.misc_selected}>
-
-                                </NotificationMenu>
+                                <FeedbackSvg/>
                             </div>
+                        </div>
 
-                            {/* Settings Button Container */}
+                        {/* Text Section */}
+                        <div>
+                            <span>Provide Feedback</span>
+                            <span>Help us make our app even better!</span>
+                        </div>
+                    </div>
+
+                    <MenuDivider/>
+
+                    <div>
+                        {/* Icon Section */}
+                        <div>
                             <div>
-                                <div onClick={() => this.setState({ misc_selected: { notifications: false, settings_menu: !this.state.misc_selected.settings_menu, profile_menu: false } })}>
-                                    <SettingsSvg/>
-                                </div>
+                                <SettingsSvg/>
+                            </div>
+                        </div>
 
-                                <SettingsMenu selected={this.state.misc_selected}>
+                        {/* Text Section */}
+                        <div>
+                            <span>Settings</span>
+                        </div>
+                    </div>
 
-                                    {/* User or Login Section */}
-                                    <div>
-                                        {/* Image Section */}
-                                        <div>
-                                            <div>
+                    <div>
+                        {/* Icon Section */}
+                        <div>
+                            <div>
+                                <DevelopersSvg/>
+                            </div>
+                        </div>
 
-                                            </div>
-                                        </div>
+                        {/* Text Section */}
+                        <div>
+                            <span>Developers</span>
+                        </div>
+                    </div>
 
-                                        {/* Text Section */}
-                                        <div>
-                                            <span>Christian Larcomb</span>
-                                            <span>View user profile.</span>
-                                        </div>
-                                    </div>
+                    <div>
+                        {/* Icon Section */}
+                        <div>
+                            <div>
+                                <HelpAndSupportSvg/>
+                            </div>
+                        </div>
 
-                                    <MenuDivider/>
+                        {/* Text Section */}
+                        <div>
+                            <span>Help & Support</span>
+                        </div>
+                    </div>
 
-                                    <div>
-                                        {/* Icon Section */}
-                                        <div>
-                                            <div>
-                                                <FeedbackSvg/>
-                                            </div>
-                                        </div>
+                    <div>
+                        {/* Icon Section */}
+                        <div>
+                            <div>
+                                <DarkModeSvg/>
+                            </div>
+                        </div>
 
-                                        {/* Text Section */}
-                                        <div>
-                                            <span>Provide Feedback</span>
-                                            <span>Help us make our app even better!</span>
-                                        </div>
-                                    </div>
-
-                                    <MenuDivider/>
-
-                                    <div>
-                                        {/* Icon Section */}
-                                        <div>
-                                            <div>
-                                                <SettingsSvg/>
-                                            </div>
-                                        </div>
-
-                                        {/* Text Section */}
-                                        <div>
-                                            <span>Settings</span>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        {/* Icon Section */}
-                                        <div>
-                                            <div>
-                                                <DevelopersSvg/>
-                                            </div>
-                                        </div>
-
-                                        {/* Text Section */}
-                                        <div>
-                                            <span>Developers</span>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        {/* Icon Section */}
-                                        <div>
-                                            <div>
-                                                <HelpAndSupportSvg/>
-                                            </div>
-                                        </div>
-
-                                        {/* Text Section */}
-                                        <div>
-                                            <span>Help & Support</span>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        {/* Icon Section */}
-                                        <div>
-                                            <div>
-                                                <DarkModeSvg/>
-                                            </div>
-                                        </div>
-
-                                        {/* Text Section */}
-                                        <div>
+                        {/* Text Section */}
+                        <div>
                                             <span>
                                                 Dark Mode
                                             </span>
 
-                                            <ToggleButton/>
-                                        </div>
-                                    </div>
+                            <ToggleButton/>
+                        </div>
+                    </div>
 
-                                    <div onClick={this.handleLogout}>
-                                        {/* Icon Section */}
-                                        <div>
-                                            <div>
-                                                <LogoutSvg/>
-                                            </div>
-                                        </div>
-
-                                        {/* Text Section */}
-                                        <div>
-                                            <span>Logout</span>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <span><a>Privacy</a> • <a>Terms</a> • <a>Advertising</a> • <a>Ad Choices</a> • <a>Cookies</a> <br/>DailyApp © 2020</span>
-                                    </div>
-
-                                </SettingsMenu>
+                    <div onClick={handleLogout}>
+                        {/* Icon Section */}
+                        <div>
+                            <div>
+                                <LogoutSvg/>
                             </div>
+                        </div>
 
-                            {/* Profile Button Container */}
+                        {/* Text Section */}
+                        <div>
+                            <span>Logout</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span><a>Privacy</a> • <a>Terms</a> • <a>Advertising</a> • <a>Ad Choices</a> • <a>Cookies</a> <br/>DailyApp © 2020</span>
+                    </div>
+
+                </SettingsMenuLoggedIn>
+            )
+
+        } else {
+
+            return (
+                <SettingsMenuLoggedOut selected={settings}>
+
+                    {/* USER LOGIN */}
+                    <div onClick={handleLogin}>
+                        {/* Image Section */}
+                        <div>
                             <div>
 
-                                <div onClick={() => this.setState({ misc_selected: { notifications: false, settings_menu: false, profile_menu: !this.state.misc_selected.profile_menu } })}>
+                            </div>
+                        </div>
+
+                        {/* Text Section */}
+                        <div>
+                            <span>Sign in</span>
+                            <span>Join our community today!</span>
+                        </div>
+                    </div>
+
+                    <MenuDivider/>
+
+                    {/* PROVIDE FEEDBACK */}
+                    <div>
+                        {/* Icon Section */}
+                        <div>
+                            <div>
+                                <FeedbackSvg/>
+                            </div>
+                        </div>
+
+                        {/* Text Section */}
+                        <div>
+                            <span>Provide Feedback</span>
+                            <span>Help us make our app even better!</span>
+                        </div>
+                    </div>
+
+                    <MenuDivider/>
+
+                    {/* HELP & SUPPORT */}
+                    <div>
+                        {/* Icon Section */}
+                        <div>
+                            <div>
+                                <HelpAndSupportSvg/>
+                            </div>
+                        </div>
+
+                        {/* Text Section */}
+                        <div>
+                            <span>Help & Support</span>
+                        </div>
+                    </div>
+
+                    {/* DARK MODE */}
+                    <div>
+                        {/* Icon Section */}
+                        <div>
+                            <div>
+                                <DarkModeSvg/>
+                            </div>
+                        </div>
+
+                        {/* Text Section */}
+                        <div>
+                            <span>
+                                Dark Mode
+                            </span>
+
+                            <ToggleButton/>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span><a>Privacy</a> • <a>Terms</a> • <a>Advertising</a> • <a>Ad Choices</a> • <a>Cookies</a> <br/>DailyApp © 2020</span>
+                    </div>
+
+                </SettingsMenuLoggedOut>
+            )
+        }
+    }
+
+    /* Renders the components */
+    return(
+        <>
+            <PrimaryContainer>
+
+                {/* Contains all misc. menus */}
+                <PrimarySidebar>
+
+                    <div>
+                        <MugLogoSvg/>
+                    </div>
+
+                    <MenuBarContainer>
+                        <MenuBarWrapper selected={{ explore, shop, chat }}>
+
+                            {/* Explore Highlight */}
+                            <div>
+                                {/* Highlight Bar */}
+                                <div/>
+
+                                <div data-tip data-for="explore" onClick={() => {
+                                    setExploreEnabled(true);
+                                    setShopEnabled(false);
+                                    setChatEnabled(false);
+                                }}>
+
+                                    { explore ? <Redirect to="/panels/explore"/> : <></> }
+                                    <ExploreSvg/>
                                 </div>
 
-                                <ProfileMenu selected={this.state.misc_selected}/>
+                                <StyledToolTip id="explore" type="light" place="right" effect="solid" arrowColor="transparent">Explore</StyledToolTip>
 
                             </div>
 
-                        </MiscBar>
+                            {/* Shop Highlight */}
+                            <div>
+                                {/* Highlight Bar */}
+                                <div/>
 
-                    </PrimarySidebar>
+                                <div data-tip data-for="shop" onClick={() => {
+                                    setExploreEnabled(false);
+                                    setShopEnabled(true);
+                                    setChatEnabled(false);
+                                }}>
 
-                    { /* Conditionally rendering the route specifically */ }
+                                    { shop ? <Redirect to="/panels/shop"/> : <></> }
+                                    <PriceTagSvg/>
+                                </div>
 
-                    <Route path="/panels/explore" exact component={''}/>
-                    <Route path="/panels/shop" exact component={''}/>
-                    <Route path="/panels/messenger" exact component={''}/>
+                                <StyledToolTip id="shop" type="light" place="right" effect="solid" arrowColor="transparent">Shop</StyledToolTip>
 
-                </PrimaryContainer>
-            </>
-        )
-    }
+                            </div>
 
+                            {/* Chat Highlight */}
+                            <div>
+                                {/* Highlight Bar */}
+                                <div/>
 
+                                <div data-tip data-for="chat" onClick={() => {
+                                    setExploreEnabled(false);
+                                    setShopEnabled(false);
+                                    setChatEnabled(true);
+                                }}>
+
+                                    { chat ? <Redirect to="/panels/chat"/> : <></> }
+                                    <ChatSvg/>
+                                </div>
+
+                                <StyledToolTip id="chat" type="light" place="right" effect="solid" arrowColor="transparent">Chat</StyledToolTip>
+
+                            </div>
+
+                        </MenuBarWrapper>
+                    </MenuBarContainer>
+
+                    <MiscBar selected={{ notifications, settings, profile}}>
+
+                        {/* Notification Button Container */}
+                        <div>
+
+                            {/* Notification Button Wrapper */}
+                            <div onClick={() => {
+                                setNotificationsEnabled(!notifications);
+                                setSettingsEnabled(false);
+                                setProfileEnabled(false);
+                            }}>
+
+                                <NotificationBellSvg/>
+                            </div>
+
+                            <NotificationMenu selected={notifications}>
+                                {/* Need to finish this notifications menu */}
+                            </NotificationMenu>
+                        </div>
+
+                        {/* Settings Button Container */}
+                        <div>
+                            <div onClick={() => {
+                                setNotificationsEnabled(false);
+                                setSettingsEnabled(!settings);
+                                setProfileEnabled(false);
+                            }}>
+                                <SettingsSvg/>
+                            </div>
+
+                            { renderSettingsMenu() }
+                        </div>
+
+                        {/* Profile Button Container */}
+                        <div>
+
+                            <div onClick={() => {
+                                setNotificationsEnabled(false);
+                                setSettingsEnabled(false);
+                                setProfileEnabled(!profile);
+                            }}>
+                            </div>
+
+                            <ProfileMenu selected={{ profile }}/>
+
+                        </div>
+
+                    </MiscBar>
+
+                </PrimarySidebar>
+
+                { /* Conditionally rendering the route specifically */ }
+
+                <Route path="/panels/explore" exact component={''}/>
+                <Route path="/panels/shop" exact component={''}/>
+                <Route path="/panels/messenger" exact component={''}/>
+
+            </PrimaryContainer>
+        </>
+    )
 }
 
 export default PanelsContainer

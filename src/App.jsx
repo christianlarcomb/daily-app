@@ -6,6 +6,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
+
 import axios from 'axios'
 
 import './styles/App.css';
@@ -18,6 +19,8 @@ import {useSelector} from "react-redux";
 import { ThemeProvider } from "styled-components";
 import store from "./redux/store";
 import {userLoggedIn} from "./redux/actions";
+import Notifications from "./components/Notifications";
+import SuccessSvg from "./assets/svgs/notifications/icons/success.svg";
 
 /* TODO: */
 function App()
@@ -63,10 +66,14 @@ function App()
 
     return (
         <ThemeProvider theme={theme}>
+
+            {/* Notification Container */}
+            <Notifications options={{ icon: SuccessSvg }}/>
+
             <Switch>
-                <Route path="/" exact component={Lander}/>
+                <Route path="/" exact  component={Lander}/>
                 <Route path="/account" component={AccountPortal}/>
-                <Route path="/panels" component={PanelsContainer}/>
+                <Route path="/panels"  component={PanelsContainer}/>
 
                 {/* Default 404 Page */}
                 <Route component={ErrorPages}/>

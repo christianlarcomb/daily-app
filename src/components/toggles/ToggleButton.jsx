@@ -41,7 +41,11 @@ function ToggleButton()
 
     return (
         <>
-            <SwitchContainer onClick={() => { store.dispatch(darkModeToggled(!toggled)) }}>
+            <SwitchContainer onClick={() => {
+
+                /* Set Redux State for Visual Appearance */
+                store.dispatch(darkModeToggled(!toggled))
+            }}>
 
                 <ButtonSwitch toggled={toggled}/>
                 <ButtonBack toggled={toggled}/>

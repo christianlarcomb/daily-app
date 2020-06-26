@@ -266,7 +266,7 @@ class LoginAccount extends React.Component
                 .then(res =>
                 {
                     /* Intentional Secret Welcome Message */
-                    console.log('Login Success! Welcome!')
+                    //console.log('Login Success! Welcome!')
 
                     /* Getting Tokens from Request */
                     const accessToken = res.data['Daily Response'].access_token
@@ -279,12 +279,16 @@ class LoginAccount extends React.Component
                     const refreshExpiresIn = new Date(Date.now() + 30 * dayMultiplier)
                     const accessExpiresIn  = new Date(Date.now() + 2 * hourMultiplier)
 
-                    console.log("Access Token Cookies:", accessToken)
+                    /* Debugging */
+                    //console.log("Access Token Cookies:", accessToken)
 
                     /* COOKIE STORAGE FOR NUMEROUS DATA POINTS */
                     /* Storing Access and Refresh Java Web-Token in Cookies */
                     document.cookie = `jwtat=${accessToken}; expires=${accessExpiresIn.toUTCString()}; path=/`
                     document.cookie = `jwtrt=${refreshToken}; expires=${refreshExpiresIn.toUTCString()}; path=/`
+
+                    /* Storing User's Username, Email, Name, UUID */
+
 
                     /* Create Account / Login Success and setting Redux state */
                     store.dispatch(userLoggedIn(true))

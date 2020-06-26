@@ -16,7 +16,7 @@ const Container = styled.div`
     position: fixed;
     bottom: ${props => props.toggled ? '16' : '-160'}px;
     opacity: ${props => props.toggled ? '100' : '0'};
-    left: 16px;
+    right: 16px;
     z-index: 999;
     transition: bottom 0.25s ease, opacity 0.25s ease;
     width: 350px;
@@ -26,8 +26,8 @@ const Container = styled.div`
     border-width: 1.5px;
     border-style: solid;
     
-    -webkit-filter: drop-shadow(0px 25px 10px rgba(0, 0, 0, 0.09));
-    filter: drop-shadow(0px 25px 10px rgba(0, 0, 0, 0.09));
+    -webkit-filter: drop-shadow(0px 4px 1px rgba(0, 0, 0, 0.04));
+            filter: drop-shadow(0px 4px 1px rgba(0, 0, 0, 0.04));
     
     display: grid;
     grid-template-rows: 50px 1fr;
@@ -127,10 +127,13 @@ export default class Notifications extends React.Component
         })
     }
 
-    checkForIconOption = () => {
+    checkNotificationOptions = () => {
+
+        /* Getting the icon option */
+        const { icon } = this.props.options
 
         /* Try to use the settings available */
-        try { return this.props.options.icon } catch (e) { return AlertDefaultIcon; }
+        try { return icon } catch (e) { return AlertDefaultIcon; }
 
     }
 
@@ -190,7 +193,7 @@ export default class Notifications extends React.Component
 
                     {/* Check if the option is null, set it */}
                     <NotifIconStyled>
-                        <img alt="Icon" src={this.checkForIconOption()}/>
+                        <img alt="Icon" src={this.checkNotificationOptions()}/>
                     </NotifIconStyled>
 
                     <span>{this.state.contents.title}</span>
