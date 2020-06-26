@@ -10,6 +10,7 @@
     "bcrypt": "^4.0.1",
     "biguint-format": "^1.0.2",
     "dotenv": "^8.2.0",
+    "event-emitter": "^0.3.5",
     "express": "^4.17.1",
     "flake-idgen": "^1.4.0",
     "jsonwebtoken": "^8.5.1",

@@ -3,9 +3,11 @@ import styled from "styled-components";
 import {Route, Redirect} from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import ToggleButton from '../toggles/ToggleButton'
+import Notifications, { notify } from "../Notifications";
 
 /* Logo SVG */
 import { ReactComponent as MugLogoSvg } from '../../assets/svgs/daily/daily_mug.svg';
+import SuccessSvg from '../../assets/svgs/notifications/icons/success.svg'
 
 /* Menu Bar SVGs */
 import { ReactComponent as ExploreSvg } from '../../assets/svgs/ui/explore.svg';
@@ -440,7 +442,8 @@ class PanelsContainer extends React.Component
 
     /* TODO: Implement tab history for a user to go back to where they were after signing in */
     /* TODO: Find a way to redirect using function. */
-    handleLogout = () => {
+    handleLogout = () =>
+    {
 
         /* Delete their access tokens */
         document.cookie = "jwtat=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -449,14 +452,16 @@ class PanelsContainer extends React.Component
         /* Set the user as logged out for Redux */
         store.dispatch(userLoggedIn(true))
 
-        console.log("This fired>")
-        return <Redirect exact strict to="/account/create"/>
+        /* Lastly: push notification */
+        notify('Successfully logged out!')
     }
 
     render()
     {
         return(
             <>
+
+                <Notifications options={ {icon: SuccessSvg } }/>
 
                 <PrimaryContainer>
 
@@ -673,7 +678,6 @@ class PanelsContainer extends React.Component
                     </PrimarySidebar>
 
                     { /* Conditionally rendering the route specifically */ }
-
 
                     <Route path="/panels/explore" exact component={''}/>
                     <Route path="/panels/shop" exact component={''}/>
