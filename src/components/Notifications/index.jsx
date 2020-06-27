@@ -95,9 +95,9 @@ const NotifIconStyled = styled.div`
 
 const emitter = new ee();
 
-export const notify = (title, msg) =>
+export const notify = (title, msg, icon) =>
 {
-    emitter.emit('notification', title, msg)
+    emitter.emit('notification', title, msg, icon)
 }
 
 export default class Notifications extends React.Component
@@ -122,23 +122,13 @@ export default class Notifications extends React.Component
 
         this.timeout = null;
 
-        emitter.on('notification', (type, msg) => {
-            this.onShow(type, msg)
+        emitter.on('notification', (type, msg, icon) => {
+            this.onShow(type, msg, icon)
         })
     }
 
-    checkNotificationOptions = () => {
-
-        /* Getting the icon option */
-        const { icon } = this.props.options
-
-        /* Try to use the settings available */
-        try { return icon } catch (e) { return AlertDefaultIcon; }
-
-    }
-
     /* Determines how the showing of the notification functions: prevents looping or spammed notifications */
-    onShow = (title, msg) =>
+    onShow = (title, msg, icon) =>
     {
         if(this.timeout)
         {
@@ -149,21 +139,24 @@ export default class Notifications extends React.Component
                 toggled: false
             }, () => {
                 this.timeout = setTimeout(() => {
-                    this.showNotification(title, msg)
+                    this.showNotification(title, msg, icon)
                 }, 250)
             })
 
         } else {
-            this.showNotification(title, msg)
+            this.showNotification(title, msg, icon)
         }
     }
 
     /* Sets the state of the notification and displays it: Implements a timeout */
-    showNotification = (title, msg) =>
+    showNotification = (title, msg, icon) =>
     {
 
         /* If msg is set, set it, otherwise default to empty string */
         const setMsg = msg || ''
+        const setIcon = icon || AlertDefaultIcon
+
+        console.log(setIcon)
 
         this.setState({
 
@@ -172,7 +165,8 @@ export default class Notifications extends React.Component
             contents:
                 {
                     title: title,
-                    msg: setMsg
+                    msg: setMsg,
+                    icon: setIcon
                 }
 
         }, () => {
@@ -193,7 +187,7 @@ export default class Notifications extends React.Component
 
                     {/* Check if the option is null, set it */}
                     <NotifIconStyled>
-                        <img alt="Icon" src={this.checkNotificationOptions()}/>
+                        <img alt="Icon" src={this.state.contents.icon}/>
                     </NotifIconStyled>
 
                     <span>{this.state.contents.title}</span>

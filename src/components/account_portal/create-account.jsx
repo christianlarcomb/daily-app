@@ -5,7 +5,6 @@ import '../../styles/global_styles/portal_shared.css'
 
 /* Redux Elements */
 import { userLoggedIn } from "../../redux/actions";
-import { useSelector } from "react-redux";
 import store from "../../redux/store";
 
 import axios from 'axios'
@@ -14,7 +13,11 @@ import ReCaptcha from 'react-google-recaptcha'
 import { ReactComponent as AppleLogo } from "../../assets/svgs/apple-google-etc/apple-logo.svg";
 import { ReactComponent as GoogleLogo } from "../../assets/svgs/apple-google-etc/google-logo.svg";
 
-import { BrowserRouter, Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import { notify } from "../Notifications";
+
+import SuccessSvg from '../../assets/svgs/notifications/icons/success.svg'
 
 const InfoSectionContainer = styled.div`
     display: grid;
@@ -393,6 +396,9 @@ class SignupSection extends React.Component
 
                     /* Create Account / Login Success and setting Redux state */
                     store.dispatch(userLoggedIn(true))
+
+                    /* Notification for successful login */
+                    notify('Welcome back!','', SuccessSvg)
                 })
 
                 /* Upon Request Error */

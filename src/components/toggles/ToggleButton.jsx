@@ -6,6 +6,11 @@ import { darkModeToggled } from "../../redux/actions";
 import { useSelector } from "react-redux";
 import store from "../../redux/store";
 
+/* Reg Icons */
+import SuccessIcon from '../../assets/svgs/notifications/icons/success.svg';
+
+import { notify } from "../Notifications";
+
 /* CSS Components */
 const SwitchContainer = styled.div`
    height: 27px;
@@ -45,6 +50,13 @@ function ToggleButton()
 
                 /* Set Redux State for Visual Appearance */
                 store.dispatch(darkModeToggled(!toggled))
+
+                /* Assuming the above line changes the state correctly, store it in local storage. */
+                window.localStorage.setItem('dark_mode', `${!toggled}`)
+
+                /* Sending notification! */
+                let response = toggled ? "Disabled" : "Enabled"
+                notify(`Dark Mode ${response}!`, '', SuccessIcon)
             }}>
 
                 <ButtonSwitch toggled={toggled}/>

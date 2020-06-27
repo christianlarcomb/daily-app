@@ -1,25 +1,25 @@
-import React, {useEffect} from 'react';
+import './styles/App.css';
+import React, { useEffect } from 'react';
 
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
-
+/* Misc. */
+import {Switch, Route} from "react-router-dom";
 import axios from 'axios'
 
-import './styles/App.css';
-
+/* Components */
 import AccountPortal from './components/account_portal/'
 import ErrorPages from "./components/error";
 import Lander from './components/lander'
 import PanelsContainer from './components/panels_container'
-import {useSelector} from "react-redux";
+
+/* Styled-Components */
 import { ThemeProvider } from "styled-components";
+
+/* Redux Imports */
 import store from "./redux/store";
-import {userLoggedIn} from "./redux/actions";
-import Notifications from "./components/Notifications";
+import { useSelector } from "react-redux";
+import { userLoggedIn, darkModeToggled } from "./redux/actions";
+
+import Notifications, { notify } from "./components/Notifications";
 import SuccessSvg from "./assets/svgs/notifications/icons/success.svg";
 
 /* TODO: */
@@ -61,6 +61,14 @@ function App()
 
         /* Begin managing the state of the browsers cookies */
         cookieManagement()
+
+            /* Send Alert Notification if something went wrong */
+            .catch(e => {
+                notify('Uh oh!', 'Something went wrong with cookies!')
+            })
+
+        darkModeManagement()
+
 
     }, [])
 
@@ -167,6 +175,15 @@ const cookieManagement = async () =>
     }
 
     console.log("Cookies:", cookies);
+}
+
+const darkModeManagement = () => {
+
+    let activated = window.localStorage.getItem('dark_mode')
+    activated = activated === "true";
+
+    store.dispatch(darkModeToggled(activated))
+    
 }
 
 export default App;

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import {Route, Redirect} from "react-router-dom";
+import {Route, Redirect, Link} from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import ToggleButton from '../toggles/ToggleButton'
-import Notifications, { notify } from "../Notifications";
+import { notify } from "../Notifications";
 
 /* Logo SVG */
 import { ReactComponent as MugLogoSvg } from '../../assets/svgs/daily/daily_mug.svg';
@@ -411,8 +411,15 @@ const SettingsMenuLoggedOut = styled(MiscBarMenu)`
 
     opacity: ${props => props.selected ? 100 : 0};
     
+    /* Stlying the Link component from react-router-dom */
+    & > a 
+    {
+      color: ${props => props.theme.primaryText};
+      text-decoration: none;
+    }
+    
     /* Generalized */
-    & > div
+    & > div, & > a > div
     {
       display: grid;
       height: 54px;
@@ -475,12 +482,13 @@ const SettingsMenuLoggedOut = styled(MiscBarMenu)`
     }
     
     /* User + Login */
-    & > div:nth-child(1)
+    & > a > div:nth-of-type(1)
     {
       height: 64px;
       margin: 5px 0;
       grid-template-columns: 48px 1fr;
       grid-gap: 10px;
+      text-decoration: none;
       
       /* Image Box */
       & > div:nth-child(1) {
@@ -588,7 +596,7 @@ function PanelsContainer()
         store.dispatch(userLoggedIn(false))
 
         /* Lastly: push notification */
-        notify('Successfully logged out!')
+        notify('Logout Success! Come back soon ;(', '', SuccessSvg)
 
         return (<Redirect exact strict to="/account/login"/>)
     }
@@ -601,7 +609,7 @@ function PanelsContainer()
     /* Whether the user is logged in or not, render the menu */
     const renderSettingsMenu = () =>
     {
-
+        /* Rendering the proper settings menu */
         if(isLoggedIn)
         {
 
@@ -730,20 +738,22 @@ function PanelsContainer()
                 <SettingsMenuLoggedOut selected={settings}>
 
                     {/* USER LOGIN */}
-                    <div onClick={handleLogin}>
-                        {/* Image Section */}
-                        <div>
+                    <Link to="/account/create">
+                        <div onClick={handleLogin}>
+                            {/* Image Section */}
                             <div>
+                                <div>
 
+                                </div>
+                            </div>
+
+                            {/* Text Section */}
+                            <div>
+                                <span>Sign in</span>
+                                <span>Join our community today!</span>
                             </div>
                         </div>
-
-                        {/* Text Section */}
-                        <div>
-                            <span>Sign in</span>
-                            <span>Join our community today!</span>
-                        </div>
-                    </div>
+                    </Link>
 
                     <MenuDivider/>
 
