@@ -596,7 +596,7 @@ function PanelsContainer()
         store.dispatch(userLoggedIn(false))
 
         /* Lastly: push notification */
-        notify('Logout Success! Come back soon ;(', '', SuccessSvg)
+        notify('Logout Success!', '', SuccessSvg)
 
         return (<Redirect exact strict to="/account/login"/>)
     }

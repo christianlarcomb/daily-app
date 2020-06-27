@@ -183,7 +183,7 @@ const darkModeManagement = () => {
     activated = activated === "true";
 
     store.dispatch(darkModeToggled(activated))
-    
+
 }
 
 export default App;
