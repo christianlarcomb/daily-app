@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import {Route, Redirect, Link} from "react-router-dom";
+import {Route, Redirect, Link, Switch} from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import ToggleButton from '../toggles/ToggleButton'
 import { notify } from "../Notifications";
+
+/* Panels */
+import SettingsPanels from "./settings_panels";
 
 /* Logo SVG */
 import { ReactComponent as MugLogoSvg } from '../../assets/svgs/daily/daily_mug.svg';
@@ -573,7 +576,7 @@ function PanelsContainer()
 
     /* STATE HOOKS */
     /* Panel Selected */
-    let [explore, setExploreEnabled] = useState(true);
+    let [explore, setExploreEnabled] = useState(false);
     let [shop, setShopEnabled] = useState(false);
     let [chat, setChatEnabled] = useState(false);
 
@@ -586,6 +589,7 @@ function PanelsContainer()
 
     /* TODO: Implement tab history for a user to go back to where they were after signing in */
     /* TODO: Find a way to redirect using function. */
+
     const handleLogout = () =>
     {
         /* Delete their access tokens */
@@ -612,7 +616,6 @@ function PanelsContainer()
         /* Rendering the proper settings menu */
         if(isLoggedIn)
         {
-
             return (
                 <SettingsMenuLoggedIn selected={settings}>
 
@@ -731,9 +734,7 @@ function PanelsContainer()
 
                 </SettingsMenuLoggedIn>
             )
-
         } else {
-
             return (
                 <SettingsMenuLoggedOut selected={settings}>
 
@@ -838,7 +839,8 @@ function PanelsContainer()
                                 {/* Highlight Bar */}
                                 <div/>
 
-                                <div data-tip data-for="explore" onClick={() => {
+                                <div data-tip data-for="explore" onClick={() =>
+                                {
                                     setExploreEnabled(true);
                                     setShopEnabled(false);
                                     setChatEnabled(false);
@@ -893,7 +895,7 @@ function PanelsContainer()
                         </MenuBarWrapper>
                     </MenuBarContainer>
 
-                    <MiscBar selected={{ notifications, settings, profile}}>
+                    <MiscBar selected={{ notifications, settings, profile }}>
 
                         {/* Notification Button Container */}
                         <div>
@@ -946,9 +948,12 @@ function PanelsContainer()
 
                 { /* Conditionally rendering the route specifically */ }
 
-                <Route path="/panels/explore" exact component={''}/>
-                <Route path="/panels/shop" exact component={''}/>
-                <Route path="/panels/messenger" exact component={''}/>
+                <Switch>
+                    <Route path="/panels/explore" exact component={''}/>
+                    <Route path="/panels/shop" exact component={''}/>
+                    <Route path="/panels/messenger" exact component={''}/>
+                    <Route path="/panels/settings" exact component={SettingsPanels}/>
+                </Switch>
 
             </PrimaryContainer>
         </>
