@@ -68,12 +68,22 @@ app.post('/api/v1/users/create',
     try
     {
 
+        /* Getting user id */
+        const [_id] = req.user.toObject()
+
         console.log({
             'Daily Response': {
                 status: 201,
                 statusText: 'Account Creation Success',
-                refresh_token: req.refreshToken,
-                access_token: req.accessToken
+
+                tokens: {
+                    refresh_token: req.refreshToken,
+                    access_token: req.accessToken
+                },
+
+                credentials: {
+                    uuid: _id
+                }
             }
         })
 
@@ -81,8 +91,15 @@ app.post('/api/v1/users/create',
             'Daily Response': {
                 status: 201,
                 statusText: 'Account Creation Success',
-                refresh_token: req.refreshToken,
-                access_token: req.accessToken
+
+                tokens: {
+                    refresh_token: req.refreshToken,
+                    access_token: req.accessToken
+                },
+
+                credentials: {
+                    uuid: req.uuid
+                }
             }
         }).end()
 
@@ -263,15 +280,7 @@ async function reCaptchaVerification(req, res, next)
 
 async function mongodbTokenUpload(req, res, next){
 
-    const userObject = req.user.toObject()
-
-    /* Filtered Object for JSON Web-Token */
-    const userObjectFiltered =
-        {
-            ...userObject,
-            password: null
-        };
-
+    /* Refresh Token Schema */
     const refreshToken = new RefreshToken({
         _id: new mongoose.Types.ObjectId(),
         refresh_token: req.refreshToken
@@ -330,8 +339,8 @@ async function mongodbUserUpload(req, res, next) {
     const snowflakeInDecimal = intformat(generatedSnowflake.next(), 'dec');
 
     /* Debugging */
-    console.log("Generated Flake:", generatedSnowflake)
-    console.log("In Decimal:", snowflakeInDecimal)
+    //console.log("Generated Flake:", generatedSnowflake)
+    //console.log("In Decimal:", snowflakeInDecimal)
 
     // Creating the user mongo object from the User schema
     const user = new User({

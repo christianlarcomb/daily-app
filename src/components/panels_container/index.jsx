@@ -596,6 +596,11 @@ function PanelsContainer()
         document.cookie = "jwtat=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie = "jwtrt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
+        /* Delete LocalStorage cache */
+        window.localStorage.removeItem('uuid')
+        window.localStorage.removeItem('name')
+        window.localStorage.removeItem('username')
+
         /* Set the user as logged out for Redux */
         store.dispatch(userLoggedIn(false))
 

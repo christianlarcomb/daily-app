@@ -377,8 +377,9 @@ class SignupSection extends React.Component
                     console.log('Account Creation Success! Welcome!')
 
                     /* Getting Tokens from Request */
-                    const accessToken = res.data['Daily Response'].access_token
-                    const refreshToken = res.data['Daily Response'].refresh_token
+                    const accessToken =  res.data['Daily Response'].tokens.access_token
+                    const refreshToken = res.data['Daily Response'].tokens.refresh_token
+                    const uuid =         res.data['Daily Response'].credentials.uuid
 
                     /* Second Multipliers */
                     const hourMultiplier =      60 * 60 * 1000;
@@ -393,6 +394,11 @@ class SignupSection extends React.Component
                     /* Storing Access and Refresh Java Web-Token in Cookies */
                     document.cookie = `jwtat=${accessToken}; expires=${accessExpiresIn.toUTCString()}; path=/`
                     document.cookie = `jwtrt=${refreshToken}; expires=${refreshExpiresIn.toUTCString()}; path=/`
+
+                    /* Local Storing Credentials */
+                    window.localStorage.setItem('uuid', uuid)
+                    window.localStorage.setItem('name', this.state.values.name)
+                    window.localStorage.setItem('username', this.state.values.username)
 
                     /* Create Account / Login Success and setting Redux state */
                     store.dispatch(userLoggedIn(true))

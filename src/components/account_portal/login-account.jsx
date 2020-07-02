@@ -269,8 +269,12 @@ class LoginAccount extends React.Component
                     //console.log('Login Success! Welcome!')
 
                     /* Getting Tokens from Request */
-                    const accessToken = res.data['Daily Response'].access_token
-                    const refreshToken = res.data['Daily Response'].refresh_token
+                    const accessToken = res.data['Daily Response'].tokens.access_token
+                    const refreshToken = res.data['Daily Response'].tokens.refresh_token
+                    const username = res.data['Daily Response'].credentials.username
+                    const name = res.data['Daily Response'].credentials.name
+                    const uuid = res.data['Daily Response'].credentials.uuid
+
 
                     /* Second Multipliers */
                     const hourMultiplier =      60 * 60 * 1000;
@@ -287,8 +291,10 @@ class LoginAccount extends React.Component
                     document.cookie = `jwtat=${accessToken}; expires=${accessExpiresIn.toUTCString()}; path=/`
                     document.cookie = `jwtrt=${refreshToken}; expires=${refreshExpiresIn.toUTCString()}; path=/`
 
-                    /* Storing User's Username, Email, Name, UUID */
-
+                    /* Local Storing User's Username, Email, Name, UUID */
+                    window.localStorage.setItem('uuid', uuid)
+                    window.localStorage.setItem('name', name)
+                    window.localStorage.setItem('username', username)
 
                     /* Create Account / Login Success and setting Redux state */
                     store.dispatch(userLoggedIn(true))

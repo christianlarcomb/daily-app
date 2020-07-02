@@ -113,8 +113,17 @@ app.post('/api/v1/users/login', reCaptchaVerification, verifyUserPassword, (req,
         'Daily Response': {
             status: 200,
             message: "Login success!",
-            access_token: req.accessToken,
-            refresh_token: req.refreshToken
+
+            tokens: {
+                access_token: req.accessToken,
+                refresh_token: req.refreshToken,
+            },
+
+            credentials: {
+                username: req.username,
+                name: req.name,
+                uuid: req.uuid
+            }
         }
     }).end()
 })
@@ -201,6 +210,11 @@ async function verifyUserPassword(req, res, next)
                             // Set user variable
                             req.accessToken = accessToken
                             req.refreshToken = refreshToken
+
+                            // Set user details
+                            req.username = credentials.core.username
+                            req.name = credentials.identity.name
+                            req.uuid = _id
 
                             next()
 
