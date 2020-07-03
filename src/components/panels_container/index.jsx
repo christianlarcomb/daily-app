@@ -31,7 +31,6 @@ import store from "../../redux/store";
 import {userLoggedIn} from "../../redux/actions";
 import {useSelector} from "react-redux";
 
-
 const StyledToolTip = styled(ReactTooltip)`
   background-color: ${props => props.theme.one} !important;
   opacity: 100 !important;
@@ -267,7 +266,7 @@ const SettingsMenuLoggedIn = styled(MiscBarMenu)`
     opacity: ${props => props.selected ? 100 : 0};
     
     /* Generalized */
-    & > div
+    & > div, & > a
     {
       display: grid;
       height: 54px;
@@ -275,12 +274,21 @@ const SettingsMenuLoggedIn = styled(MiscBarMenu)`
       grid-gap: 12px;
       padding: 0 10px;
       
+      color: ${props => props.theme.primaryText};
+      text-decoration: none !important;
+      
       &:hover
       {
         background-color: ${props => props.theme.buttonHover};
         cursor: pointer;
         border-radius: 12px;
         transition: background-color 0.05s ease;
+        text-decoration: none !important;
+      }
+      
+      &:link
+      {
+      text-decoration: none !important;
       }
       
       /* Icon Box */
@@ -335,7 +343,7 @@ const SettingsMenuLoggedIn = styled(MiscBarMenu)`
     }
     
     /* User + Login */
-    & > div:nth-child(1)
+    & > a:nth-child(1)
     {
       height: 64px;
       margin: 5px 0;
@@ -343,10 +351,10 @@ const SettingsMenuLoggedIn = styled(MiscBarMenu)`
       grid-gap: 10px;
       
       /* Image Box */
-      & > div:nth-child(1) {
+      & > div:nth-child(1)
+      {
         display: grid;
         align-items: center;
-        
         
         & > div:nth-child(1)
         {
@@ -354,7 +362,6 @@ const SettingsMenuLoggedIn = styled(MiscBarMenu)`
             width: 100%;
             border-radius: 100%;
             overflow: hidden;
-            
         }
       }
       
@@ -365,10 +372,10 @@ const SettingsMenuLoggedIn = styled(MiscBarMenu)`
     }
     
     /* Feedback Item Margin */
-    & > div:nth-child(3) { margin: 5px 0; }
+    & > a:nth-child(3) { margin: 5px 0; }
     
     /* Settings Item Margin */
-    & > div:nth-child(5) { margin-top: 5px; }
+    & > a:nth-child(5) { margin-top: 5px; }
     
     /* Styling Dark Mode Toggle */
     & > div:nth-child(8) > div:nth-child(2)
@@ -498,14 +505,12 @@ const SettingsMenuLoggedOut = styled(MiscBarMenu)`
         display: grid;
         align-items: center;
         
-        
         & > div:nth-child(1)
         {
             height: 48px;
             width: 100%;
             border-radius: 100%;
             overflow: hidden;
-            
         }
       }
     }
@@ -606,14 +611,7 @@ function PanelsContainer()
 
         /* Lastly: push notification */
         notify('Logout Success!', '', SuccessSvg)
-
-        return (<Redirect exact strict to="/account/login"/>)
     }
-
-    const handleLogin = () => {
-        return (<Redirect exact strict to="/account/create"/>)
-    }
-
 
     /* Whether the user is logged in or not, render the menu */
     const renderSettingsMenu = () =>
@@ -624,8 +622,9 @@ function PanelsContainer()
             return (
                 <SettingsMenuLoggedIn selected={settings}>
 
+                    {/* TODO: Figure out how to prevent the Link tags from darkening upon hover. */}
                     {/* User or Login Section */}
-                    <div>
+                    <Link to='/panels/settings/profile'>
                         {/* Image Section */}
                         <div>
                             <div>
@@ -635,14 +634,14 @@ function PanelsContainer()
 
                         {/* Text Section */}
                         <div>
-                            <span>Christian Larcomb</span>
+                            <span>{window.localStorage.getItem('name')}</span>
                             <span>View user profile.</span>
                         </div>
-                    </div>
+                    </Link>
 
                     <MenuDivider/>
 
-                    <div>
+                    <Link to='/panels/feedback'>
                         {/* Icon Section */}
                         <div>
                             <div>
@@ -655,11 +654,12 @@ function PanelsContainer()
                             <span>Provide Feedback</span>
                             <span>Help us make our app even better!</span>
                         </div>
-                    </div>
+                    </Link>
 
                     <MenuDivider/>
 
-                    <div>
+                    {/* TODO: Implement a Link router to settings */}
+                    <Link to='/panels/settings'>
                         {/* Icon Section */}
                         <div>
                             <div>
@@ -671,9 +671,9 @@ function PanelsContainer()
                         <div>
                             <span>Settings</span>
                         </div>
-                    </div>
+                    </Link>
 
-                    <div>
+                    <Link to='/panels/settings/developers'>
                         {/* Icon Section */}
                         <div>
                             <div>
@@ -685,9 +685,9 @@ function PanelsContainer()
                         <div>
                             <span>Developers</span>
                         </div>
-                    </div>
+                    </Link>
 
-                    <div>
+                    <Link to='/panels/settings/help-and-support'>
                         {/* Icon Section */}
                         <div>
                             <div>
@@ -699,7 +699,7 @@ function PanelsContainer()
                         <div>
                             <span>Help & Support</span>
                         </div>
-                    </div>
+                    </Link>
 
                     <div>
                         {/* Icon Section */}
@@ -711,9 +711,9 @@ function PanelsContainer()
 
                         {/* Text Section */}
                         <div>
-                                            <span>
-                                                Dark Mode
-                                            </span>
+                            <span>
+                                Dark Mode
+                            </span>
 
                             <ToggleButton/>
                         </div>
@@ -745,7 +745,7 @@ function PanelsContainer()
 
                     {/* USER LOGIN */}
                     <Link to="/account/create">
-                        <div onClick={handleLogin}>
+                        <div>
                             {/* Image Section */}
                             <div>
                                 <div>
