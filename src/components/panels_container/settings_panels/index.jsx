@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Route } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 
 /* SVG Imports */
 import { ReactComponent as AccountSvg }             from "../../../assets/svgs/settings_menu/Account.svg";
@@ -61,13 +61,15 @@ const StyledMenuItems = styled.div`
     }
 
     /* Menu button */
-    & > div
+    & > div, & > a
     {
       display: grid;
       height: 54px;
       grid-template-columns: 34px 1fr;
       grid-gap: 12px;
       padding: 0 10px;
+      text-decoration: none;
+      color: ${props => props.theme.primaryText};
       
       &:hover
       {
@@ -75,6 +77,8 @@ const StyledMenuItems = styled.div`
         cursor: pointer;
         border-radius: 12px;
         transition: background-color 0.05s ease;
+        filter: brightness(1);
+        text-decoration: none;
       }
       
       /* Icon Box */
@@ -153,7 +157,7 @@ function SettingsPanels()
                 </h2>
 
                 {/* Menu Button #1 */}
-                <div>
+                <Link to='/panels/settings/account'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -165,10 +169,10 @@ function SettingsPanels()
                     <div>
                         <span>Account</span>
                     </div>
-                </div>
+                </Link>
 
-                {/* Menu Button #1 */}
-                <div>
+                {/* Menu Button #2 */}
+                <Link to='/panels/settings/privacy'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -180,10 +184,10 @@ function SettingsPanels()
                     <div>
                         <span>Privacy</span>
                     </div>
-                </div>
+                </Link>
 
-                {/* Menu Button #1 */}
-                <div>
+                {/* Menu Button #3 */}
+                <Link to='/panels/settings/notifications'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -195,10 +199,10 @@ function SettingsPanels()
                     <div>
                         <span>Notifications</span>
                     </div>
-                </div>
+                </Link>
 
-                {/* Menu Button #1 */}
-                <div>
+                {/* Menu Button #4 */}
+                <Link to='/panels/settings/content-preferences'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -210,10 +214,10 @@ function SettingsPanels()
                     <div>
                         <span>Content Preferences</span>
                     </div>
-                </div>
+                </Link>
 
-                {/* Menu Button #1 */}
-                <div>
+                {/* Menu Button #5 */}
+                <Link to='/panels/settings/payments'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -225,15 +229,15 @@ function SettingsPanels()
                     <div>
                         <span>Payments</span>
                     </div>
-                </div>
+                </Link>
 
                 {/* General Subcategory */}
                 <h2>
                     General
                 </h2>
 
-                {/* Menu Button #1 */}
-                <div>
+                {/* Menu Button #6 */}
+                <Link to='/panels/settings/about'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -245,10 +249,10 @@ function SettingsPanels()
                     <div>
                         <span>About</span>
                     </div>
-                </div>
+                </Link>
 
-                {/* Menu Button #1 */}
-                <div>
+                {/* Menu Button #7 */}
+                <Link to='/panels/settings/language-and-region'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -260,10 +264,10 @@ function SettingsPanels()
                     <div>
                         <span>Language and Region</span>
                     </div>
-                </div>
+                </Link>
 
-                {/* Menu Button #1 */}
-                <div>
+                {/* Menu Button #8 */}
+                <Link to='/panels/settings/location'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -275,10 +279,10 @@ function SettingsPanels()
                     <div>
                         <span>Location</span>
                     </div>
-                </div>
+                </Link>
 
-                {/* Menu Button #1 */}
-                <div>
+                {/* Menu Button #9 */}
+                <Link to='/panels/settings/support'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -290,7 +294,7 @@ function SettingsPanels()
                     <div>
                         <span>Support</span>
                     </div>
-                </div>
+                </Link>
 
             </StyledMenuItems>
 

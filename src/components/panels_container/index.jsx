@@ -956,7 +956,7 @@ function PanelsContainer()
                     <Route path="/panels/explore" exact component={''}/>
                     <Route path="/panels/shop" exact component={''}/>
                     <Route path="/panels/messenger" exact component={''}/>
-                    <Route path="/panels/settings" exact component={SettingsPanels}/>
+                    <Route path="/panels/settings" component={SettingsPanels}/>
                 </Switch>
 
             </PrimaryContainer>
