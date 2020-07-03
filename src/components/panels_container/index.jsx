@@ -623,7 +623,7 @@ function PanelsContainer()
 
                     {/* TODO: Figure out how to prevent the Link tags from darkening upon hover. */}
                     {/* User or Login Section */}
-                    <Link to='/panels/settings/profile'>
+                    <Link to='/panels/settings/account'>
                         {/* Image Section */}
                         <div>
                             <div>
