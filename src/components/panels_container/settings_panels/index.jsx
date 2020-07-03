@@ -1,7 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
-import {ReactComponent as FeedbackSvg} from "../../../assets/svgs/ui/feedback.svg";
 import { Route } from 'react-router-dom'
+
+/* SVG Imports */
+import { ReactComponent as AccountSvg }             from "../../../assets/svgs/settings_menu/Account.svg";
+import { ReactComponent as PrivacySvg }             from "../../../assets/svgs/settings_menu/Privacy.svg";
+import { ReactComponent as NotificationsSvg }       from "../../../assets/svgs/settings_menu/Notifications.svg";
+import { ReactComponent as ContentsPreferencesSvg } from "../../../assets/svgs/settings_menu/Content Preferences.svg";
+import { ReactComponent as PaymentsSvg }            from "../../../assets/svgs/settings_menu/Payments.svg";
+import { ReactComponent as AboutSvg }               from "../../../assets/svgs/settings_menu/About.svg";
+import { ReactComponent as LanguageAndRegionSvg }   from "../../../assets/svgs/settings_menu/Language and Region.svg";
+import { ReactComponent as LocationSvg }            from "../../../assets/svgs/settings_menu/Location.svg";
+import { ReactComponent as SupportSvg }             from "../../../assets/svgs/settings_menu/Support.svg";
 
 const CoreGrid = styled.div`
 
@@ -21,6 +31,12 @@ const CoreGrid = styled.div`
 `
 
 const StyledMenuItems = styled.div`
+
+  /* Colors:
+   * #726F79
+   * #D7D4E5
+   * #9090A4
+   */
 
     padding: 0 10px;
     color: ${props => props.theme.primaryText};
@@ -63,6 +79,7 @@ const StyledMenuItems = styled.div`
       
       /* Icon Box */
       & > div:nth-child(1) {
+      
         display: grid;
         align-items: center;  
         
@@ -73,15 +90,14 @@ const StyledMenuItems = styled.div`
             width: 32px;
             border-radius: 100%;
             overflow: hidden;
-            background-color: ${props => props.theme.menuIconBack};
+            
             display: grid;
             place-items: center;
             
             & > svg
             {
               height: auto;
-              width: 16px;
-              fill: ${props => props.theme.menuIconSvg};
+              width: 24px;
             }
         }
       }
@@ -119,6 +135,7 @@ function SettingsPanels()
 
     return(
         <CoreGrid>
+
             {/* Filler #1 */}
             <div/>
 
@@ -140,7 +157,7 @@ function SettingsPanels()
                     {/* Icon Section */}
                     <div>
                         <div>
-                            <FeedbackSvg/>
+                            <AccountSvg/>
                         </div>
                     </div>
 
@@ -155,7 +172,7 @@ function SettingsPanels()
                     {/* Icon Section */}
                     <div>
                         <div>
-                            <FeedbackSvg/>
+                            <PrivacySvg/>
                         </div>
                     </div>
 
@@ -170,7 +187,7 @@ function SettingsPanels()
                     {/* Icon Section */}
                     <div>
                         <div>
-                            <FeedbackSvg/>
+                            <NotificationsSvg/>
                         </div>
                     </div>
 
@@ -185,7 +202,7 @@ function SettingsPanels()
                     {/* Icon Section */}
                     <div>
                         <div>
-                            <FeedbackSvg/>
+                            <ContentsPreferencesSvg/>
                         </div>
                     </div>
 
@@ -200,7 +217,7 @@ function SettingsPanels()
                     {/* Icon Section */}
                     <div>
                         <div>
-                            <FeedbackSvg/>
+                            <PaymentsSvg/>
                         </div>
                     </div>
 
@@ -220,7 +237,7 @@ function SettingsPanels()
                     {/* Icon Section */}
                     <div>
                         <div>
-                            <FeedbackSvg/>
+                            <AboutSvg/>
                         </div>
                     </div>
 
@@ -235,7 +252,7 @@ function SettingsPanels()
                     {/* Icon Section */}
                     <div>
                         <div>
-                            <FeedbackSvg/>
+                            <LanguageAndRegionSvg/>
                         </div>
                     </div>
 
@@ -250,7 +267,7 @@ function SettingsPanels()
                     {/* Icon Section */}
                     <div>
                         <div>
-                            <FeedbackSvg/>
+                            <LocationSvg/>
                         </div>
                     </div>
 
@@ -265,7 +282,7 @@ function SettingsPanels()
                     {/* Icon Section */}
                     <div>
                         <div>
-                            <FeedbackSvg/>
+                            <SupportSvg/>
                         </div>
                     </div>
 
