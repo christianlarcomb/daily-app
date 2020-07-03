@@ -275,7 +275,7 @@ const SettingsMenuLoggedIn = styled(MiscBarMenu)`
       padding: 0 10px;
       
       color: ${props => props.theme.primaryText};
-      text-decoration: none !important;
+      text-decoration: none;
       
       &:hover
       {
@@ -283,7 +283,8 @@ const SettingsMenuLoggedIn = styled(MiscBarMenu)`
         cursor: pointer;
         border-radius: 12px;
         transition: background-color 0.05s ease;
-        text-decoration: none !important;
+        text-decoration: none;
+        filter: brightness(1);
       }
       
       &:link
@@ -574,7 +575,6 @@ const MenuDivider = styled.div`
   margin: 0 8px !important;
 `
 
-
 /* TODO: Complete the sidebar */
 function PanelsContainer()
 {
@@ -593,7 +593,6 @@ function PanelsContainer()
     let isLoggedIn = useSelector(state => state.userManager.account_status.isLoggedIn)
 
     /* TODO: Implement tab history for a user to go back to where they were after signing in */
-    /* TODO: Find a way to redirect using function. */
 
     const handleLogout = () =>
     {

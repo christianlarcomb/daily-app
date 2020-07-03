@@ -4,6 +4,7 @@ import {ReactComponent as FeedbackSvg} from "../../../assets/svgs/ui/feedback.sv
 import { Route } from 'react-router-dom'
 
 const CoreGrid = styled.div`
+
   display: grid;
   width: 100%;
   height: 100vh;
@@ -26,21 +27,21 @@ const StyledMenuItems = styled.div`
   
     & > h1 
     {
-    display: grid;
-    align-content: center; 
-    font-size: 26px;
-    margin: 35px 0 30px 0;
-    padding: 0 10px;
+        display: grid;
+        align-content: center; 
+        font-size: 26px;
+        margin: 35px 0 30px 0;
+        padding: 0 10px;
     }
     
     & > h2
     {
-    display: grid;
-    align-content: center;
-    font-size: 22px;
-    font-weight: 500;
-    margin: 20px 0 8px 0;
-    padding: 0 10px;
+        display: grid;
+        align-content: center;
+        font-size: 22px;
+        font-weight: 500;
+        margin: 20px 0 8px 0;
+        padding: 0 10px;
     }
 
     /* Menu button */
@@ -131,7 +132,7 @@ function SettingsPanels()
 
                 {/* User Subcategory */}
                 <h2>
-                    @user
+                    @{window.localStorage.getItem('username')}
                 </h2>
 
                 {/* Menu Button #1 */}

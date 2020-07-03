@@ -22,7 +22,6 @@ import { userLoggedIn, darkModeToggled } from "./redux/actions";
 import Notifications, { notify } from "./components/Notifications";
 import SuccessSvg from "./assets/svgs/notifications/icons/success.svg";
 
-/* TODO: */
 function App()
 {
     /* Utilize this function to carry out necessary checks:
