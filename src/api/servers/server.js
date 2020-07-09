@@ -60,16 +60,20 @@ app.get('/api/v1/panels/@me', authenticateAccessToken, (req, res) =>
 
 // Creating a new user
 app.post('/api/v1/users/create',
+
     reCaptchaVerification,
     mongodbUserUpload,
     generateTokens,
-    mongodbTokenUpload, async (req, res) =>
+    mongodbTokenUpload,
+
+    async (req, res) =>
 {
+
     try
     {
 
         /* Getting user id */
-        const [_id] = req.user.toObject()
+        const { _id } = req.user
 
         console.log({
             'Daily Response': {
@@ -98,7 +102,7 @@ app.post('/api/v1/users/create',
                 },
 
                 credentials: {
-                    uuid: req.uuid
+                    uuid: _id
                 }
             }
         }).end()
@@ -108,9 +112,11 @@ app.post('/api/v1/users/create',
         console.log({
             'Daily Response': {
                 status: 500,
-                statusText: 'Critical Request Error'
+                statusText: 'Critical Request Error: Posting to logs...'
             }
         })
+
+        console.log("Error:", e)
 
         res.status(500).send({
             'Daily Response': {
@@ -386,6 +392,7 @@ async function mongodbUserUpload(req, res, next) {
         })
 
         req.user = user
+
         next()
     })
 

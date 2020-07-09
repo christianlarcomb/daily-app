@@ -622,6 +622,7 @@ function PanelsContainer()
                 <SettingsMenuLoggedIn selected={settings}>
 
                     {/* TODO: Figure out how to prevent the Link tags from darkening upon hover. */}
+
                     {/* User or Login Section */}
                     <Link to='/panels/settings/account'>
                         {/* Image Section */}

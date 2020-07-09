@@ -28,11 +28,13 @@ const CoreGrid = styled.div`
   
   /* Background Styling */
   & > div:nth-child(3),& > div:nth-child(4){ background-color: ${props => props.theme.two}; }
+  
 `
 
 const StyledMenuItems = styled.div`
 
-  /* Colors:
+  /* 
+   * Colors:
    * #726F79
    * #D7D4E5
    * #9090A4
