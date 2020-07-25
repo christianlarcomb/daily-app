@@ -33,9 +33,19 @@ function App()
     const theme =
     {
         /* Primary Color Pallet */
-        one: !toggled ?   '#fff': '#2c2f33',
-        two: !toggled ?   '#e9f0ed': '#3e4a46',
+        one:   !toggled ?   '#fff': '#2c2f33',
+        two:   !toggled ?   '#E7E7E7': '#3e4a46',
         three: !toggled ? '#a6c5ba': '#69837b',
+
+        /***** PRIMARY SIDE BAR THEMING  *****/
+        SiteVectorSvg: !toggled ? '#1E1E1F': '#fff',
+
+        /* TODO: If the color is purple for darkmode, it means the final color is currently undecided. */
+        PrimaryBtnsSVG: !toggled ? '#9D9D9D' : 'purple',
+        PrimaryBtnsBack: !toggled ? '#9D9D9D' : 'purple',
+
+        MiscBtnsSVG: !toggled ? '#9D9D9D' : 'purple',
+        MiscBtnsBack: !toggled ? '#E7E7E7' : 'purple',
 
         /********** MENU THEMING **********/
         /* Menu Theming */
@@ -44,11 +54,11 @@ function App()
         buttonHover:          !toggled ? '#f5f5f5' : '#3e4a46',
 
         /* Menu Icon Theming */
-        menuIconSvg:          !toggled ? '#676767' : '#D8D8D8',
+        menuIconSvg:          !toggled ? '#676767' : '#fff',
         menuIconBack:         !toggled ? '#D8D8D8' : '#676767',
 
         /* Icon Theming */
-        smlRoundedSvgPrimary: !toggled ? '#A6C5BA' : '#69837B',
+        smlRoundedBtnPrimary: !toggled ? '#9D9D9D' : '#69837B',
         smlRoundedBtnBack:    !toggled ? '#E9F0ED' : '#3E4A46',
 
         /* Menu Highlights */

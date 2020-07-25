@@ -22,7 +22,6 @@ const LoginAccountContainer = styled.div`
 `
 
 const ReCaptchaContainer = styled.div`
-
   position: absolute;
   width: 100%;
   height: 100%;
@@ -33,10 +32,11 @@ const ReCaptchaContainer = styled.div`
   
   & > div:nth-child(1)
   {
-  display: grid;
-  place-items: center;
-  height: 100%;
+    display: grid;
+    place-items: center;
+    height: 100%;
   }
+  
   
   & > div:nth-child(1) > div:nth-child(1)
   {

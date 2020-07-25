@@ -7,6 +7,9 @@ import { notify } from "../Notifications";
 
 /* Panels */
 import SettingsPanels from "./settings_panels";
+import ExplorePanel from './explore';
+import MessengerPanel from './messenger';
+import ShopPanel from './shop';
 
 /* Logo SVG */
 import { ReactComponent as MugLogoSvg } from '../../assets/svgs/daily/daily_mug.svg';
@@ -55,8 +58,9 @@ const PrimaryContainer = styled.div`
 `
 
 const PrimarySidebar = styled.div`
+
   display: grid;
-  grid-template-rows: 85px 1fr 150px 10px;
+  grid-template-rows: 55px 1fr 150px 10px;
   width: 100%;
   position: relative;
   place-items: center;
@@ -65,17 +69,16 @@ const PrimarySidebar = styled.div`
   {
     height: 46px;
     width: 46px;
-    border-radius: 100%;
     display: grid;
     place-content: center;
-    background-color: #6ab26a;
   }
   
+  /* Styling the primary logo of the site */
   & > div:nth-child(1) > svg
   {
-    height: 24px;
-    width: 24px;
-    fill: ${props => props.theme.one};
+    height: 26px;
+    width: 26px;
+    fill: ${props => props.theme.SiteVectorSvg};
     padding-right: 3px;
   }
 `
@@ -129,6 +132,7 @@ const MenuBarWrapper = styled.div`
     transition: background-color 0.05s ease;
   }
   
+  // TODO: Make sure this is working.
   & > div > div:nth-child(2):hover
   {
     background-color: ${props => props.theme.two};
@@ -137,7 +141,7 @@ const MenuBarWrapper = styled.div`
   
   & > div > div:nth-child(2) > svg { height: 26px; }
   
-  /* Dynamic Global Light Animation */
+  /* Dynamic Global Animation */
   & > div > div:nth-child(1) 
   { transition: opacity 0.05s ease; }
   
@@ -147,23 +151,23 @@ const MenuBarWrapper = styled.div`
   /* Dynamic Elements Rendered by State */
   & > div:nth-child(1) > div:nth-child(1) 
   { 
-    background-color: var(--primary-grn);
+    background-color: #1E1E1F;
     opacity: ${props => props.selected.explore ? 100 : 0};
   }
   
-  & > div:nth-child(1) > div:nth-child(2) > svg { fill: ${props => props.selected.explore ? '#6ab26a' : props.theme.menuBarHighlight}; }
+  & > div:nth-child(1) > div:nth-child(2) > svg { fill: ${props => props.selected.explore ? '#1E1E1F' : props.theme.PrimaryBtnsSVG}; }
   
   & > div:nth-child(2) > div:nth-child(1) {
-    background-color: var(--primary-grn);
+    background-color: #1E1E1F;
     opacity: ${props => props.selected.shop ? 100 : 0};
   }
-  & > div:nth-child(2) > div:nth-child(2) > svg { fill: ${props => props.selected.shop ? '#6ab26a' : props.theme.menuBarHighlight}; }
+  & > div:nth-child(2) > div:nth-child(2) > svg { fill: ${props => props.selected.shop ? '#1E1E1F' : props.theme.PrimaryBtnsSVG}; }
   
   & > div:nth-child(3) > div:nth-child(1) {
-    background-color: var(--primary-grn);
+    background-color: #1E1E1F;
     opacity: ${props => props.selected.chat ? 100 : 0};
   }
-  & > div:nth-child(3) > div:nth-child(2) > svg { fill: ${props => props.selected.chat ? '#6ab26a' : props.theme.menuBarHighlight}; }
+  & > div:nth-child(3) > div:nth-child(2) > svg { fill: ${props => props.selected.chat ? '#1E1E1F' : props.theme.PrimaryBtnsSVG}; }
 `
 
 const MiscBar = styled.div`
@@ -201,23 +205,23 @@ const MiscBar = styled.div`
   /* Dynamic Rendering of Notification Button */
   & > div:nth-child(1) > div:nth-child(1)
   {
-    background-color: ${props => props.selected.notifications ? '#6ab26a' : props.theme.two};
+    background-color: ${props => props.selected.notifications ? '#1E1E1F' : props.theme.MiscBtnsBack};
     
     & > svg 
     {
         transform: rotate(-16deg);
-        fill: ${props => props.selected.notifications ? props.theme.one : props.theme.smlRoundedSvgPrimary};
+        fill: ${props => props.selected.notifications ? props.theme.one : props.theme.MiscBtnsSVG};
     }
   }
   
   /* Dynamic Rendering of Settings Button */
   & > div:nth-child(2) > div:nth-child(1) 
   { 
-    background-color: ${props => props.selected.settings ? '#6ab26a' : props.theme.two};
+    background-color: ${props => props.selected.settings ? '#1E1E1F' : props.theme.MiscBtnsBack};
     
     & > svg
     {
-      fill: ${props => props.selected.settings ? props.theme.one : props.theme.smlRoundedSvgPrimary}
+      fill: ${props => props.selected.settings ? props.theme.one : props.theme.MiscBtnsSVG}
     }
   }
   
@@ -259,11 +263,13 @@ const MiscBarMenu = styled.div`
 
 const NotificationMenu = styled(MiscBarMenu)`
     opacity: ${props => props.selected ? 100 : 0};
+    z-index: ${props => props.selected ? 9999 : -9999};
 `
 
 const SettingsMenuLoggedIn = styled(MiscBarMenu)`
 
     opacity: ${props => props.selected ? 100 : 0};
+    z-index: ${props => props.selected ? 9999 : -9999};
     
     /* Generalized */
     & > div, & > a
@@ -421,6 +427,7 @@ const SettingsMenuLoggedIn = styled(MiscBarMenu)`
 const SettingsMenuLoggedOut = styled(MiscBarMenu)`
 
     opacity: ${props => props.selected ? 100 : 0};
+    z-index: ${props => props.selected ? 9999 : -9999};
     
     /* Stlying the Link component from react-router-dom */
     & > a 
@@ -951,13 +958,13 @@ function PanelsContainer()
 
                 </PrimarySidebar>
 
-                { /* Conditionally rendering the route specifically */ }
+                {/* Conditionally rendering the route specifically */}
 
                 <Switch>
-                    <Route path="/panels/explore" exact component={''}/>
-                    <Route path="/panels/shop" exact component={''}/>
-                    <Route path="/panels/messenger" exact component={''}/>
-                    <Route path="/panels/settings" component={SettingsPanels}/>
+                    <Route path="/panels/explore"   exact component={ExplorePanel}/>
+                    <Route path="/panels/shop"      exact component={ShopPanel}/>
+                    <Route path="/panels/messenger" exact component={MessengerPanel}/>
+                    <Route path="/panels/settings"        component={SettingsPanels}/>
                 </Switch>
 
             </PrimaryContainer>
