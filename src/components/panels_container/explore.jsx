@@ -7,6 +7,15 @@ import { ReactComponent as SearchIcon } from '../../assets/svgs/ui/search.svg';
 import { ReactComponent as ClockIcon } from '../../assets/svgs/explore_header/clock.svg';
 import { ReactComponent as FilterIcon } from '../../assets/svgs/explore_header/sort_vector.svg';
 
+/* Images */
+import BannerImgOne from '../../assets/imgs/explore/banner_image_1.png'
+import BannerImgTwo from '../../assets/imgs/explore/banner_image_2.jpg'
+import BannerImgThree from '../../assets/imgs/explore/banner_image_3.jpg'
+import BannerImgFour from '../../assets/imgs/explore/banner_image_4.png'
+import BannerImgFive from '../../assets/imgs/explore/banner_image_5.png'
+import BannerImgSix from '../../assets/imgs/explore/banner_image_6.jpg'
+import BannerImgSeven from '../../assets/imgs/explore/banner_image_7.jpg'
+
 const FilterIconStyled = styled(FilterIcon)`
   height: 12px;
 `
@@ -163,54 +172,91 @@ const FirstContainer = styled.div`
   & > div 
   {
     border-radius: 20px;
+    
+    position: relative;
+    display: grid;
+    place-content: center;
+    overflow: hidden;
+    
+    background-color: #1E1E1F;
   }
 
   #fsd-11a 
   {
     grid-area: a;
-    background-color: #4285F4;
+    
+    width: 155px;
+    height: 325px;
   }
 
   #fsd-12a 
   {
     grid-area: b;
-    background-color: #4285F4;
+    
+    width: 325px;
+    height: 155px;
+    
+    & > img { width: 325px; }
   }
 
   #fsd-13a 
   {
     grid-area: c;
-    background-color: #4285F4;
+    
+    width: 155px;
+    height: 155px;
+    
+    & > img { height: 155px; }
   }
   
   #fsd-14a 
   {
     grid-area: d;
-    background-color: #4285F4;
+    
+    width: 155px;
+    height: 325px;
+    
+    & > img { height: 325px; }
   }
   
   #fsd-15a 
   {
     grid-area: e;
-    background-color: #4285F4;
+    
+    width: 155px;
+    height: 155px;
+    
+    & > img { height: 155px; }
   }
   
   #fsd-16a 
   {
     grid-area: f;
-    background-color: #4285F4;
+    
+    width: 155px;
+    height: 155px;
+    
+    & > img { height: 155px; }
   }
   
   #fsd-17a 
   {
     grid-area: g;
-    background-color: #4285F4;
+    
+    width: 325px;
+    height: 155px;
+    
+    & > img { width: 325px; }
   }
   
   #fsd-18a 
   {
     grid-area: h;
-    background-color: #4285F4;
+    
+    width: 155px;
+    height: 155px;
+    
+    & > img { height: 155px; }
   }
 `
 
@@ -387,14 +433,30 @@ function ExplorePanel()
             <ContentHolder>
                 <div>
                     <FirstContainer>
-                        <div id='fsd-11a'></div>
-                        <div id='fsd-12a'></div>
-                        <div id='fsd-13a'></div>
-                        <div id='fsd-14a'></div>
-                        <div id='fsd-15a'></div>
-                        <div id='fsd-16a'></div>
-                        <div id='fsd-17a'></div>
-                        <div id='fsd-18a'></div>
+                        <div id='fsd-11a'>
+
+                        </div>
+                        <div id='fsd-12a'>
+                            <img alt='' src={BannerImgOne}/>
+                        </div>
+                        <div id='fsd-13a'>
+                            <img alt='' src={BannerImgTwo}/>
+                        </div>
+                        <div id='fsd-14a'>
+                            <img alt='' src={BannerImgThree}/>
+                        </div>
+                        <div id='fsd-15a'>
+                            <img alt='' src={BannerImgFour}/>
+                        </div>
+                        <div id='fsd-16a'>
+                            <img alt='' src={BannerImgFive}/>
+                        </div>
+                        <div id='fsd-17a'>
+                            <img alt='' src={BannerImgSix}/>
+                        </div>
+                        <div id='fsd-18a'>
+                            <img alt='' src={BannerImgSeven}/>
+                        </div>
                     </FirstContainer>
 
                     <SecondContainer>
