@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
+import Tilt from 'react-tilt'
+
 /* Misc. Items */
 import GeneralItemObject from "../misc/general_item_object";
 
@@ -169,10 +171,11 @@ const FirstContainer = styled.div`
   height:   325px;
   grid-gap: 15px;
   margin-top: 25px;
-  grid-template-areas: "a b b c d e"
-                       "a f g g d h";
-                       
-  & > div 
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+    
+  /* Styling the entire tiles */                     
+  & > div
   {
     border-radius: 20px;
     
@@ -181,86 +184,14 @@ const FirstContainer = styled.div`
     place-content: center;
     overflow: hidden;
     
-    background-color: #1E1E1F;
+    background-color: #F2F2F2;
+    
+    & > img
+    {
+      width: 325px;
+    }
   }
 
-  #fsd-11a 
-  {
-    grid-area: a;
-    
-    width: 155px;
-    height: 325px;
-  }
-
-  #fsd-12a 
-  {
-    grid-area: b;
-    
-    width: 325px;
-    height: 155px;
-    
-    & > img { width: 325px; }
-  }
-
-  #fsd-13a 
-  {
-    grid-area: c;
-    
-    width: 155px;
-    height: 155px;
-    
-    & > img { height: 155px; }
-  }
-  
-  #fsd-14a 
-  {
-    grid-area: d;
-    
-    width: 155px;
-    height: 325px;
-    
-    & > img { height: 325px; }
-  }
-  
-  #fsd-15a 
-  {
-    grid-area: e;
-    
-    width: 155px;
-    height: 155px;
-    
-    & > img { height: 155px; }
-  }
-  
-  #fsd-16a 
-  {
-    grid-area: f;
-    
-    width: 155px;
-    height: 155px;
-    
-    & > img { height: 155px; }
-  }
-  
-  #fsd-17a 
-  {
-    grid-area: g;
-    
-    width: 325px;
-    height: 155px;
-    
-    & > img { width: 325px; }
-  }
-  
-  #fsd-18a 
-  {
-    grid-area: h;
-    
-    width: 155px;
-    height: 155px;
-    
-    & > img { height: 155px; }
-  }
 `
 
 const SecondContainer = styled.div`
@@ -362,6 +293,43 @@ const SecondContainer = styled.div`
   }
 `
 
+const ThirdContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 32px 1fr 52px;
+  grid-gap: 25px;
+  margin-top: 45px;
+  height: 490px;
+  
+  & > span 
+  {
+    font-size: 24px;
+    font-weight: 500;
+  }
+  
+  & > div:nth-of-type(1)
+  {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 15px;
+  }
+  
+  & > div:nth-of-type(2)
+  { 
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    color: white;
+    margin-top: auto;
+    width: 100%;
+    height: 52px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+  }
+`
+
 function ExplorePanel()
 {
 
@@ -373,7 +341,8 @@ function ExplorePanel()
         setInput(target.value)
     }
 
-    const handleFocus = (e) => {
+    const handleFocus = (e) =>
+    {
         let target = e.target
 
         if(target.value === 'Search')
@@ -382,7 +351,8 @@ function ExplorePanel()
         }
     }
 
-    const handleBlur= (e) => {
+    const handleBlur= (e) =>
+    {
         let target = e.target
 
         if(target.value === '')
@@ -453,33 +423,37 @@ function ExplorePanel()
 
             <ContentHolder>
                 <div>
+                    {/* Marking Materials */}
                     <FirstContainer>
-                        <div id='fsd-11a'>
 
-                        </div>
-                        <div id='fsd-12a'>
+                        {/* TODO: Try to finish implementing tilt for fun; remove dep. if it's not needed */}
+                        <Tilt options={{ max : 20, scale: 1.01, reverse: true }} style={{ height: 155, width: 325 }}>
+
+                        </Tilt>
+
+                        <Tilt options={{ max : 20, scale: 1.01, reverse: true }} style={{ height: 155, width: 325 }}>
                             <img alt='' src={BannerImgOne}/>
-                        </div>
-                        <div id='fsd-13a'>
+                        </Tilt>
+
+                        <Tilt options={{ max : 20, scale: 1.01, reverse: true }} style={{ height: 155, width: 325 }}>
                             <img alt='' src={BannerImgTwo}/>
-                        </div>
-                        <div id='fsd-14a'>
+                        </Tilt>
+
+                        <Tilt options={{ max : 20, scale: 1.01, reverse: true }} style={{ height: 155, width: 325 }}>
                             <img alt='' src={BannerImgThree}/>
-                        </div>
-                        <div id='fsd-15a'>
+                        </Tilt>
+
+                        <Tilt options={{ max : 20, scale: 1.01, reverse: true }} style={{ height: 155, width: 325 }}>
                             <img alt='' src={BannerImgFour}/>
-                        </div>
-                        <div id='fsd-16a'>
+                        </Tilt>
+
+                        <Tilt options={{ max : 20, scale: 1.01, reverse: true }} style={{ height: 155, width: 325 }}>
                             <img alt='' src={BannerImgFive}/>
-                        </div>
-                        <div id='fsd-17a'>
-                            <img alt='' src={BannerImgSix}/>
-                        </div>
-                        <div id='fsd-18a'>
-                            <img alt='' src={BannerImgSeven}/>
-                        </div>
+                        </Tilt>
+
                     </FirstContainer>
 
+                    {/* Primary Catalogs */}
                     <SecondContainer>
 
                         <span>Top Categories</span>
@@ -579,6 +553,94 @@ function ExplorePanel()
                         </div>
 
                     </SecondContainer>
+
+                    {/* Secondary Catalogs */}
+                    <ThirdContainer>
+
+                        <span>Recommended</span>
+
+                        {/* Content */}
+                        <div>
+                            <GeneralItemObject
+                                title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
+                                images=''
+                                badges=''
+                                rating=''
+                                price={25.99}
+                                currency=''
+                                rate=''
+                                select_featured=''
+                                shipping=''
+                                badges=''
+                            />
+                            <GeneralItemObject
+                                title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
+                                images=''
+                                badges=''
+                                rating=''
+                                price={25.99}
+                                currency=''
+                                rate=''
+                                select_featured=''
+                                shipping=''
+                                badges=''
+                            />
+                            <GeneralItemObject
+                                title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
+                                images=''
+                                badges=''
+                                rating=''
+                                price={25.99}
+                                currency=''
+                                rate=''
+                                select_featured=''
+                                shipping=''
+                                badges=''
+                            />
+                            <GeneralItemObject
+                                title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
+                                images=''
+                                badges=''
+                                rating=''
+                                price={25.99}
+                                currency=''
+                                rate=''
+                                select_featured=''
+                                shipping=''
+                                badges=''
+                            />
+                            <GeneralItemObject
+                                title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
+                                images=''
+                                badges=''
+                                rating=''
+                                price={25.99}
+                                currency=''
+                                rate=''
+                                select_featured=''
+                                shipping=''
+                                badges=''
+                            />
+                            <GeneralItemObject
+                                title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
+                                images=''
+                                badges=''
+                                rating=''
+                                price={25.99}
+                                currency=''
+                                rate=''
+                                select_featured=''
+                                shipping=''
+                                badges=''
+                            />
+                        </div>
+
+                        {/* Button */}
+                        <div>
+                            Explore
+                        </div>
+
+                    </ThirdContainer>
                 </div>
             </ContentHolder>
 

@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
+/* Temp Image as placement holder */
+import BannerImgOne from '../../assets/imgs/explore/banner_image_1.png'
+
+/* SVG Imports */
 import {ReactComponent as CertificateSVG } from '../../assets/svgs/badges/certificate.svg';
+import {ReactComponent as StarSVG } from '../../assets/svgs/products/star.svg';
 
 const ItemStyling = styled.div`
 
@@ -16,6 +21,43 @@ const ItemStyling = styled.div`
       {
         background-color: #1e1e1e;
         border-radius: 20px;
+        display: grid;
+        place-content: center;
+        position: relative;
+        overflow: hidden;
+        
+        /* Ratings Bar */
+        & > div:nth-of-type(1)
+        {
+          position: absolute;
+          border-radius: 30px;
+          height: 26px;
+          backdrop-filter: blur(20px);
+          opacity: 90%;
+          width: 100px;
+          background-color: #1e1e1e;
+          bottom: 5px;
+          left: 5px;
+          
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+          padding: 0 10px;
+          place-items: center;
+          
+          & > svg 
+          {
+            height: 12px;
+            width: 12px;
+            background-color: #1e1e1e;
+            opacity: 95%;
+            
+          }
+        }
+        
+        & > img
+        {
+          height: 175px;
+        }
       }
       
       /* Content Section */
@@ -103,11 +145,37 @@ const ItemStyling = styled.div`
 // TODO: Finish styling the item objects
 function GeneralItemObject(props)
 {
+    // TODO: Finishing implementing the rating system and star highlighting
+    let [rating, setRating] = useState(0)
+    
     return(
         <ItemStyling>
             {/* Images & Ratings */}
             <div>
-
+                {/* Ratings Container */}
+                <div>
+                    <StarSVG>
+                        {/* Highlighting */}
+                        <div/>
+                    </StarSVG>
+                    <StarSVG>
+                        {/* Highlighting */}
+                        <div/>
+                    </StarSVG>
+                    <StarSVG>
+                        {/* Highlighting */}
+                        <div/>
+                    </StarSVG>
+                    <StarSVG>
+                        {/* Highlighting */}
+                        <div/>
+                    </StarSVG>
+                    <StarSVG>
+                        {/* Highlighting */}
+                        <div/>
+                    </StarSVG>
+                </div>
+                <img src={BannerImgOne} alt='Placement Image'/>
             </div>
 
             {/* Content */}
