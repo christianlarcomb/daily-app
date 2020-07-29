@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
+/* Misc. Items */
+import GeneralItemObject from "../misc/general_item_object";
+
 /* Vectors */
 import { ReactComponent as DailyTextLogo } from '../../assets/svgs/daily/daily_text.svg';
 import { ReactComponent as SearchIcon } from '../../assets/svgs/ui/search.svg';
@@ -261,12 +264,13 @@ const FirstContainer = styled.div`
 `
 
 const SecondContainer = styled.div`
+
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 32px 1fr;
   grid-gap: 25px;
   margin-top: 45px;
-  height: 525px;
+  height: 490px;
   
   & > span 
   {
@@ -274,6 +278,7 @@ const SecondContainer = styled.div`
     font-weight: 500;
   }
   
+  /* Top Categories Section */
   & > div:nth-of-type(1)
   {
     display: grid;
@@ -303,7 +308,6 @@ const SecondContainer = styled.div`
     {
       grid-area: dev;
       background-image: linear-gradient(#17ECA1, #00D5E6);
-      
     }
     #fse-12a
     {
@@ -332,10 +336,31 @@ const SecondContainer = styled.div`
     }
     
   }
+  
+  /* Trending Section */
   & > div:nth-of-type(2)
   {
-    background-color: cadetblue;
+    display: grid;
+    grid-template-rows: 3fr 3fr 1fr;
+    grid-gap: 10px;
+    
+    /* Bottom Button */
+    & > div:nth-child(3)
+    {
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      color: white;
+      margin-top: auto;
+      width: 100%;
+      height: 52px;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+    }
   }
+  
+  /* Recent Orders Section */
   & > div:nth-of-type(3)
   {
     background-color: darkolivegreen;
@@ -344,6 +369,7 @@ const SecondContainer = styled.div`
 
 function ExplorePanel()
 {
+
     let [input, setInput] = useState('Search')
 
     const handleInput = (event) =>
@@ -460,10 +486,12 @@ function ExplorePanel()
                     </FirstContainer>
 
                     <SecondContainer>
+
                         <span>Top Categories</span>
                         <span>Trending</span>
                         <span>Recent Orders</span>
 
+                        {/* Top Categories Container */}
                         <div>
                             <div id='fse-11a'>
                                 <span>Development</span>
@@ -485,13 +513,37 @@ function ExplorePanel()
                             </div>
                         </div>
 
+                        {/* Trending Container */}
+                        <div>
+
+                            <GeneralItemObject
+                                title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
+                                images=''
+                                badges=''
+                                rating=''
+                                price=''
+                                currency=''
+                                rate=''
+                                select_featured=''
+                                shipping=''
+                                badges=''
+                            />
+
+                            <GeneralItemObject
+                                title='Handcrafted wooden models designed exactly as requested.'
+                            />
+
+                            {/* Button */}
+                            <div>
+                                Explore
+                            </div>
+                        </div>
+
+                        {/* Recent Orders Container */}
                         <div>
 
                         </div>
 
-                        <div>
-
-                        </div>
                     </SecondContainer>
                 </div>
             </ContentHolder>
