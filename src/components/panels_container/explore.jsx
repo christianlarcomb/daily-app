@@ -337,8 +337,9 @@ const SecondContainer = styled.div`
     
   }
   
-  /* Trending Section */
-  & > div:nth-of-type(2)
+  /* Trending & Recent Orders Section */
+  & > div:nth-of-type(2), 
+  & > div:nth-of-type(3)
   {
     display: grid;
     grid-template-rows: 3fr 3fr 1fr;
@@ -358,12 +359,6 @@ const SecondContainer = styled.div`
       background-color: #1e1e1e;
       border-radius: 10px;
     }
-  }
-  
-  /* Recent Orders Section */
-  & > div:nth-of-type(3)
-  {
-    background-color: darkolivegreen;
   }
 `
 
@@ -521,7 +516,7 @@ function ExplorePanel()
                                 images=''
                                 badges=''
                                 rating=''
-                                price=''
+                                price={25.99}
                                 currency=''
                                 rate=''
                                 select_featured=''
@@ -531,6 +526,15 @@ function ExplorePanel()
 
                             <GeneralItemObject
                                 title='Handcrafted wooden models designed exactly as requested.'
+                                images=''
+                                badges=''
+                                rating=''
+                                price={32}
+                                currency=''
+                                rate=''
+                                select_featured=''
+                                shipping=''
+                                badges=''
                             />
 
                             {/* Button */}
@@ -542,6 +546,36 @@ function ExplorePanel()
                         {/* Recent Orders Container */}
                         <div>
 
+                            <GeneralItemObject
+                                title={`Custom 3D printed objects exactly how you'd like. Try it and if don't like we'll refund.`}
+                                images=''
+                                badges=''
+                                rating=''
+                                price={100}
+                                currency=''
+                                rate=''
+                                select_featured=''
+                                shipping=''
+                                badges=''
+                            />
+
+                            <GeneralItemObject
+                                title='Handcrafted wooden models designed exactly as requested.'
+                                images=''
+                                badges=''
+                                rating=''
+                                price={12}
+                                currency=''
+                                rate=''
+                                select_featured=''
+                                shipping=''
+                                badges=''
+                            />
+
+                            {/* Button */}
+                            <div>
+                                Explore
+                            </div>
                         </div>
 
                     </SecondContainer>

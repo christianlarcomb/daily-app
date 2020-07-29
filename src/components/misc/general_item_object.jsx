@@ -6,11 +6,10 @@ import {ReactComponent as CertificateSVG } from '../../assets/svgs/badges/certif
 const ItemStyling = styled.div`
 
       display: grid;
+      height: 175px;
       grid-template-columns: 110px 1fr;
       grid-gap: 18px;
-      height: 170px;
-      max-width: 100%;
-      min-width: 350px;
+      min-width: 300px;
       
       /* Image Section */
       & > div:nth-child(1)
@@ -74,6 +73,30 @@ const ItemStyling = styled.div`
             }
           }
         }
+        
+        /* Misc. Info Container */
+        & > div:nth-child(5)
+        {
+          display: grid;
+          grid-template-columns: auto auto auto;
+          align-content: center;
+          
+          & > div { font-size: 13px; }
+          
+          & > div:nth-child(1) { color: #6ab26a; font-weight: 700; }
+          & > div:nth-child(2) { font-weight: 700 }
+        }
+        
+        /* Pricing Container */
+        & > div:nth-child(6)
+        {
+          display: grid;
+          grid-template-columns: auto auto auto 1fr;
+          
+          & > div:nth-child(1){ padding-right: 2px; font-size: 15px; color: gray; margin-top: 4px}
+          & > div:nth-child(2){ padding-right: 2px; font-size: 20px;}
+          & > div:nth-child(3){ padding-left: 2px; font-size: 12px; color: gray; margin-top: 9px}
+        }
       }
 `
 
@@ -117,12 +140,16 @@ function GeneralItemObject(props)
 
                 {/* Misc. Info */}
                 <div>
-
+                    <div>Select</div>
+                    <div>No Fee</div>
+                    <div>Mon, Jul 10</div>
                 </div>
 
                 {/* Pricing */}
                 <div>
-
+                    <div>$</div>
+                    <div>{props.price}</div>
+                    <div>per hour</div>
                 </div>
             </div>
         </ItemStyling>
