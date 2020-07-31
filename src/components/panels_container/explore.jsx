@@ -487,28 +487,28 @@ function ExplorePanel()
 
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
-                                images=''
-                                badges=''
+                                image=''
+                                badge={2}
                                 rating={100}
                                 price={25.99}
-                                currency=''
-                                rate=''
-                                select_featured=''
-                                shipping=''
-                                badges=''
+                                currency='USD'
+                                rate='per hour'
+                                select={true}
+                                shipping='1-day'
+                                fee={true}
                             />
 
                             <GeneralItemObject
                                 title='Handcrafted wooden models designed exactly as requested.'
-                                images=''
-                                badges=''
-                                rating={12}
-                                price={80}
-                                currency=''
-                                rate=''
-                                select_featured=''
-                                shipping=''
-                                badges=''
+                                image=''
+                                badge={2}
+                                rating={100}
+                                price={35.99}
+                                currency='USD'
+                                rate='per order'
+                                select={true}
+                                shipping='3-day'
+                                fee={true}
                             />
 
                             {/* Button */}
@@ -522,28 +522,28 @@ function ExplorePanel()
 
                             <GeneralItemObject
                                 title={`Custom 3D printed objects exactly how you'd like. Try it and if don't like we'll refund.`}
-                                images=''
-                                badges=''
-                                rating={36}
-                                price={100}
-                                currency=''
-                                rate=''
-                                select_featured=''
-                                shipping=''
-                                badges=''
+                                image=''
+                                badge={1}
+                                rating={83}
+                                price={50}
+                                currency='USD'
+                                rate='per piece'
+                                select={true}
+                                shipping='1-day'
+                                fee={false}
                             />
 
                             <GeneralItemObject
                                 title='Handcrafted wooden models designed exactly as requested.'
-                                images=''
-                                badges=''
-                                rating={87}
-                                price={12}
-                                currency=''
-                                rate=''
-                                select_featured=''
-                                shipping=''
-                                badges=''
+                                image=''
+                                badge={1}
+                                rating={82}
+                                price={28}
+                                currency='USD'
+                                rate='per hour'
+                                select={true}
+                                shipping='1-day'
+                                fee={true}
                             />
 
                             {/* Button */}
@@ -564,74 +564,74 @@ function ExplorePanel()
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
-                                badges=''
-                                rating={77}
-                                price={25.99}
-                                currency=''
-                                rate=''
-                                select_featured=''
-                                shipping=''
-                                badges=''
+                                badge={1}
+                                rating={96}
+                                price={12}
+                                currency='USD'
+                                rate='per hour'
+                                select={true}
+                                shipping='same-day'
+                                fee={false}
                             />
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
-                                badges=''
-                                rating={68}
-                                price={25.99}
-                                currency=''
-                                rate=''
-                                select_featured=''
-                                shipping=''
-                                badges=''
+                                badge={0}
+                                rating={89}
+                                price={5}
+                                currency='USD'
+                                rate='per piece'
+                                select={true}
+                                shipping='2-day'
+                                fee={false}
                             />
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
-                                badges=''
-                                rating={77}
-                                price={25.99}
-                                currency=''
-                                rate=''
-                                select_featured=''
-                                shipping=''
-                                badges=''
+                                badge={1}
+                                rating={95}
+                                price={30}
+                                currency='USD'
+                                rate='per order'
+                                select={true}
+                                shipping='same-day'
+                                fee={true}
                             />
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
-                                badges=''
-                                rating={66}
-                                price={25.99}
-                                currency=''
-                                rate=''
-                                select_featured=''
-                                shipping=''
-                                badges=''
+                                badge={0}
+                                rating={93}
+                                price={45.25}
+                                currency='USD'
+                                rate='per hour'
+                                select={true}
+                                shipping='1-day'
+                                fee={true}
                             />
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
-                                badges=''
-                                rating={100}
-                                price={25.99}
-                                currency=''
-                                rate=''
-                                select_featured=''
-                                shipping=''
-                                badges=''
+                                badge={2}
+                                rating={81}
+                                price={13}
+                                currency='USD'
+                                rate='per hour'
+                                select={true}
+                                shipping='5+ days'
+                                fee={true}
                             />
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
-                                badges=''
-                                rating={32}
-                                price={25.99}
-                                currency=''
-                                rate=''
-                                select_featured=''
-                                shipping=''
-                                badges=''
+                                badge={1}
+                                rating={86}
+                                price={10}
+                                currency='USD'
+                                rate='per hour'
+                                select={true}
+                                shipping='1-day'
+                                fee={true}
                             />
                         </div>
 

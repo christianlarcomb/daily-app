@@ -228,6 +228,52 @@ export default class GeneralItemObject extends React.Component
         })
     }
 
+    handleBadge = () =>
+    {
+        /* Daily Choice */
+        if(this.props.badge === 1)
+        {
+            return(
+                <div>
+                    <div>
+                        <CertificateSVG/>
+                    </div>
+                    <div>
+                        <span>Daily</span>&nbsp;<span>Choice</span>
+                    </div>
+                </div>
+            )
+
+        /* Top Rated */
+        } else if(this.props.badge === 2)
+        {
+            return(
+                <div>
+                    <div>
+                        <CertificateSVG/>
+                    </div>
+                    <div>
+                        <span>Top</span>&nbsp;<span>Rated</span>
+                    </div>
+                </div>
+            )
+        }
+    }
+
+    handleSelect = () =>
+    {
+        if(this.props.select === true)
+        {
+            return(
+                <div>Select</div>
+            )
+        } else {
+            return(
+                <div/>
+            )
+        }
+    }
+
     /* Returned JSX */
     render()
     {
@@ -361,15 +407,8 @@ export default class GeneralItemObject extends React.Component
 
                     {/* Badges Container */}
                     <div>
-                        {/* Badge 1 */}
-                        <div>
-                            <div>
-                                <CertificateSVG/>
-                            </div>
-                            <div>
-                                <span>Daily</span>&nbsp;<span>Choice</span>
-                            </div>
-                        </div>
+                        {/* Rendering the badges */}
+                        { this.handleBadge() }
                     </div>
 
                     {/* Spacer */}
@@ -377,16 +416,16 @@ export default class GeneralItemObject extends React.Component
 
                     {/* Misc. Info */}
                     <div>
-                        <div>Select</div>
-                        <div>No Fee</div>
-                        <div>Mon, Jul 10</div>
+                        { this.handleSelect() }
+                        <div>{ this.props.fee ? "" : "No Fee"}</div>
+                        <div>{this.props.shipping}</div>
                     </div>
 
                     {/* Pricing */}
                     <div>
                         <div>$</div>
                         <div>{this.props.price}</div>
-                        <div>per hour</div>
+                        <div>{this.props.rate}</div>
                     </div>
                 </div>
             </ItemStyling>
