@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 /* Temp Image as placement holder */
@@ -7,6 +7,7 @@ import BannerImgOne from '../../assets/imgs/explore/banner_image_1.png'
 /* SVG Imports */
 import {ReactComponent as CertificateSVG } from '../../assets/svgs/badges/certificate.svg';
 import {ReactComponent as StarSVG } from '../../assets/svgs/products/star.svg';
+import {render} from "react-dom";
 
 const ItemStyling = styled.div`
 
@@ -25,34 +26,6 @@ const ItemStyling = styled.div`
         place-content: center;
         position: relative;
         overflow: hidden;
-        
-        /* Ratings Bar */
-        & > div:nth-of-type(1)
-        {
-          position: absolute;
-          border-radius: 30px;
-          height: 26px;
-          backdrop-filter: blur(20px);
-          opacity: 90%;
-          width: 100px;
-          background-color: #1e1e1e;
-          bottom: 5px;
-          left: 5px;
-          
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-          padding: 0 10px;
-          place-items: center;
-          
-          & > svg 
-          {
-            height: 12px;
-            width: 12px;
-            background-color: #1e1e1e;
-            opacity: 95%;
-            
-          }
-        }
         
         & > img
         {
@@ -142,86 +115,295 @@ const ItemStyling = styled.div`
       }
 `
 
-// TODO: Finish styling the item objects
-function GeneralItemObject(props)
-{
-    // TODO: Finishing implementing the rating system and star highlighting
-    let [rating, setRating] = useState(0)
+const Ratings = styled.div`
+
+  /* Ratings Bar */  
+  position: absolute;
+  border-radius: 30px;
+  height: 26px;
+  backdrop-filter: blur(20px);
+  opacity: 90%;
+  width: 100px;
+  background-color: #1e1e1e;
+  bottom: 5px;
+  left: 5px;
+  
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  padding: 0 10px;
+  place-items: center;
+  
+  /* Generic Styling of Stars */
+  & > svg 
+  {
+    height: 12px;
+    width: 12px;
+    opacity: 95%;
+    position: relative;
     
-    return(
-        <ItemStyling>
-            {/* Images & Ratings */}
-            <div>
-                {/* Ratings Container */}
+  }
+  
+  & > svg:nth-child(1)
+  {
+    
+  }
+  
+  & > svg:nth-of-type(2)
+  {
+  
+  }
+  
+  & > svg:nth-of-type(3)
+  {
+  
+  }
+  
+  & > svg:nth-of-type(4)
+  {
+  
+  }
+  
+  & > svg:nth-of-type(5)
+  {
+  
+  }
+    
+`
+
+
+// TODO: Finish styling the item objects
+export default class GeneralItemObject extends React.Component
+{
+
+    constructor(props)
+    {
+        super(props);
+
+        this.state =
+        {
+            starOne: 0,
+            starTwo: 0,
+            starThree: 0,
+            starFour: 0,
+            starFive: 0,
+        }
+    }
+
+    componentWillMount()
+    {
+        /* Getting the rating passed to the ratings object */
+        let rating = this.props.rating;
+        console.log('current rating:',rating)
+
+        let starValues = [];
+
+        /* Looping through all stars and styling them. */
+        for (let i = 0; i < 5; i++)
+        {
+
+            /* Defaulting to max value */
+            let value_to_be_set = 100;
+            /* Checking the rating and handling it accordingly */
+            if (rating < 20) {
+                value_to_be_set = (rating / 20) * 100;
+            }
+            if (rating <= 0) {
+                value_to_be_set = 0;
+            }
+
+            /* Setting the array of values */
+            starValues[i] = value_to_be_set;
+
+            /* Decrementing to the next star */
+            rating -= 20;
+        }
+
+        /* Debugging */
+        /*
+        console.log({
+            starOne: starValues[0],
+            starTwo: starValues[1],
+            starThree: starValues[2],
+            starFour: starValues[3],
+            starFive: starValues[4]
+        })
+         */
+
+        /* Setting the state */
+        this.setState({
+            starOne: starValues[0],
+            starTwo: starValues[1],
+            starThree: starValues[2],
+            starFour: starValues[3],
+            starFive: starValues[4]
+        })
+
+    }
+
+    /* Returned JSX */
+    render()
+    {
+        return (
+            <ItemStyling>
+
+                {/* Images & Ratings */}
                 <div>
-                    <StarSVG>
-                        {/* Highlighting */}
-                        <div/>
-                    </StarSVG>
-                    <StarSVG>
-                        {/* Highlighting */}
-                        <div/>
-                    </StarSVG>
-                    <StarSVG>
-                        {/* Highlighting */}
-                        <div/>
-                    </StarSVG>
-                    <StarSVG>
-                        {/* Highlighting */}
-                        <div/>
-                    </StarSVG>
-                    <StarSVG>
-                        {/* Highlighting */}
-                        <div/>
-                    </StarSVG>
+
+                    {/* Ratings Container */}
+                    <Ratings>
+
+                        <svg height="511pt"
+                             viewBox="0 -10 511.99143 511"
+                             width="511pt"
+                             xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <defs>
+                                <linearGradient id="starOne">
+
+                                    {console.log('First Star Expected:', this.state.starOne + '%')}
+
+                                    <stop offset="0%" stopColor="white"/>
+                                    <stop offset={this.state.starOne + `%`} stopColor="white"/>
+                                    <stop offset={this.state.starOne + `%`} stopColor="black"/>
+                                    <stop offset="100%" stopColor="black"/>
+                                </linearGradient>
+                            </defs>
+
+                            <path fill="url(#starOne)"
+                                  d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+
+                        </svg>
+
+                        <svg height="511pt"
+                             viewBox="0 -10 511.99143 511"
+                             width="511pt"
+                             xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <defs>
+                                <linearGradient id="starTwo">
+
+                                    {console.log('Second Star Expected:', this.state.starTwo + '%')}
+
+                                    <stop offset="0%" stopColor="white"/>
+                                    <stop offset={this.state.starTwo + `%`} stopColor="white"/>
+                                    <stop offset={this.state.starTwo + `%`} stopColor="black"/>
+                                    <stop offset="100%" stopColor="black"/>
+                                </linearGradient>
+                            </defs>
+
+                            <path fill="url(#starTwo)"
+                                  d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+
+                        </svg>
+
+                        <svg height="511pt"
+                             viewBox="0 -10 511.99143 511"
+                             width="511pt"
+                             xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <defs>
+                                <linearGradient id="starThree">
+
+                                    {console.log('Third Star Expected:', this.state.starThree + '%')}
+
+                                    <stop offset="0%" stopColor="white"/>
+                                    <stop offset={this.state.starThree + `%`} stopColor="white"/>
+                                    <stop offset={this.state.starThree + `%`} stopColor="black"/>
+                                    <stop offset="100%" stopColor="black"/>
+                                </linearGradient>
+                            </defs>
+
+                            <path fill="url(#starThree)"
+                                  d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+
+                        </svg>
+
+                        <svg height="511pt"
+                             viewBox="0 -10 511.99143 511"
+                             width="511pt"
+                             xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <defs>
+                                <linearGradient id="starFour">
+                                    <stop offset="0%" stopColor="white"/>
+                                    <stop offset={this.state.starFour + `%`} stopColor="white"/>
+                                    <stop offset={this.state.starFour + `%`} stopColor="black"/>
+                                    <stop offset="100%" stopColor="black"/>
+                                </linearGradient>
+                            </defs>
+
+                            <path fill="url(#starFour)"
+                                  d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+
+                        </svg>
+
+                        <svg height="511pt"
+                             viewBox="0 -10 511.99143 511"
+                             width="511pt"
+                             xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <defs>
+                                <linearGradient id="starFive">
+                                    <stop offset="0%" stopColor="white"/>
+                                    <stop offset={this.state.starFive + `%`} stopColor="white"/>
+                                    <stop offset={this.state.starFive + `%`} stopColor="black"/>
+                                    <stop offset="100%" stopColor="black"/>
+                                </linearGradient>
+                            </defs>
+
+                            <path fill="url(#starFive)"
+                                  d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+
+                        </svg>
+
+                    </Ratings>
+
+                    <img src={BannerImgOne} alt='Placement Image'/>
                 </div>
-                <img src={BannerImgOne} alt='Placement Image'/>
-            </div>
 
-            {/* Content */}
-            <div>
-                {/* Item Message */}
+                {/* Content */}
                 <div>
-                    <span>
-                        {props.title}
-                    </span>
-                </div>
-
-                {/* Spacer */}
-                <div/>
-
-                {/* Badges Container */}
-                <div>
-                    {/* Badge 1 */}
+                    {/* Item Message */}
                     <div>
+                    <span>
+                        {this.props.title}
+                    </span>
+                    </div>
+
+                    {/* Spacer */}
+                    <div/>
+
+                    {/* Badges Container */}
+                    <div>
+                        {/* Badge 1 */}
                         <div>
-                            <CertificateSVG/>
-                        </div>
-                        <div>
-                            <span>Daily</span>&nbsp;<span>Choice</span>
+                            <div>
+                                <CertificateSVG/>
+                            </div>
+                            <div>
+                                <span>Daily</span>&nbsp;<span>Choice</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Spacer */}
-                <div/>
+                    {/* Spacer */}
+                    <div/>
 
-                {/* Misc. Info */}
-                <div>
-                    <div>Select</div>
-                    <div>No Fee</div>
-                    <div>Mon, Jul 10</div>
-                </div>
+                    {/* Misc. Info */}
+                    <div>
+                        <div>Select</div>
+                        <div>No Fee</div>
+                        <div>Mon, Jul 10</div>
+                    </div>
 
-                {/* Pricing */}
-                <div>
-                    <div>$</div>
-                    <div>{props.price}</div>
-                    <div>per hour</div>
+                    {/* Pricing */}
+                    <div>
+                        <div>$</div>
+                        <div>{this.props.price}</div>
+                        <div>per hour</div>
+                    </div>
                 </div>
-            </div>
-        </ItemStyling>
-    )
+            </ItemStyling>
+        )
+    }
 }
-
-export default GeneralItemObject

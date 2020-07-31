@@ -489,7 +489,7 @@ function ExplorePanel()
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
                                 badges=''
-                                rating=''
+                                rating={80}
                                 price={25.99}
                                 currency=''
                                 rate=''
@@ -524,7 +524,7 @@ function ExplorePanel()
                                 title={`Custom 3D printed objects exactly how you'd like. Try it and if don't like we'll refund.`}
                                 images=''
                                 badges=''
-                                rating=''
+                                rating={22}
                                 price={100}
                                 currency=''
                                 rate=''
@@ -537,7 +537,7 @@ function ExplorePanel()
                                 title='Handcrafted wooden models designed exactly as requested.'
                                 images=''
                                 badges=''
-                                rating=''
+                                rating={22}
                                 price={12}
                                 currency=''
                                 rate=''
@@ -565,7 +565,7 @@ function ExplorePanel()
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
                                 badges=''
-                                rating=''
+                                rating={22}
                                 price={25.99}
                                 currency=''
                                 rate=''
@@ -577,7 +577,7 @@ function ExplorePanel()
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
                                 badges=''
-                                rating=''
+                                rating={22}
                                 price={25.99}
                                 currency=''
                                 rate=''
@@ -589,7 +589,7 @@ function ExplorePanel()
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
                                 badges=''
-                                rating=''
+                                rating={22}
                                 price={25.99}
                                 currency=''
                                 rate=''
@@ -601,7 +601,7 @@ function ExplorePanel()
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
                                 badges=''
-                                rating=''
+                                rating={22}
                                 price={25.99}
                                 currency=''
                                 rate=''
@@ -613,7 +613,7 @@ function ExplorePanel()
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
                                 badges=''
-                                rating=''
+                                rating={22}
                                 price={25.99}
                                 currency=''
                                 rate=''
@@ -625,7 +625,7 @@ function ExplorePanel()
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
                                 badges=''
-                                rating=''
+                                rating={22}
                                 price={25.99}
                                 currency=''
                                 rate=''
