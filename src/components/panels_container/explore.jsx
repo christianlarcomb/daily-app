@@ -489,7 +489,7 @@ function ExplorePanel()
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
                                 badges=''
-                                rating={80}
+                                rating={49}
                                 price={25.99}
                                 currency=''
                                 rate=''
