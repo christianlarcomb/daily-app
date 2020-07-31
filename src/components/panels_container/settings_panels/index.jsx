@@ -159,7 +159,7 @@ function SettingsPanels()
                 </h2>
 
                 {/* Menu Button #1 */}
-                <Link to='/panels/settings/account'>
+                <Link to='/app/settings/account'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -174,7 +174,7 @@ function SettingsPanels()
                 </Link>
 
                 {/* Menu Button #2 */}
-                <Link to='/panels/settings/privacy'>
+                <Link to='/app/settings/privacy'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -189,7 +189,7 @@ function SettingsPanels()
                 </Link>
 
                 {/* Menu Button #3 */}
-                <Link to='/panels/settings/notifications'>
+                <Link to='/app/settings/notifications'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -204,7 +204,7 @@ function SettingsPanels()
                 </Link>
 
                 {/* Menu Button #4 */}
-                <Link to='/panels/settings/content-preferences'>
+                <Link to='/app/settings/content-preferences'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -219,7 +219,7 @@ function SettingsPanels()
                 </Link>
 
                 {/* Menu Button #5 */}
-                <Link to='/panels/settings/payments'>
+                <Link to='/app/settings/payments'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -239,7 +239,7 @@ function SettingsPanels()
                 </h2>
 
                 {/* Menu Button #6 */}
-                <Link to='/panels/settings/about'>
+                <Link to='/app/settings/about'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -254,7 +254,7 @@ function SettingsPanels()
                 </Link>
 
                 {/* Menu Button #7 */}
-                <Link to='/panels/settings/language-and-region'>
+                <Link to='/app/settings/language-and-region'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -269,7 +269,7 @@ function SettingsPanels()
                 </Link>
 
                 {/* Menu Button #8 */}
-                <Link to='/panels/settings/location'>
+                <Link to='/app/settings/location'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -284,7 +284,7 @@ function SettingsPanels()
                 </Link>
 
                 {/* Menu Button #9 */}
-                <Link to='/panels/settings/support'>
+                <Link to='/app/settings/support'>
                     {/* Icon Section */}
                     <div>
                         <div>
@@ -302,15 +302,15 @@ function SettingsPanels()
 
             {/* Preference Panels */}
             <div>
-                <Route exact strict to={"/panels/settings/account"}/>
-                <Route exact strict to={"/panels/settings/privacy"}/>
-                <Route exact strict to={"/panels/settings/notifications"}/>
-                <Route exact strict to={"/panels/settings/content-preferences"}/>
-                <Route exact strict to={"/panels/settings/payments"}/>
-                <Route exact strict to={"/panels/settings/about"}/>
-                <Route exact strict to={"/panels/settings/language-and-region"}/>
-                <Route exact strict to={"/panels/settings/location"}/>
-                <Route exact strict to={"/panels/settings/support"}/>
+                <Route exact strict to={"/app/settings/account"}/>
+                <Route exact strict to={"/app/settings/privacy"}/>
+                <Route exact strict to={"/app/settings/notifications"}/>
+                <Route exact strict to={"/app/settings/content-preferences"}/>
+                <Route exact strict to={"/app/settings/payments"}/>
+                <Route exact strict to={"/app/settings/about"}/>
+                <Route exact strict to={"/app/settings/language-and-region"}/>
+                <Route exact strict to={"/app/settings/location"}/>
+                <Route exact strict to={"/app/settings/support"}/>
             </div>
 
             {/* Filler #2 */}

@@ -17,6 +17,8 @@ const ItemStyling = styled.div`
       grid-gap: 18px;
       min-width: 300px;
       
+      &:hover { cursor: pointer }
+      
       /* Image Section */
       & > div:nth-child(1)
       {
@@ -170,6 +172,10 @@ const Ratings = styled.div`
     
 `
 
+const OneStopOne = styled.stop`
+  
+`
+
 
 // TODO: Finish styling the item objects
 export default class GeneralItemObject extends React.Component
@@ -189,11 +195,11 @@ export default class GeneralItemObject extends React.Component
         }
     }
 
+    /* Before the component mounts, calculate the stars percentages */
     componentWillMount()
     {
         /* Getting the rating passed to the ratings object */
         let rating = this.props.rating;
-        console.log('current rating:',rating)
 
         /* Initializing the ratings array */
         let starValues = [];
@@ -244,18 +250,16 @@ export default class GeneralItemObject extends React.Component
                         >
                             <defs>
                                 <linearGradient id="starOne">
-
-                                    {console.log('First Star Expected:', this.state.starOne + '%')}
-
                                     <stop offset="0%" stopColor="#FCC034"/>
                                     <stop offset={this.state.starOne + `%`} stopColor="#FCC034"/>
-                                    <stop offset={this.state.starOne + `%`} stopColor="black"/>
-                                    <stop offset="100%" stopColor="black"/>
+                                    <stop offset={this.state.starOne + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                    <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
                                 </linearGradient>
                             </defs>
 
                             <path fill="url(#starOne)"
-                                  d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+                                  d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"
+                            />
 
                         </svg>
 
@@ -266,13 +270,10 @@ export default class GeneralItemObject extends React.Component
                         >
                             <defs>
                                 <linearGradient id="starTwo">
-
-                                    {console.log('Second Star Expected:', this.state.starTwo + '%')}
-
                                     <stop offset="0%" stopColor="#FCC034"/>
                                     <stop offset={this.state.starTwo + `%`} stopColor="#FCC034"/>
-                                    <stop offset={this.state.starTwo + `%`} stopColor="black"/>
-                                    <stop offset="100%" stopColor="black"/>
+                                    <stop offset={this.state.starTwo + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                    <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
                                 </linearGradient>
                             </defs>
 
@@ -288,13 +289,10 @@ export default class GeneralItemObject extends React.Component
                         >
                             <defs>
                                 <linearGradient id="starThree">
-
-                                    {console.log('Third Star Expected:', this.state.starThree + '%')}
-
                                     <stop offset="0%" stopColor="#FCC034"/>
                                     <stop offset={this.state.starThree + `%`} stopColor="#FCC034"/>
-                                    <stop offset={this.state.starThree + `%`} stopColor="black"/>
-                                    <stop offset="100%" stopColor="black"/>
+                                    <stop offset={this.state.starThree + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                    <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
                                 </linearGradient>
                             </defs>
 
@@ -312,8 +310,8 @@ export default class GeneralItemObject extends React.Component
                                 <linearGradient id="starFour">
                                     <stop offset="0%" stopColor="#FCC034"/>
                                     <stop offset={this.state.starFour + `%`} stopColor="#FCC034"/>
-                                    <stop offset={this.state.starFour + `%`} stopColor="black"/>
-                                    <stop offset="100%" stopColor="black"/>
+                                    <stop offset={this.state.starFour + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                    <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
                                 </linearGradient>
                             </defs>
 
@@ -331,8 +329,8 @@ export default class GeneralItemObject extends React.Component
                                 <linearGradient id="starFive">
                                     <stop offset="0%" stopColor="#FCC034"/>
                                     <stop offset={this.state.starFive + `%`} stopColor="#FCC034"/>
-                                    <stop offset={this.state.starFive + `%`} stopColor="black"/>
-                                    <stop offset="100%" stopColor="black"/>
+                                    <stop offset={this.state.starFive + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                    <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
                                 </linearGradient>
                             </defs>
 

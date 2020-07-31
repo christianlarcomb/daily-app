@@ -858,7 +858,7 @@ function PanelsContainer()
                                     setChatEnabled(false);
                                 }}>
 
-                                    { explore ? <Redirect to="/panels/explore"/> : <></> }
+                                    { explore ? <Redirect to="/app/explore"/> : <></> }
                                     <ExploreSvg/>
                                 </div>
 
@@ -877,7 +877,7 @@ function PanelsContainer()
                                     setChatEnabled(false);
                                 }}>
 
-                                    { shop ? <Redirect to="/panels/shop"/> : <></> }
+                                    { shop ? <Redirect to="/app/shop"/> : <></> }
                                     <PriceTagSvg/>
                                 </div>
 
@@ -896,7 +896,7 @@ function PanelsContainer()
                                     setChatEnabled(true);
                                 }}>
 
-                                    { chat ? <Redirect to="/panels/chat"/> : <></> }
+                                    { chat ? <Redirect to="/app/chat"/> : <></> }
                                     <ChatSvg/>
                                 </div>
 
@@ -961,10 +961,10 @@ function PanelsContainer()
                 {/* Conditionally rendering the route specifically */}
 
                 <Switch>
-                    <Route path="/panels/explore"   exact component={ExplorePanel}/>
-                    <Route path="/panels/shop"      exact component={ShopPanel}/>
-                    <Route path="/panels/messenger" exact component={MessengerPanel}/>
-                    <Route path="/panels/settings"        component={SettingsPanels}/>
+                    <Route path="/app/explore"   exact component={ExplorePanel}/>
+                    <Route path="/app/shop"      exact component={ShopPanel}/>
+                    <Route path="/app/messenger" exact component={MessengerPanel}/>
+                    <Route path="/app/settings"        component={SettingsPanels}/>
                 </Switch>
 
             </PrimaryContainer>

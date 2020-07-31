@@ -90,7 +90,7 @@ function App()
             <Switch>
                 <Route path="/" exact  component={Lander}/>
                 <Route path="/account" component={AccountPortal}/>
-                <Route path="/panels"  component={PanelsContainer}/>
+                <Route path="/app"  component={PanelsContainer}/>
 
                 {/* Default 404 Page */}
                 <Route component={ErrorPages}/>
