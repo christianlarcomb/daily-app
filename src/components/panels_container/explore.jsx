@@ -487,7 +487,7 @@ function ExplorePanel()
 
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
-                                image=''
+                                images={[BannerImgOne, BannerImgTwo]}
                                 badge={2}
                                 rating={100}
                                 price={25.99}
@@ -500,7 +500,7 @@ function ExplorePanel()
 
                             <GeneralItemObject
                                 title='Handcrafted wooden models designed exactly as requested.'
-                                image=''
+                                images={[BannerImgTwo, BannerImgOne]}
                                 badge={2}
                                 rating={100}
                                 price={35.99}
@@ -522,7 +522,7 @@ function ExplorePanel()
 
                             <GeneralItemObject
                                 title={`Custom 3D printed objects exactly how you'd like. Try it and if don't like we'll refund.`}
-                                image=''
+                                images={[BannerImgThree, BannerImgTwo]}
                                 badge={1}
                                 rating={83}
                                 price={50}
@@ -535,7 +535,7 @@ function ExplorePanel()
 
                             <GeneralItemObject
                                 title='Handcrafted wooden models designed exactly as requested.'
-                                image=''
+                                images={[BannerImgFour, BannerImgThree]}
                                 badge={1}
                                 rating={82}
                                 price={28}
@@ -563,7 +563,7 @@ function ExplorePanel()
                         <div>
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
-                                images=''
+                                images={[BannerImgFive, BannerImgFour]}
                                 badge={1}
                                 rating={96}
                                 price={12}
@@ -575,7 +575,7 @@ function ExplorePanel()
                             />
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
-                                images=''
+                                images={[BannerImgSix, BannerImgFive]}
                                 badge={0}
                                 rating={89}
                                 price={5}
@@ -587,7 +587,7 @@ function ExplorePanel()
                             />
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
-                                images=''
+                                images={[BannerImgSeven, BannerImgFive]}
                                 badge={1}
                                 rating={95}
                                 price={30}

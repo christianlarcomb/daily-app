@@ -5,9 +5,6 @@ import styled from 'styled-components'
 /* Generates ID's for each products individual stars... yikes. */
 import { nanoid } from "nanoid";
 
-/* Temp Image as placement holder */
-import BannerImgOne from '../../assets/imgs/explore/banner_image_1.png'
-
 /* SVG Imports */
 import {ReactComponent as CertificateSVG } from '../../assets/svgs/badges/certificate.svg';
 import {ReactComponent as StarSVG } from '../../assets/svgs/products/star.svg';
@@ -19,11 +16,17 @@ const ItemStyling = styled.div`
   grid-template-columns: 110px 1fr;
   grid-gap: 18px;
   min-width: 300px;
+  position: relative;
   
   &:hover { cursor: pointer }
   
+  & > div:nth-child(1):hover
+  {
+    opacity: 100%;
+  }
+  
   /* Image Section */
-  & > div:nth-child(1)
+  & > div:nth-child(2)
   {
     background-color: #1e1e1e;
     border-radius: 20px;
@@ -39,7 +42,7 @@ const ItemStyling = styled.div`
   }
   
   /* Content Section */
-  & > div:nth-child(2)
+  & > div:nth-child(3)
   {
     display: grid;
     grid-template-rows: auto 2px 26px 1fr 20px 35px;
@@ -120,7 +123,7 @@ const ItemStyling = styled.div`
   }
 `
 
-const Ratings = styled.div`
+const ProductRatings = styled.div`
 
   /* Ratings Bar */  
   position: absolute;
@@ -147,6 +150,93 @@ const Ratings = styled.div`
     position: relative;
   }
 `
+
+const BrandRatings = styled.div`
+
+    display: grid;
+    place-items: center;
+    height: 16px;
+    grid-gap: 2px;
+    grid-template-columns: 1fr 9px 9px 9px 9px 9px 1fr;
+    
+    /* Styling the stars */
+    & > svg
+    {
+      height: 9px;
+      width: 9px;
+      position: relative;
+    }
+`
+
+const Overlay = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 175px;
+  background-color: rgba(0,0,0,0.8);
+  backdrop-filter: blur(30px) saturate(400%);
+  z-index: 20;
+  border-radius: 20px;
+  /* Change this to work on the panels */
+  opacity: 0;
+  transition: opacity ease-in-out 0.05s;
+  display: grid;
+  
+  grid-template-rows: 1fr 45px 18px 14px 1fr 14px 20px 12px 1fr 22px 1fr;
+  
+  /* General styles */
+  & > div
+  {
+    color:white;
+  }
+  
+  /* Styling the brand logo */
+  & > div:nth-child(2)
+  {
+    height: 42px;
+    width: 42px;
+    background-color: white;
+    margin: auto auto;
+    border-radius: 15px;
+  }
+  
+  /* Brand Name */
+  & > div:nth-child(3)
+  {
+    font-size: 13px;
+    text-align: center;
+  }
+  
+  /* Brand Tag */
+  & > div:nth-child(4)
+  {
+    color: gray;
+    font-size: 12px;
+    text-align: center;
+  }
+  
+  /* Ratings Text */
+  & > div:nth-child(6)
+  {
+    font-size: 12px;
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  /* Company Ratings Container Styling */
+  & > div:nth-child(7)
+  {
+    margin: auto 0;
+  }
+  
+  /* Reviews Text */
+  & > div:nth-child(8)
+  {
+    font-size: 10px;
+    text-align: center;
+  }
+`
+
+
 
 export default class GeneralItemObject extends React.Component
 {
@@ -278,157 +368,322 @@ export default class GeneralItemObject extends React.Component
     render()
     {
         return (
-            <ItemStyling>
 
-                {/* Images & Ratings */}
-                <div>
+            <>
 
-                    {/* Ratings Container */}
-                    <Ratings stars={{
-                        starOne: this.state.starOne,
-                        starTwo: this.state.starTwo,
-                        starThree: this.state.starThree,
-                        starFour: this.state.starFour,
-                        starFive: this.state.starFive
-                    }}>
+                <ItemStyling>
 
-                        <svg height="511pt"
-                             viewBox="0 -10 511.99143 511"
-                             width="511pt"
-                             xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <defs>
-                                <linearGradient id={`starOne-${this.state.starOneID}`}>
-                                    <stop offset="0%" stopColor="#FCC034"/>
-                                    <stop offset={this.state.starOne + `%`} stopColor="#FCC034"/>
-                                    <stop offset={this.state.starOne + `%`} stopColor="rgba(0,0,0,0.5)"/>
-                                    <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
-                                </linearGradient>
-                            </defs>
+                    {/* Overlay */}
+                    <Overlay>
+                        {/* Spacer */}
+                        <div/>
 
-                            <path fill={`url(#starOne-${this.state.starOneID})`}
-                                  d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"
-                            />
+                        {/* Icon */}
+                        <div>
 
-                        </svg>
+                        </div>
 
-                        <svg height="511pt"
-                             viewBox="0 -10 511.99143 511"
-                             width="511pt"
-                             xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <defs>
-                                <linearGradient id={`starTwo-${this.state.starTwoID}`}>
-                                    <stop offset="0%" stopColor="#FCC034"/>
-                                    <stop offset={this.state.starTwo + `%`} stopColor="#FCC034"/>
-                                    <stop offset={this.state.starTwo + `%`} stopColor="rgba(0,0,0,0.5)"/>
-                                    <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
-                                </linearGradient>
-                            </defs>
+                        {/* Brand Name */}
+                        <div>
+                            United Cleaning Services
+                        </div>
 
-                            <path fill={`url(#starTwo-${this.state.starTwoID})`}
-                                  d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+                        {/* Brand Tag */}
+                        <div>
+                            @unitedcleaningservices
+                        </div>
 
-                        </svg>
+                        {/* Spacer */}
+                        <div/>
 
-                        <svg height="511pt"
-                             viewBox="0 -10 511.99143 511"
-                             width="511pt"
-                             xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <defs>
-                                <linearGradient id={`starThree-${this.state.starThreeID}`}>
-                                    <stop offset="0%" stopColor="#FCC034"/>
-                                    <stop offset={this.state.starThree + `%`} stopColor="#FCC034"/>
-                                    <stop offset={this.state.starThree + `%`} stopColor="rgba(0,0,0,0.5)"/>
-                                    <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
-                                </linearGradient>
-                            </defs>
+                        {/* Ratings Text */}
+                        <div>
+                            Ratings
+                        </div>
 
-                            <path fill={`url(#starThree-${this.state.starThreeID})`}
-                                  d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+                        {/* Ratings Stars */}
+                        <div>
+                            {/* Ratings Container */}
+                            <BrandRatings stars={{
+                                starOne: this.state.starOne,
+                                starTwo: this.state.starTwo,
+                                starThree: this.state.starThree,
+                                starFour: this.state.starFour,
+                                starFive: this.state.starFive
+                            }}>
 
-                        </svg>
+                                <div/>
 
-                        <svg height="511pt"
-                             viewBox="0 -10 511.99143 511"
-                             width="511pt"
-                             xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <defs>
-                                <linearGradient id={`starFour-${this.state.starFourID}`}>
-                                    <stop offset="0%" stopColor="#FCC034"/>
-                                    <stop offset={this.state.starFour + `%`} stopColor="#FCC034"/>
-                                    <stop offset={this.state.starFour + `%`} stopColor="rgba(0,0,0,0.5)"/>
-                                    <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
-                                </linearGradient>
-                            </defs>
+                                <svg height="511pt"
+                                     viewBox="0 -10 511.99143 511"
+                                     width="511pt"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <defs>
+                                        <linearGradient id={`starOne-${this.state.starOneID}`}>
+                                            <stop offset="0%" stopColor="#FCC034"/>
+                                            <stop offset={this.state.starOne + `%`} stopColor="#FCC034"/>
+                                            <stop offset={this.state.starOne + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                            <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
+                                        </linearGradient>
+                                    </defs>
 
-                            <path fill={`url(#starFour-${this.state.starFourID})`}
-                                  d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+                                    <path fill={`url(#starOne-${this.state.starOneID})`}
+                                          d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"
+                                    />
 
-                        </svg>
+                                </svg>
 
-                        <svg height="511pt"
-                             viewBox="0 -10 511.99143 511"
-                             width="511pt"
-                             xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <defs>
-                                <linearGradient id={`starFive-${this.state.starFiveID}`}>
-                                    <stop offset="0%" stopColor="#FCC034"/>
-                                    <stop offset={this.state.starFive + `%`} stopColor="#FCC034"/>
-                                    <stop offset={this.state.starFive + `%`} stopColor="rgba(0,0,0,0.5)"/>
-                                    <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
-                                </linearGradient>
-                            </defs>
+                                <svg height="511pt"
+                                     viewBox="0 -10 511.99143 511"
+                                     width="511pt"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <defs>
+                                        <linearGradient id={`starTwo-${this.state.starTwoID}`}>
+                                            <stop offset="0%" stopColor="#FCC034"/>
+                                            <stop offset={this.state.starTwo + `%`} stopColor="#FCC034"/>
+                                            <stop offset={this.state.starTwo + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                            <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
+                                        </linearGradient>
+                                    </defs>
 
-                            <path fill={`url(#starFive-${this.state.starFiveID})`}
-                                  d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+                                    <path fill={`url(#starTwo-${this.state.starTwoID})`}
+                                          d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
 
-                        </svg>
+                                </svg>
 
-                    </Ratings>
+                                <svg height="511pt"
+                                     viewBox="0 -10 511.99143 511"
+                                     width="511pt"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <defs>
+                                        <linearGradient id={`starThree-${this.state.starThreeID}`}>
+                                            <stop offset="0%" stopColor="#FCC034"/>
+                                            <stop offset={this.state.starThree + `%`} stopColor="#FCC034"/>
+                                            <stop offset={this.state.starThree + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                            <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
+                                        </linearGradient>
+                                    </defs>
 
-                    <img src={BannerImgOne} alt='Placement Image'/>
-                </div>
+                                    <path fill={`url(#starThree-${this.state.starThreeID})`}
+                                          d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
 
-                {/* Content */}
-                <div>
-                    {/* Item Message */}
+                                </svg>
+
+                                <svg height="511pt"
+                                     viewBox="0 -10 511.99143 511"
+                                     width="511pt"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <defs>
+                                        <linearGradient id={`starFour-${this.state.starFourID}`}>
+                                            <stop offset="0%" stopColor="#FCC034"/>
+                                            <stop offset={this.state.starFour + `%`} stopColor="#FCC034"/>
+                                            <stop offset={this.state.starFour + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                            <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
+                                        </linearGradient>
+                                    </defs>
+
+                                    <path fill={`url(#starFour-${this.state.starFourID})`}
+                                          d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+
+                                </svg>
+
+                                <svg height="511pt"
+                                     viewBox="0 -10 511.99143 511"
+                                     width="511pt"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <defs>
+                                        <linearGradient id={`starFive-${this.state.starFiveID}`}>
+                                            <stop offset="0%" stopColor="#FCC034"/>
+                                            <stop offset={this.state.starFive + `%`} stopColor="#FCC034"/>
+                                            <stop offset={this.state.starFive + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                            <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
+                                        </linearGradient>
+                                    </defs>
+
+                                    <path fill={`url(#starFive-${this.state.starFiveID})`}
+                                          d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+
+                                </svg>
+
+                                <div/>
+
+                            </BrandRatings>
+                        </div>
+
+                        {/* Reviews Text */}
+                        <div>
+                            1,734 Reviews
+                        </div>
+
+                        {/* Spacer */}
+                        <div/>
+
+                        {/* Buttons */}
+                        <div>
+
+                        </div>
+
+                        {/* Spacer */}
+                        <div/>
+
+                    </Overlay>
+
+                    {/* Images & Ratings */}
                     <div>
-                    <span>
-                        {this.props.title}
-                    </span>
+
+                        {/* Ratings Container */}
+                        <ProductRatings stars={{
+                            starOne: this.state.starOne,
+                            starTwo: this.state.starTwo,
+                            starThree: this.state.starThree,
+                            starFour: this.state.starFour,
+                            starFive: this.state.starFive
+                        }}>
+
+                            <svg height="511pt"
+                                 viewBox="0 -10 511.99143 511"
+                                 width="511pt"
+                                 xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <defs>
+                                    <linearGradient id={`starOne-${this.state.starOneID}`}>
+                                        <stop offset="0%" stopColor="#FCC034"/>
+                                        <stop offset={this.state.starOne + `%`} stopColor="#FCC034"/>
+                                        <stop offset={this.state.starOne + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                        <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
+                                    </linearGradient>
+                                </defs>
+
+                                <path fill={`url(#starOne-${this.state.starOneID})`}
+                                      d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"
+                                />
+
+                            </svg>
+
+                            <svg height="511pt"
+                                 viewBox="0 -10 511.99143 511"
+                                 width="511pt"
+                                 xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <defs>
+                                    <linearGradient id={`starTwo-${this.state.starTwoID}`}>
+                                        <stop offset="0%" stopColor="#FCC034"/>
+                                        <stop offset={this.state.starTwo + `%`} stopColor="#FCC034"/>
+                                        <stop offset={this.state.starTwo + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                        <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
+                                    </linearGradient>
+                                </defs>
+
+                                <path fill={`url(#starTwo-${this.state.starTwoID})`}
+                                      d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+
+                            </svg>
+
+                            <svg height="511pt"
+                                 viewBox="0 -10 511.99143 511"
+                                 width="511pt"
+                                 xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <defs>
+                                    <linearGradient id={`starThree-${this.state.starThreeID}`}>
+                                        <stop offset="0%" stopColor="#FCC034"/>
+                                        <stop offset={this.state.starThree + `%`} stopColor="#FCC034"/>
+                                        <stop offset={this.state.starThree + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                        <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
+                                    </linearGradient>
+                                </defs>
+
+                                <path fill={`url(#starThree-${this.state.starThreeID})`}
+                                      d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+
+                            </svg>
+
+                            <svg height="511pt"
+                                 viewBox="0 -10 511.99143 511"
+                                 width="511pt"
+                                 xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <defs>
+                                    <linearGradient id={`starFour-${this.state.starFourID}`}>
+                                        <stop offset="0%" stopColor="#FCC034"/>
+                                        <stop offset={this.state.starFour + `%`} stopColor="#FCC034"/>
+                                        <stop offset={this.state.starFour + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                        <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
+                                    </linearGradient>
+                                </defs>
+
+                                <path fill={`url(#starFour-${this.state.starFourID})`}
+                                      d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+
+                            </svg>
+
+                            <svg height="511pt"
+                                 viewBox="0 -10 511.99143 511"
+                                 width="511pt"
+                                 xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <defs>
+                                    <linearGradient id={`starFive-${this.state.starFiveID}`}>
+                                        <stop offset="0%" stopColor="#FCC034"/>
+                                        <stop offset={this.state.starFive + `%`} stopColor="#FCC034"/>
+                                        <stop offset={this.state.starFive + `%`} stopColor="rgba(0,0,0,0.5)"/>
+                                        <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
+                                    </linearGradient>
+                                </defs>
+
+                                <path fill={`url(#starFive-${this.state.starFiveID})`}
+                                      d="m510.652344 185.882812c-3.371094-10.367187-12.566406-17.707031-23.402344-18.6875l-147.796875-13.417968-58.410156-136.75c-4.3125-10.046875-14.125-16.53125-25.046875-16.53125s-20.738282 6.484375-25.023438 16.53125l-58.410156 136.75-147.820312 13.417968c-10.835938 1-20.011719 8.339844-23.402344 18.6875-3.371094 10.367188-.257813 21.738282 7.9375 28.925782l111.722656 97.964844-32.941406 145.085937c-2.410156 10.667969 1.730468 21.699219 10.582031 28.097656 4.757813 3.457031 10.347656 5.183594 15.957031 5.183594 4.820313 0 9.644532-1.28125 13.953125-3.859375l127.445313-76.203125 127.421875 76.203125c9.347656 5.585938 21.101562 5.074219 29.933593-1.324219 8.851563-6.398437 12.992188-17.429687 10.582032-28.097656l-32.941406-145.085937 111.722656-97.964844c8.191406-7.1875 11.308594-18.535156 7.9375-28.925782zm-252.203125 223.722657"/>
+
+                            </svg>
+
+                        </ProductRatings>
+
+                        {/* Images for the items */}
+                        <img src={this.props.images[0]} alt='Placement Image'/>
                     </div>
 
-                    {/* Spacer */}
-                    <div/>
-
-                    {/* Badges Container */}
+                    {/* Content */}
                     <div>
-                        {/* Rendering the badges */}
-                        { this.handleBadge() }
-                    </div>
+                        {/* Item Message */}
+                        <div>
+                        <span>
+                            {this.props.title}
+                        </span>
+                        </div>
 
-                    {/* Spacer */}
-                    <div/>
+                        {/* Spacer */}
+                        <div/>
 
-                    {/* Misc. Info */}
-                    <div>
-                        { this.handleSelect() }
-                        <div>{ this.props.fee ? "" : "No Fee"}</div>
-                        <div>{this.props.shipping}</div>
-                    </div>
+                        {/* Badges Container */}
+                        <div>
+                            {/* Rendering the badges */}
+                            { this.handleBadge() }
+                        </div>
 
-                    {/* Pricing */}
-                    <div>
-                        <div>$</div>
-                        <div>{this.props.price}</div>
-                        <div>{this.props.rate}</div>
+                        {/* Spacer */}
+                        <div/>
+
+                        {/* Misc. Info */}
+                        <div>
+                            { this.handleSelect() }
+                            <div>{ this.props.fee ? "" : "No Fee"}</div>
+                            <div>{this.props.shipping}</div>
+                        </div>
+
+                        {/* Pricing */}
+                        <div>
+                            <div>$</div>
+                            <div>{this.props.price}</div>
+                            <div>{this.props.rate}</div>
+                        </div>
                     </div>
-                </div>
-            </ItemStyling>
+                </ItemStyling>
+            </>
         )
     }
 }
