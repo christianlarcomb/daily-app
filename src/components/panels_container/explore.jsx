@@ -489,26 +489,38 @@ function ExplorePanel()
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images={[BannerImgOne, BannerImgTwo]}
                                 badge={2}
-                                rating={100}
+                                product_rating={100}
                                 price={25.99}
                                 currency='USD'
                                 rate='per hour'
                                 select={true}
                                 shipping='1-day'
                                 fee={true}
+
+                                brand_uuid={239487234823}
+                                brand_name={'United Cleaning Services'}
+                                brand_tag={'unitedcleaningservices'}
+                                brand_review_count={2362}
+                                brand_rating={80}
                             />
 
                             <GeneralItemObject
                                 title='Handcrafted wooden models designed exactly as requested.'
                                 images={[BannerImgTwo, BannerImgOne]}
                                 badge={2}
-                                rating={100}
+                                product_rating={100}
                                 price={35.99}
                                 currency='USD'
                                 rate='per order'
                                 select={true}
                                 shipping='3-day'
                                 fee={true}
+
+                                brand_uuid={239487234823}
+                                brand_name={'3D Design Marketplace'}
+                                brand_tag={'3ddesignmp'}
+                                brand_review_count={1124}
+                                brand_rating={90}
                             />
 
                             {/* Button */}
@@ -524,26 +536,38 @@ function ExplorePanel()
                                 title={`Custom 3D printed objects exactly how you'd like. Try it and if don't like we'll refund.`}
                                 images={[BannerImgThree, BannerImgTwo]}
                                 badge={1}
-                                rating={83}
+                                product_rating={83}
                                 price={50}
                                 currency='USD'
                                 rate='per piece'
                                 select={true}
                                 shipping='1-day'
                                 fee={false}
+
+                                brand_uuid={654618913654}
+                                brand_name={''}
+                                brand_tag={''}
+                                brand_review_count={''}
+                                brand_rating={100}
                             />
 
                             <GeneralItemObject
                                 title='Handcrafted wooden models designed exactly as requested.'
                                 images={[BannerImgFour, BannerImgThree]}
                                 badge={1}
-                                rating={82}
+                                product_rating={82}
                                 price={28}
                                 currency='USD'
                                 rate='per hour'
                                 select={true}
                                 shipping='1-day'
                                 fee={true}
+
+                                brand_uuid={654618913654}
+                                brand_name={''}
+                                brand_tag={''}
+                                brand_review_count={''}
+                                brand_rating={15}
                             />
 
                             {/* Button */}
@@ -565,73 +589,109 @@ function ExplorePanel()
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images={[BannerImgFive, BannerImgFour]}
                                 badge={1}
-                                rating={96}
+                                product_rating={96}
                                 price={12}
                                 currency='USD'
                                 rate='per hour'
                                 select={true}
                                 shipping='same-day'
                                 fee={false}
+
+                                brand_uuid={654618913654}
+                                brand_name={'Wholefoods Marketplace'}
+                                brand_tag={'wholefoods'}
+                                brand_review_count={165486}
+                                brand_rating={100}
                             />
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images={[BannerImgSix, BannerImgFive]}
                                 badge={0}
-                                rating={89}
+                                product_rating={89}
                                 price={5}
                                 currency='USD'
                                 rate='per piece'
                                 select={true}
                                 shipping='2-day'
                                 fee={false}
+
+                                brand_uuid={87651945461}
+                                brand_name={''}
+                                brand_tag={''}
+                                brand_review_count={6542}
+                                brand_rating={95}
                             />
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images={[BannerImgSeven, BannerImgFive]}
                                 badge={1}
-                                rating={95}
+                                product_rating={95}
                                 price={30}
                                 currency='USD'
                                 rate='per order'
                                 select={true}
                                 shipping='same-day'
                                 fee={true}
+
+                                brand_uuid={87651945461}
+                                brand_name={''}
+                                brand_tag={''}
+                                brand_review_count={6542}
+                                brand_rating={95}
                             />
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
                                 badge={0}
-                                rating={93}
+                                product_rating={93}
                                 price={45.25}
                                 currency='USD'
                                 rate='per hour'
                                 select={true}
                                 shipping='1-day'
                                 fee={true}
+
+                                brand_uuid={654618913654}
+                                brand_name={''}
+                                brand_tag={''}
+                                brand_review_count={''}
+                                brand_rating={0}
                             />
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
                                 badge={2}
-                                rating={81}
+                                product_rating={81}
                                 price={13}
                                 currency='USD'
                                 rate='per hour'
                                 select={true}
                                 shipping='5+ days'
                                 fee={true}
+
+                                brand_uuid={654618913654}
+                                brand_name={''}
+                                brand_tag={''}
+                                brand_review_count={''}
+                                brand_rating={0}
                             />
                             <GeneralItemObject
                                 title='Affordable cleaning services services offering in the New Jersey area. Ideal for busy bees and stores!'
                                 images=''
                                 badge={1}
-                                rating={86}
+                                product_rating={86}
                                 price={10}
                                 currency='USD'
                                 rate='per hour'
                                 select={true}
                                 shipping='1-day'
                                 fee={true}
+
+                                brand_uuid={654618913654}
+                                brand_name={'Minedesigns'}
+                                brand_tag={'minedesigns'}
+                                brand_review_count={105}
+                                brand_rating={96}
                             />
                         </div>
 
