@@ -20,8 +20,6 @@ const ItemStyling = styled.div`
   min-width: 300px;
   position: relative;
   
-  &:hover { cursor: pointer }
-  
   & > div:nth-child(1):hover
   {
     opacity: 100%;
@@ -203,10 +201,7 @@ const Overlay = styled.div`
     place-content: center;
     overflow: hidden;
     
-    & > img
-    {
-      height: 42px;
-    }
+    & > img { height: 42px; }
   }
   
   /* Brand Name */
@@ -251,15 +246,19 @@ const Overlay = styled.div`
   {
     display: grid;
     grid-template-columns: auto auto auto auto;
+    grid-template-rows: 22px;
     font-size: 11px;
     grid-gap: 18px;
     place-content: center;
     
+    /* Styling the SVGs */
     & > div > svg
     {
       height: 14px;
-      fill: white;
+      fill: #9C9C9C;
     }
+    
+    & > div > svg:hover { fill: white; }
     
     & > div
     {
@@ -268,7 +267,16 @@ const Overlay = styled.div`
       grid-gap: 2px;
       place-items: center;
       font-size: 10px;
+      color: #9c9c9c;
     }
+    
+    & > div:hover
+    {
+        cursor: pointer;
+        & > svg { fill: white; }
+        & > div { color: white; }
+    }
+    
     
   }
 `
