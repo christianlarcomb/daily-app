@@ -276,12 +276,8 @@ const Overlay = styled.div`
         & > svg { fill: white; }
         & > div { color: white; }
     }
-    
-    
   }
 `
-
-
 
 export default class GeneralItemObject extends React.Component
 {
@@ -502,7 +498,6 @@ export default class GeneralItemObject extends React.Component
         return (
 
             <>
-
                 <ItemStyling>
 
                     {/* Overlay */}

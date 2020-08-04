@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { BrowserRouter as Router, Switch, Route, Link, useLocation } from 'react-router-dom'
 
 import Tilt from 'react-tilt'
 
@@ -330,9 +331,8 @@ const ThirdContainer = styled.div`
   }
 `
 
-function ExplorePanel()
+function GeneralView()
 {
-
     let [input, setInput] = useState('Search')
 
     const handleInput = (event) =>
@@ -705,6 +705,39 @@ function ExplorePanel()
             </ContentHolder>
 
         </PrimaryContainer>
+    )
+}
+
+function useQuery()
+{
+    return new URLSearchParams(useLocation().search)
+}
+
+function ProductView()
+{
+    let query = useQuery();
+    let puid = query.get('name')
+
+    // TODO: Get back to working on linking to product pages and nested components... I'll figure this out after work.
+    return(
+        <>
+            <h2>hello</h2>
+        </>
+    )
+}
+
+function ExplorePanel()
+{
+
+    return(
+
+        <Router>
+            <Switch>
+                <Route path='/' component={GeneralView}/>
+                <Route path='/product' component={ProductView}/>
+            </Switch>
+        </Router>
+
     )
 }
 
