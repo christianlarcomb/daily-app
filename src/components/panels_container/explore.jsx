@@ -545,9 +545,9 @@ function ExplorePanel()
                                 fee={false}
 
                                 brand_uuid={654618913654}
-                                brand_name={''}
-                                brand_tag={''}
-                                brand_review_count={''}
+                                brand_name={'Cosmos'}
+                                brand_tag={'cosmos'}
+                                brand_review_count={98}
                                 brand_rating={100}
                             />
 

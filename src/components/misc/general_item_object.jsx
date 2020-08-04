@@ -7,8 +7,10 @@ import { nanoid } from "nanoid";
 
 /* SVG Imports */
 import {ReactComponent as CertificateSVG } from '../../assets/svgs/badges/certificate.svg';
-import {ReactComponent as StarSVG } from '../../assets/svgs/products/star.svg';
-import {render} from "react-dom";
+import {ReactComponent as ReportSVG} from '../../assets/svgs/products/cancel.svg';
+import {ReactComponent as WishlistSVG} from '../../assets/svgs/products/wishlist.svg';
+import {ReactComponent as HeartSVG} from '../../assets/svgs/products/heart.svg';
+import {ReactComponent as ViewItemSVG} from '../../assets/svgs/products/send.svg';
 
 const ItemStyling = styled.div`
   display: grid;
@@ -248,15 +250,26 @@ const Overlay = styled.div`
   & > div:nth-child(10)
   {
     display: grid;
-    grid-template-columns: 1fr 20px auto 20px auto 20px auto 20px auto 1fr;
+    grid-template-columns: auto auto auto auto;
     font-size: 11px;
-    grid-gap: 2px;
+    grid-gap: 18px;
     place-content: center;
     
-    & > div:nth-child(3), & > div:nth-child(5), & > div:nth-child(7), & > div:nth-child(9)
+    & > div > svg
     {
-      margin-right: 2px;
+      height: 14px;
+      fill: white;
     }
+    
+    & > div
+    {
+      display: grid;
+      grid-template-columns: 20px auto;
+      grid-gap: 2px;
+      place-items: center;
+      font-size: 10px;
+    }
+    
   }
 `
 
@@ -349,38 +362,6 @@ export default class GeneralItemObject extends React.Component
         let brand_starFourID = uniqueString.slice(13,17)
         let brand_starFiveID = uniqueString.slice(17,21)
 
-        /* debugging (everything seems clear here...)
-        console.log({
-            product_rating:{
-                starOne: product_star_values[0],
-                starTwo: product_star_values[1],
-                starThree: product_star_values[2],
-                starFour: product_star_values[3],
-                starFive: product_star_values[4],
-
-                starOneID: product_starOneID,
-                starTwoID: product_starTwoID,
-                starThreeID: product_starThreeID,
-                starFourID: product_starFourID,
-                starFiveID: product_starFiveID
-            },
-
-            brand_rating:{
-                starOne: brand_star_values[0],
-                starTwo: brand_star_values[1],
-                starThree: brand_star_values[2],
-                starFour: brand_star_values[3],
-                starFive: brand_star_values[4],
-
-                starOneID: brand_starOneID,
-                starTwoID: brand_starTwoID,
-                starThreeID: brand_starThreeID,
-                starFourID: brand_starFourID,
-                starFiveID: brand_starFiveID
-            }
-        })
-         */
-
         /* Setting the state */
         this.setState({
             product_rating:{
@@ -457,6 +438,54 @@ export default class GeneralItemObject extends React.Component
                 <div/>
             )
         }
+    }
+
+    handleReviews = () =>
+    {
+        let reviewCount = this.props.brand_review_count
+        let reviewCountString = reviewCount.toString()
+        let slices = [];
+
+        let completedString = '';
+
+        let sliceCount = 0;
+        /* Handles slicing the numbers */
+        for(let i = reviewCountString.length; i > 0; i -= 3)
+        {
+            /* Trying to store the slices in reverse order */
+            try
+            {
+                slices[sliceCount] = reviewCountString.substring(i-3, i)
+            } catch (e)
+            {
+                console.log('Slice of 3 too large')
+
+                try
+                {
+                    slices[sliceCount] = reviewCountString.substring(i-2, i)
+                } catch (e)
+                {
+                    console.log('Slice of 2 too large')
+
+                    try
+                    {
+                        slices[sliceCount] = reviewCountString.substring(i-1, i)
+                    } catch (e)
+                    {
+                        slices[sliceCount] = reviewCountString.substring(i, i)
+                        console.log('Slice of 1 too large?? What do??')
+                    }
+                }
+            }
+
+            //console.log(sliceCount)
+            sliceCount++;
+        }
+
+        /* Creating the string */
+        for(let i = slices.length; i > 0; i--) { completedString += slices[i-1] + (i-1 !== 0 ? "," : "") }
+
+        return completedString
     }
 
     /* Returned JSX */
@@ -612,7 +641,7 @@ export default class GeneralItemObject extends React.Component
 
                         {/* Reviews Text */}
                         <div>
-                            1,734 Brand Reviews
+                            {this.handleReviews()} Brand Reviews
                         </div>
 
                         {/* Spacer */}
@@ -620,25 +649,26 @@ export default class GeneralItemObject extends React.Component
 
                         {/* Buttons */}
                         <div>
-                            <div/>
 
-                            <div/>
+                            <div>
+                                <ReportSVG/>
+                                <div>Report</div>
+                            </div>
 
-                            <div>Report</div>
+                            <div>
+                                <WishlistSVG/>
+                                <div>Wishlist</div>
+                            </div>
 
-                            <div/>
+                            <div>
+                                <HeartSVG/>
+                                <div>Like</div>
+                            </div>
 
-                            <div>Wishlist</div>
-
-                            <div/>
-
-                            <div>Like</div>
-
-                            <div/>
-
-                            <div>View Item</div>
-
-                            <div/>
+                            <div>
+                                <ViewItemSVG/>
+                                <div>View</div>
+                            </div>
 
                         </div>
 
