@@ -7,7 +7,7 @@ import { notify } from "../Notifications";
 
 /* Panels */
 import SettingsPanels from "./settings_panels";
-import ExplorePanel from './explore';
+import MarketplacePanels from './marketplace';
 import MessengerPanel from './messenger';
 import ShopPanel from './shop';
 
@@ -858,7 +858,7 @@ function PanelsContainer()
                                     setChatEnabled(false);
                                 }}>
 
-                                    { explore ? <Redirect to="/app/explore"/> : <></> }
+                                    { explore ? <Redirect to="/app/marketplace"/> : <></> }
                                     <ExploreSvg/>
                                 </div>
 
@@ -959,9 +959,8 @@ function PanelsContainer()
                 </PrimarySidebar>
 
                 {/* Conditionally rendering the route specifically */}
-
                 <Switch>
-                    <Route path="/app/explore"   exact component={ExplorePanel}/>
+                    <Route path="/app/marketplace" component={MarketplacePanels}/>
                     <Route path="/app/shop"      exact component={ShopPanel}/>
                     <Route path="/app/messenger" exact component={MessengerPanel}/>
                     <Route path="/app/settings"        component={SettingsPanels}/>

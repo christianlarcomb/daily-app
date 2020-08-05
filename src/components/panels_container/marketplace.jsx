@@ -331,7 +331,7 @@ const ThirdContainer = styled.div`
   }
 `
 
-function GeneralView()
+function SearchBarHeader()
 {
     let [input, setInput] = useState('Search')
 
@@ -355,72 +355,81 @@ function GeneralView()
     {
         let target = e.target
 
-        if(target.value === '')
-        {
+        if (target.value === '') {
             setInput('Search')
         }
     }
 
     return(
-        <PrimaryContainer>
+        <Header>
+            {/* Logo Container */}
+            <div>
+                <DailyTextLogo/>
+            </div>
 
-            {/* Responsible for the navigation of the marketplace page */}
-            <Header>
-                {/* Logo Container */}
+            {/* Search Container */}
+            <div>
                 <div>
-                    <DailyTextLogo/>
-                </div>
-
-                {/* Search Container */}
-                <div>
+                    {/* Search Container */}
                     <div>
-                        {/* Search Container */}
-                        <div>
-                            <input
-                                name='searchbar'
-                                onChange={(e) => handleInput(e)}
-                                value={input}
-                                onFocus={e => handleFocus(e)}
-                                onBlur={e => handleBlur(e)}
-                                maxLength={120}
-                            />
-                        </div>
-                        {/* Search Icon Container */}
-                        <div>
-                            <SearchIconStyled/>
-                        </div>
+                        <input
+                            name='searchbar'
+                            onChange={(e) => handleInput(e)}
+                            value={input}
+                            onFocus={e => handleFocus(e)}
+                            onBlur={e => handleBlur(e)}
+                            maxLength={120}
+                        />
+                    </div>
+                    {/* Search Icon Container */}
+                    <div>
+                        <SearchIconStyled/>
                     </div>
                 </div>
+            </div>
 
-                {/* Buttons Container */}
+            {/* Buttons Container */}
+            <div>
+
+                {/* Individual Button Wrappers */}
                 <div>
-
-                    {/* Individual Button Wrappers */}
-                    <div>
-                        <ClockIconStyled/>
-                        <span>
+                    <ClockIconStyled/>
+                    <span>
                             Orders
                         </span>
-                    </div>
+                </div>
 
-                    <div>
-                        <FilterIconStyled/>
-                        <span>
+                <div>
+                    <FilterIconStyled/>
+                    <span>
                             Filters
                         </span>
-                    </div>
+                </div>
 
+                <div>
                     <div>
-                        <div>
 
-                        </div>
-                        <span>
+                    </div>
+                    <span>
                             Bag
                         </span>
-                    </div>
                 </div>
-            </Header>
+            </div>
+        </Header>
+    )
+}
 
+function useQuery() { return new URLSearchParams(useLocation().search) }
+
+function MarketplacePanel()
+{
+
+    let query = useQuery()
+    let puid = query.get('puid')
+
+    const MarketplaceContents = () =>
+    {
+        return(
             <ContentHolder>
                 <div>
                     {/* Marking Materials */}
@@ -703,42 +712,44 @@ function GeneralView()
                     </ThirdContainer>
                 </div>
             </ContentHolder>
+        )
+    }
+
+    const RenderSwitch = () =>
+    {
+        /* If a product puid is not provided, load the marketplace */
+        if(puid === null)
+        {
+            /* Primary Marketplace */
+            return(MarketplaceContents())
+        } else {
+            /* Product Panel */
+            return (ProductContents())
+        }
+    }
+
+    const ProductContents = () =>
+    {
+        return(
+            <>
+                <div>
+                    {puid}
+                </div>
+            </>
+        )
+    }
+
+    return(
+        <PrimaryContainer>
+
+            {/* Header Containing Search & Other Functions */}
+            {SearchBarHeader()}
+
+            {/* Primary Marketplace */}
+            {RenderSwitch()}
 
         </PrimaryContainer>
     )
 }
 
-function useQuery()
-{
-    return new URLSearchParams(useLocation().search)
-}
-
-function ProductView()
-{
-    let query = useQuery();
-    let puid = query.get('name')
-
-    // TODO: Get back to working on linking to product pages and nested components... I'll figure this out after work.
-    return(
-        <>
-            <h2>hello</h2>
-        </>
-    )
-}
-
-function ExplorePanel()
-{
-
-    return(
-
-        <Router>
-            <Switch>
-                <Route path='/' component={GeneralView}/>
-                <Route path='/product' component={ProductView}/>
-            </Switch>
-        </Router>
-
-    )
-}
-
-export default ExplorePanel
+export default MarketplacePanel
