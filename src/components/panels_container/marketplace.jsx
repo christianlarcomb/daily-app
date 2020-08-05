@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import { BrowserRouter as Router, Switch, Route, Link, useLocation } from 'react-router-dom'
 
@@ -22,6 +22,7 @@ import BannerImgFive from '../../assets/imgs/explore/banner_image_5.png'
 import BannerImgSix from '../../assets/imgs/explore/banner_image_6.jpg'
 import BannerImgSeven from '../../assets/imgs/explore/banner_image_7.jpg'
 
+/******* Marketplace Styling *******/
 const FilterIconStyled = styled(FilterIcon)`
   height: 12px;
 `
@@ -40,7 +41,11 @@ const PrimaryContainer = styled.div`
   display: grid;
   grid-template-rows: 55px 1fr;
   position: relative;
+  
+  // TODO: Figure out how to prevent scrolling for product page.
   overflow-y: scroll;
+  
+  overflow-x: hidden;
 `
 
 const Header = styled.div`
@@ -331,6 +336,13 @@ const ThirdContainer = styled.div`
   }
 `
 
+/******* Product Pages Styling *******/
+const ProductContainer = styled.div`
+  display: grid;
+  grid-template-rows: 40px 1fr;
+  overflow: hidden;
+`
+
 function SearchBarHeader()
 {
     let [input, setInput] = useState('Search')
@@ -424,9 +436,16 @@ function useQuery() { return new URLSearchParams(useLocation().search) }
 function MarketplacePanel()
 {
 
+    /* Getting the url parameters */
     let query = useQuery()
     let puid = query.get('puid')
 
+    /* TODO: Utilizing state seemed like the most effective method
+    *   yet for some odd reason it succumbs to infinite re-renders?
+    * I'll continue working on this tomorrow... */
+    let [productViewed, setProductViewed] = useState(false)
+
+    /* List of functions which render specific pseudo-components */
     const MarketplaceContents = () =>
     {
         return(
@@ -721,9 +740,11 @@ function MarketplacePanel()
         if(puid === null)
         {
             /* Primary Marketplace */
+            //setProductViewed(false)
             return(MarketplaceContents())
         } else {
             /* Product Panel */
+            //setProductViewed(true)
             return (ProductContents())
         }
     }
@@ -732,15 +753,27 @@ function MarketplacePanel()
     {
         return(
             <>
-                <div>
-                    {puid}
-                </div>
+                <ProductContainer>
+
+                    {/* Mini Information Bar */}
+                    <div>
+
+                    </div>
+
+                    {/* Content Split */}
+                    <div>
+
+                    </div>
+
+                </ProductContainer>
             </>
         )
     }
 
     return(
-        <PrimaryContainer>
+        <PrimaryContainer
+            style={{overflowY: productViewed ? 'hidden' : 'scroll'}}
+        >
 
             {/* Header Containing Search & Other Functions */}
             {SearchBarHeader()}
