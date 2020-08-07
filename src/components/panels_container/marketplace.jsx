@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import styled from 'styled-components'
-import { BrowserRouter as Router, Switch, Route, Link, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link, useLocation, withRouter } from 'react-router-dom'
 
 import Tilt from 'react-tilt'
 
@@ -343,139 +343,63 @@ const ProductContainer = styled.div`
   overflow: hidden;
 `
 
-function SearchBarHeader()
-{
-    let [input, setInput] = useState('Search')
-
-    const handleInput = (event) =>
-    {
-        const target = event.target;
-        setInput(target.value)
-    }
-
-    const handleFocus = (e) =>
-    {
-        let target = e.target
-
-        if(target.value === 'Search')
-        {
-            setInput('')
-        }
-    }
-
-    const handleBlur= (e) =>
-    {
-        let target = e.target
-
-        if (target.value === '') {
-            setInput('Search')
-        }
-    }
-
-    return(
-        <Header>
-            {/* Logo Container */}
-            <div>
-                <DailyTextLogo/>
-            </div>
-
-            {/* Search Container */}
-            <div>
-                <div>
-                    {/* Search Container */}
-                    <div>
-                        <input
-                            name='searchbar'
-                            onChange={(e) => handleInput(e)}
-                            value={input}
-                            onFocus={e => handleFocus(e)}
-                            onBlur={e => handleBlur(e)}
-                            maxLength={120}
-                        />
-                    </div>
-                    {/* Search Icon Container */}
-                    <div>
-                        <SearchIconStyled/>
-                    </div>
-                </div>
-            </div>
-
-            {/* Buttons Container */}
-            <div>
-
-                {/* Individual Button Wrappers */}
-                <div>
-                    <ClockIconStyled/>
-                    <span>
-                            Orders
-                        </span>
-                </div>
-
-                <div>
-                    <FilterIconStyled/>
-                    <span>
-                            Filters
-                        </span>
-                </div>
-
-                <div>
-                    <div>
-
-                    </div>
-                    <span>
-                            Bag
-                        </span>
-                </div>
-            </div>
-        </Header>
-    )
-}
 
 function useQuery() { return new URLSearchParams(useLocation().search) }
 
-function MarketplacePanel()
-{
+
+function MarketplacePanel() {
 
     /* Getting the url parameters */
     let query = useQuery()
     let puid = query.get('puid')
 
-    /* TODO: Utilizing state seemed like the most effective method
-    *   yet for some odd reason it succumbs to infinite re-renders?
-    * I'll continue working on this tomorrow... */
-    let [productViewed, setProductViewed] = useState(false)
+    let [productView, setProductView] = useState(false)
+
+    /* Getting url location */
+    let location = useLocation()
+
+    /* TODO: It's working!! Refine for better performance */
+    useEffect(() => {
+
+
+        /* Debugging to see where the search is located */
+        console.log('location event fired:', location)
+
+        location.search !== '' ? setProductView(true) : setProductView(false)
+
+    }, [location])
 
     /* List of functions which render specific pseudo-components */
     const MarketplaceContents = () =>
     {
-        return(
+        return (
             <ContentHolder>
                 <div>
                     {/* Marking Materials */}
                     <FirstContainer>
 
                         {/* TODO: Try to finish implementing tilt for fun; remove dep. if it's not needed */}
-                        <Tilt options={{ max : 20, scale: 1.01, reverse: true }} style={{ height: 155, width: 325 }}>
+                        <Tilt options={{max: 20, scale: 1.01, reverse: true}} style={{height: 155, width: 325}}>
 
                         </Tilt>
 
-                        <Tilt options={{ max : 20, scale: 1.01, reverse: true }} style={{ height: 155, width: 325 }}>
+                        <Tilt options={{max: 20, scale: 1.01, reverse: true}} style={{height: 155, width: 325}}>
                             <img alt='' src={BannerImgOne}/>
                         </Tilt>
 
-                        <Tilt options={{ max : 20, scale: 1.01, reverse: true }} style={{ height: 155, width: 325 }}>
+                        <Tilt options={{max: 20, scale: 1.01, reverse: true}} style={{height: 155, width: 325}}>
                             <img alt='' src={BannerImgTwo}/>
                         </Tilt>
 
-                        <Tilt options={{ max : 20, scale: 1.01, reverse: true }} style={{ height: 155, width: 325 }}>
+                        <Tilt options={{max: 20, scale: 1.01, reverse: true}} style={{height: 155, width: 325}}>
                             <img alt='' src={BannerImgThree}/>
                         </Tilt>
 
-                        <Tilt options={{ max : 20, scale: 1.01, reverse: true }} style={{ height: 155, width: 325 }}>
+                        <Tilt options={{max: 20, scale: 1.01, reverse: true}} style={{height: 155, width: 325}}>
                             <img alt='' src={BannerImgFour}/>
                         </Tilt>
 
-                        <Tilt options={{ max : 20, scale: 1.01, reverse: true }} style={{ height: 155, width: 325 }}>
+                        <Tilt options={{max: 20, scale: 1.01, reverse: true}} style={{height: 155, width: 325}}>
                             <img alt='' src={BannerImgFive}/>
                         </Tilt>
 
@@ -524,6 +448,7 @@ function MarketplacePanel()
                                 select={true}
                                 shipping='1-day'
                                 fee={true}
+                                puid={4383413481324}
 
                                 brand_uuid={239487234823}
                                 brand_name={'United Cleaning Services'}
@@ -543,6 +468,7 @@ function MarketplacePanel()
                                 select={true}
                                 shipping='3-day'
                                 fee={true}
+                                puid={1461715742434}
 
                                 brand_uuid={239487234823}
                                 brand_name={'3D Design Marketplace'}
@@ -571,6 +497,7 @@ function MarketplacePanel()
                                 select={true}
                                 shipping='1-day'
                                 fee={false}
+                                puid={2346234623462}
 
                                 brand_uuid={654618913654}
                                 brand_name={'Cosmos'}
@@ -590,6 +517,7 @@ function MarketplacePanel()
                                 select={true}
                                 shipping='1-day'
                                 fee={true}
+                                puid={1463414611346}
 
                                 brand_uuid={654618913654}
                                 brand_name={''}
@@ -624,6 +552,7 @@ function MarketplacePanel()
                                 select={true}
                                 shipping='same-day'
                                 fee={false}
+                                puid={2346234613414}
 
                                 brand_uuid={654618913654}
                                 brand_name={'Wholefoods Marketplace'}
@@ -642,6 +571,7 @@ function MarketplacePanel()
                                 select={true}
                                 shipping='2-day'
                                 fee={false}
+                                puid={2346234423623}
 
                                 brand_uuid={87651945461}
                                 brand_name={''}
@@ -660,6 +590,7 @@ function MarketplacePanel()
                                 select={true}
                                 shipping='same-day'
                                 fee={true}
+                                puid={23462442452345}
 
                                 brand_uuid={87651945461}
                                 brand_name={''}
@@ -678,6 +609,7 @@ function MarketplacePanel()
                                 select={true}
                                 shipping='1-day'
                                 fee={true}
+                                puid={346456846456}
 
                                 brand_uuid={654618913654}
                                 brand_name={''}
@@ -696,6 +628,7 @@ function MarketplacePanel()
                                 select={true}
                                 shipping='5+ days'
                                 fee={true}
+                                puid={846756634534}
 
                                 brand_uuid={654618913654}
                                 brand_name={''}
@@ -714,6 +647,7 @@ function MarketplacePanel()
                                 select={true}
                                 shipping='1-day'
                                 fee={true}
+                                puid={23463462346}
 
                                 brand_uuid={654618913654}
                                 brand_name={'Minedesigns'}
@@ -734,14 +668,101 @@ function MarketplacePanel()
         )
     }
 
-    const RenderSwitch = () =>
+    const SearchBarHeader = () =>
     {
-        /* If a product puid is not provided, load the marketplace */
-        if(puid === null)
+        let [input, setInput] = useState('Search')
+
+        const handleInput = (event) =>
         {
+            const target = event.target;
+            setInput(target.value)
+        }
+
+        const handleFocus = (e) =>
+        {
+            let target = e.target
+
+            if(target.value === 'Search')
+            {
+                setInput('')
+            }
+        }
+
+        const handleBlur= (e) =>
+        {
+            let target = e.target
+
+            if (target.value === '') {
+                setInput('Search')
+            }
+        }
+
+        return(
+            <Header>
+                {/* Logo Container */}
+                <div>
+                    <DailyTextLogo/>
+                </div>
+
+                {/* Search Container */}
+                <div>
+                    <div>
+                        {/* Search Container */}
+                        <div>
+                            <input
+                                name='searchbar'
+                                onChange={(e) => handleInput(e)}
+                                value={input}
+                                onFocus={e => handleFocus(e)}
+                                onBlur={e => handleBlur(e)}
+                                maxLength={120}
+                            />
+                        </div>
+                        {/* Search Icon Container */}
+                        <div>
+                            <SearchIconStyled/>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Buttons Container */}
+                <div>
+
+                    {/* Individual Button Wrappers */}
+                    <div>
+                        <ClockIconStyled/>
+                        <span>
+                            Orders
+                        </span>
+                    </div>
+
+                    <div>
+                        <FilterIconStyled/>
+                        <span>
+                            Filters
+                        </span>
+                    </div>
+
+                    <div>
+                        <div>
+
+                        </div>
+                        <span>
+                            Bag
+                        </span>
+                    </div>
+                </div>
+            </Header>
+        )
+    }
+
+    /* Determines whether to render marketplace or product */
+    const RenderSwitch = () => {
+        /* If a product puid is not provided, load the marketplace */
+        if (puid === null) {
             /* Primary Marketplace */
             //setProductViewed(false)
-            return(MarketplaceContents())
+            return (MarketplaceContents())
         } else {
             /* Product Panel */
             //setProductViewed(true)
@@ -749,9 +770,10 @@ function MarketplacePanel()
         }
     }
 
-    const ProductContents = () =>
-    {
-        return(
+    /* The products content needs to overflow to be hidden so I can make the
+    * configuration options scrollable... */
+    const ProductContents = () => {
+        return (
             <>
                 <ProductContainer>
 
@@ -770,19 +792,20 @@ function MarketplacePanel()
         )
     }
 
+    /* Primary return statement for functional component */
     return(
-        <PrimaryContainer
-            style={{overflowY: productViewed ? 'hidden' : 'scroll'}}
-        >
+        /* TODO: Check notepad to get this to work... Goodnight */
+        <PrimaryContainer style={{overflowY: productView ? 'hidden' : 'scroll'}}>
 
-            {/* Header Containing Search & Other Functions */}
-            {SearchBarHeader()}
+        {/* Header Containing Search & Other Functions */}
+        {SearchBarHeader()}
 
-            {/* Primary Marketplace */}
-            {RenderSwitch()}
+        {/* Primary Marketplace */}
+        {RenderSwitch()}
 
         </PrimaryContainer>
     )
+
 }
 
 export default MarketplacePanel

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 /* TODO: Possibly optimize this? */
 /* Generates ID's for each products individual stars... yikes. */
@@ -11,6 +12,35 @@ import {ReactComponent as ReportSVG} from '../../assets/svgs/products/cancel.svg
 import {ReactComponent as WishlistSVG} from '../../assets/svgs/products/wishlist.svg';
 import {ReactComponent as HeartSVG} from '../../assets/svgs/products/heart.svg';
 import {ReactComponent as ViewItemSVG} from '../../assets/svgs/products/send.svg';
+
+const StyledLinkButtons = styled(Link)`
+    
+    /* Styling the SVGs */
+    & > div > svg
+    {
+      height: 14px;
+      fill: #9C9C9C;
+    }
+    
+    & > div > svg:hover { fill: white; }
+    
+    & > div
+    {
+      display: grid;
+      grid-template-columns: 20px auto;
+      grid-gap: 2px;
+      place-items: center;
+      font-size: 10px;
+      color: #9c9c9c;
+    }
+    
+    & > div:hover
+    {
+        cursor: pointer;
+        & > svg { fill: white; }
+        & > div { color: white; }
+    }
+`
 
 const ItemStyling = styled.div`
   display: grid;
@@ -250,32 +280,6 @@ const Overlay = styled.div`
     font-size: 11px;
     grid-gap: 18px;
     place-content: center;
-    
-    /* Styling the SVGs */
-    & > div > svg
-    {
-      height: 14px;
-      fill: #9C9C9C;
-    }
-    
-    & > div > svg:hover { fill: white; }
-    
-    & > div
-    {
-      display: grid;
-      grid-template-columns: 20px auto;
-      grid-gap: 2px;
-      place-items: center;
-      font-size: 10px;
-      color: #9c9c9c;
-    }
-    
-    & > div:hover
-    {
-        cursor: pointer;
-        & > svg { fill: white; }
-        & > div { color: white; }
-    }
   }
 `
 
@@ -651,27 +655,36 @@ export default class GeneralItemObject extends React.Component
                         <div/>
 
                         {/* Buttons */}
+                        {/* TODO: Need to implement Links to direct traffic to individual  */}
                         <div>
 
-                            <div>
-                                <ReportSVG/>
-                                <div>Report</div>
-                            </div>
+                            <StyledLinkButtons to={''}>
+                                <div>
+                                    <ReportSVG/>
+                                    <div>Report</div>
+                                </div>
+                            </StyledLinkButtons>
 
-                            <div>
-                                <WishlistSVG/>
-                                <div>Wishlist</div>
-                            </div>
+                            <StyledLinkButtons to={''}>
+                                <div>
+                                    <WishlistSVG/>
+                                    <div>Wishlist</div>
+                                </div>
+                            </StyledLinkButtons>
 
-                            <div>
-                                <HeartSVG/>
-                                <div>Like</div>
-                            </div>
+                            <StyledLinkButtons to={''}>
+                                <div>
+                                    <HeartSVG/>
+                                    <div>Like</div>
+                                </div>
+                            </StyledLinkButtons>
 
-                            <div>
-                                <ViewItemSVG/>
-                                <div>View</div>
-                            </div>
+                            <StyledLinkButtons to={location => `${location.pathname}?puid=${this.props.puid}`}>
+                                <div>
+                                    <ViewItemSVG/>
+                                    <div>View</div>
+                                </div>
+                            </StyledLinkButtons>
 
                         </div>
 
