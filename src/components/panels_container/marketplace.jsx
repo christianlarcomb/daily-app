@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react'
 import styled from 'styled-components'
-import { BrowserRouter as Router, Switch, Route, Link, useLocation, withRouter } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import Tilt from 'react-tilt'
 
@@ -339,8 +339,33 @@ const ThirdContainer = styled.div`
 /******* Product Pages Styling *******/
 const ProductContainer = styled.div`
   display: grid;
-  grid-template-rows: 40px 1fr;
+  grid-template-rows: 40px 1px 1fr;
   overflow: hidden;
+  
+  /* Styling the divider */ 
+  & > div:nth-child(2){ background-color: #D0D0D0; }
+  
+  /* Two main dividers */
+  & > div:nth-child(3)
+  {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+   
+    /* TODO: After work, continue styling the products page until completion. That's where you left off... */
+    
+    /* Content Section */
+    & > div:nth-child(1)
+    {
+      
+    }
+    
+    /* Configuration Section */
+    & > div:nth-child(2)
+    {
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+  }
 `
 
 
@@ -363,7 +388,7 @@ function MarketplacePanel() {
 
 
         /* Debugging to see where the search is located */
-        console.log('location event fired:', location)
+        //console.log('location event fired:', location)
 
         location.search !== '' ? setProductView(true) : setProductView(false)
 
@@ -757,7 +782,8 @@ function MarketplacePanel() {
     }
 
     /* Determines whether to render marketplace or product */
-    const RenderSwitch = () => {
+    const RenderSwitch = () =>
+    {
         /* If a product puid is not provided, load the marketplace */
         if (puid === null) {
             /* Primary Marketplace */
@@ -782,9 +808,20 @@ function MarketplacePanel() {
 
                     </div>
 
-                    {/* Content Split */}
-                    <div>
+                    {/* Divider */}
+                    <div/>
 
+                    {/* Content Container Divider */}
+                    <div>
+                        {/* Content */}
+                        <div>
+
+                        </div>
+
+                        {/* Configuration Settings */}
+                        <div>
+
+                        </div>
                     </div>
 
                 </ProductContainer>
@@ -794,7 +831,6 @@ function MarketplacePanel() {
 
     /* Primary return statement for functional component */
     return(
-        /* TODO: Check notepad to get this to work... Goodnight */
         <PrimaryContainer style={{overflowY: productView ? 'hidden' : 'scroll'}}>
 
         {/* Header Containing Search & Other Functions */}
