@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react'
 import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
+import StarRating from '../../components/misc/star_rating'
 
 import Tilt from 'react-tilt'
 
@@ -364,6 +365,7 @@ const ProductContainer = styled.div`
   {
     display: grid;
     grid-template-columns: 2fr 1fr;
+    grid-gap: 15px;
    
     /* TODO: After work, continue styling the products page until completion. That's where you left off... */
     
@@ -423,8 +425,17 @@ const ProductContainer = styled.div`
         & > div:nth-child(4)
         {
           background-color: #1e1e1e;
-          border-radius: 10px;
+          border-radius: 8px;
         }
+      }
+      
+      /* Ratings, Statuses, Awards */
+      & > div:nth-child(4)
+      {
+        display: grid;
+        place-items: center;
+        grid-template-columns: 25px auto 20px 20px auto 1fr;
+        grid-gap: 8px;
       }
     }
     
@@ -441,7 +452,8 @@ const ProductContainer = styled.div`
 function useQuery() { return new URLSearchParams(useLocation().search) }
 
 
-function MarketplacePanel() {
+function MarketplacePanel()
+{
 
     /* Getting the url parameters */
     let query = useQuery()
@@ -458,7 +470,6 @@ function MarketplacePanel() {
 
         /* Debugging to see where the search is located */
         //console.log('location event fired:', location)
-
         location.search !== '' ? setProductView(true) : setProductView(false)
 
     }, [location])
@@ -938,7 +949,25 @@ function MarketplacePanel() {
 
                             {/* Ratings, Like, Wishlist, Awards */}
                             <div>
+                                <div>
+                                    4.8
+                                </div>
 
+                                <div>
+                                    <StarRating rating={95}/>
+                                </div>
+
+                                <div>
+                                    wishlist
+                                </div>
+
+                                <div>
+                                    heart
+                                </div>
+
+                                <div>
+                                    daily
+                                </div>
                             </div>
 
                             {/* Photo Container */}
