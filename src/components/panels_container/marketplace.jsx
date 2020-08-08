@@ -339,10 +339,24 @@ const ThirdContainer = styled.div`
 /******* Product Pages Styling *******/
 const ProductContainer = styled.div`
   display: grid;
-  grid-template-rows: 40px 1px 1fr;
+  grid-template-rows: 35px 1px 1fr;
   overflow: hidden;
   
-  /* Styling the divider */ 
+  /* Information Center */
+  & > div:nth-child(1)
+  {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto 20px;
+    grid-gap: 15px;
+    place-items: center;
+    
+    & > div:nth-child(4)
+    {
+      font-weight: 500;
+    }
+  }
+  
+  /* Divider */ 
   & > div:nth-child(2){ background-color: #D0D0D0; }
   
   /* Two main dividers */
@@ -356,7 +370,62 @@ const ProductContainer = styled.div`
     /* Content Section */
     & > div:nth-child(1)
     {
+      display:            grid;
+      grid-template-rows: 5px 45px 40px 30px 200px 150px 1fr;
+      grid-gap:           15px;
       
+      /* Product Title */
+      & > div:nth-child(2) 
+      { 
+        font-weight: 600;
+        color: #1e1e1e;
+      }
+      
+      /* Brand Contact Bar */
+      & > div:nth-child(3)
+      {
+        display: grid;
+        grid-template-columns: 40px auto 1fr 125px;
+        grid-gap: 10px;
+        height: 40px;
+        
+        /* Photo Container */
+        & > div:nth-child(1)
+        {
+          display: grid;
+          place-content: center;
+          border-radius: 100%;
+          background-color: #2c2f33;
+        }
+        
+        /* Brand Text */
+        & > div:nth-child(2)
+        {
+          display: grid;
+          grid-template-rows: repeat(1fr, 2);
+          place-content: center;
+          
+          & > div:nth-child(1)
+          {
+            font-size: 15px;
+            font-weight: 500;
+            color: #1e1e1e;
+          }
+          
+          & > div:nth-child(2)
+          {
+            font-size: 13px;
+            color: #AAAAAA;
+          }
+        }
+        
+        /* Contact Button */
+        & > div:nth-child(4)
+        {
+          background-color: #1e1e1e;
+          border-radius: 10px;
+        }
+      }
     }
     
     /* Configuration Section */
@@ -805,7 +874,24 @@ function MarketplacePanel() {
 
                     {/* Mini Information Bar */}
                     <div>
+                        {/* Brand @ Handle */}
+                        <div>
+                            @heehee
+                        </div>
 
+                        {/* Related Tags */}
+                        <div>
+                            lol
+                        </div>
+
+                        <div/>
+
+                        {/**/}
+                        <div>
+                            From $25.00/hr. or $99/wk.
+                        </div>
+
+                        <div/>
                     </div>
 
                     {/* Divider */}
@@ -816,6 +902,59 @@ function MarketplacePanel() {
                         {/* Content */}
                         <div>
 
+                            {/* Top Spacer */}
+                            <div/>
+
+                            {/* Product Title */}
+                            <div>
+                                Request epic 3D designs and our team will get them out to you within a week. We will provide sketches either same-or-next day! Message us if you have any questions.
+                            </div>
+
+                            {/* Brand & Contact */}
+                            <div>
+                                {/* Brand Photo */}
+                                <div>
+
+                                </div>
+
+                                {/* Brand Tag and Name */}
+                                <div>
+                                    <div>
+                                        HooHooFarms
+                                    </div>
+                                    <div>
+                                        View brand profile
+                                    </div>
+                                </div>
+
+                                {/* Spacer */}
+                                <div/>
+
+                                {/* Button */}
+                                <div>
+
+                                </div>
+                            </div>
+
+                            {/* Ratings, Like, Wishlist, Awards */}
+                            <div>
+
+                            </div>
+
+                            {/* Photo Container */}
+                            <div>
+
+                            </div>
+
+                            {/* Top Reviews, Additional Important Disclaimers */}
+                            <div>
+
+                            </div>
+
+                            {/* Misc. space... Review Button Container? */}
+                            <div>
+
+                            </div>
                         </div>
 
                         {/* Configuration Settings */}
