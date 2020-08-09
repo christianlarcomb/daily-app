@@ -380,6 +380,8 @@ const ProductContainer = styled.div`
       display:            grid;
       grid-template-rows: 5px 45px 40px 30px 275px 225px 1fr;
       grid-gap:           15px;
+      width: 829px;
+      margin: 0 auto;
       
       /* Product Title */
       & > div:nth-child(2) 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 
 const PrimaryContainer = styled.div`
@@ -14,38 +14,65 @@ const ScrollContainer = styled.div`
   height: 100%;
   width: 100%;
   
+  /* Button Styling */
   & > div:nth-child(1), & > div:nth-child(3)
   {
     height: 45px;
     width: 45px;
     background-color: #1e1e1e;
     border-radius: 100%;
+    z-index: 10;
+    &:hover{ cursor: pointer }
   }
 `
 
 const PhotoContainer = styled.div`
+
   width: 100%;
   height: 275px;
-  padding: 0 22px;
   overflow: hidden;
   
+  /* Limiting the photo container for appearances */
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 15px;
+  grid-template-columns: 20px 1fr 20px;
   
-  & > div 
+  /* Photos Wrapper */
+  & > div:nth-child(2)
   {
-    border-radius: 25px;
-    background-color: lightgray;
-    width: 185px;
-    overflow: hidden;
+    width: 100%;
+    height: 100%;  
     display: grid;
-    place-items: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 15px;
+    overflow: hidden;
+    
+    /* TRANSITION THESE ITEMS */
+    /* Individual Photo Container */
+    & > div
+    {
+      border-radius: 25px;
+      background-color: lightgray;
+      width: 185px;
+      overflow: hidden;
+      display: grid;
+      margin: 0 auto;
+      place-items: center;
+      
+      transform: translateX(${props => props.position});
+    }
   }
 `
 
 export default function PhotoScroll()
 {
+
+    let [position, setPosition] = useState(1)
+
+    /* Checks the size of the photo array passed, and utilizes numerous comparators to handle accordingly */
+    const handleButtonPress = (num) =>
+    {
+        
+    }
 
     return(
         <>
@@ -53,7 +80,7 @@ export default function PhotoScroll()
 
                 <ScrollContainer>
                     {/* Button 1 */}
-                    <div>
+                    <div onClick={handleButtonPress(-1)}>
 
                     </div>
 
@@ -61,27 +88,34 @@ export default function PhotoScroll()
                     <div/>
 
                     {/* Button 2 */}
-                    <div>
+                    <div onClick={handleButtonPress(1)}>
 
                     </div>
 
                 </ScrollContainer>
 
 
-                <PhotoContainer>
-                    {/**/}
-                    <div>
+                <PhotoContainer position={position}>
+                    <div/>
 
-                    </div>
+                    {/* Photo Wrapper */}
                     <div>
+                        {/**/}
+                        <div>
 
-                    </div>
-                    <div>
+                        </div>
+                        <div>
 
-                    </div>
-                    <div>
+                        </div>
+                        <div>
 
+                        </div>
+                        <div>
+
+                        </div>
                     </div>
+
+                    <div/>
                 </PhotoContainer>
 
             </PrimaryContainer>
