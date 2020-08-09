@@ -15,6 +15,7 @@ import { ReactComponent as ClockIcon }     from '../../assets/svgs/explore_heade
 import { ReactComponent as FilterIcon }    from '../../assets/svgs/explore_header/sort_vector.svg';
 import { ReactComponent as WishlistSVG }   from '../../assets/svgs/products/wishlist.svg';
 import { ReactComponent as HeartSVG }      from '../../assets/svgs/products/heart.svg';
+import { ReactComponent as ChatBubblesSVG } from '../../assets/svgs/ui/chat-bubbles.svg';
 
 /* Images */
 import BannerImgOne from '../../assets/imgs/explore/banner_image_1.png'
@@ -390,7 +391,7 @@ const ProductContainer = styled.div`
       & > div:nth-child(3)
       {
         display: grid;
-        grid-template-columns: 40px auto 1fr 125px;
+        grid-template-columns: 40px auto 1fr 140px;
         grid-gap: 10px;
         height: 40px;
         
@@ -430,6 +431,27 @@ const ProductContainer = styled.div`
           background-color: #1e1e1e;
           border-radius: 8px;
           margin: 1px 0;
+          display: grid;
+          grid-template-columns: 36px 1fr;
+          
+          /* SVG Container */
+          & > div:nth-child(1)
+          {
+            margin: auto;
+            height: 16px;
+            padding-left: 8px;
+            
+            & > svg { height: 16px; width: 16px; fill: white}
+          }
+          
+          /* Contact Text */
+          & > div:nth-child(2)
+          {
+            margin: auto 0;
+            padding-left: 4px;
+            color: white;
+            font-size: 14px;
+          }
         }
       }
       
@@ -960,7 +982,12 @@ function MarketplacePanel()
 
                                 {/* Button */}
                                 <div>
-
+                                    <div>
+                                        <ChatBubblesSVG/>
+                                    </div>
+                                    <div>
+                                        Contact Seller
+                                    </div>
                                 </div>
                             </div>
 
