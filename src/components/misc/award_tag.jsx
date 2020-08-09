@@ -9,7 +9,7 @@ const Badge = styled.div`
     
     background-color: #1e1e1e;
     border-radius: 30px;
-    height: 100%;
+    height: 26px;
     width: auto;
     display: grid;
     grid-template-columns: 30px auto;
@@ -67,8 +67,6 @@ export default function AwardTag(props)
                     </div>
                 </Badge>
             )
-        } else {
-            return(<></>)
         }
     }
 

@@ -24,6 +24,8 @@ import BannerImgFour from '../../assets/imgs/explore/banner_image_4.png'
 import BannerImgFive from '../../assets/imgs/explore/banner_image_5.png'
 import BannerImgSix from '../../assets/imgs/explore/banner_image_6.jpg'
 import BannerImgSeven from '../../assets/imgs/explore/banner_image_7.jpg'
+import AwardTag from "../misc/award_tag";
+import LocationTag from "../misc/location_tag";
 
 /******* Marketplace Styling *******/
 const FilterIconStyled = styled(FilterIcon)`
@@ -354,10 +356,8 @@ const ProductContainer = styled.div`
     grid-gap: 15px;
     place-items: center;
     
-    & > div:nth-child(4)
-    {
-      font-weight: 500;
-    }
+    /* Making the Brand Tag and Price Boldened */
+    & > div:nth-child(1), & > div:nth-child(4){ font-weight: 500; }
   }
   
   /* Divider */ 
@@ -376,7 +376,7 @@ const ProductContainer = styled.div`
     & > div:nth-child(1)
     {
       display:            grid;
-      grid-template-rows: 5px 45px 40px 30px 200px 150px 1fr;
+      grid-template-rows: 5px 45px 40px 30px 275px 225px 1fr;
       grid-gap:           15px;
       
       /* Product Title */
@@ -429,6 +429,7 @@ const ProductContainer = styled.div`
         {
           background-color: #1e1e1e;
           border-radius: 8px;
+          margin: 1px 0;
         }
       }
       
@@ -439,8 +440,6 @@ const ProductContainer = styled.div`
         place-items: center;
         grid-template-columns: 25px auto 20px 20px auto 1fr;
         grid-gap: 8px;
-        
-        & > div{height: 16px;}
         
         & > div:nth-child(1)
         {
@@ -455,7 +454,6 @@ const ProductContainer = styled.div`
           height: 16px;
         }
       }
-      
     }
     
     /* Configuration Section */
@@ -910,7 +908,7 @@ function MarketplacePanel()
 
                         {/* Related Tags */}
                         <div>
-                            lol
+                            <LocationTag text={['3D','Fashion','Affordable']}/>
                         </div>
 
                         <div/>
@@ -989,7 +987,7 @@ function MarketplacePanel()
 
                                 {/* Awards */}
                                 <div>
-                                    daily
+                                    <AwardTag badge={1} />
                                 </div>
                             </div>
 
