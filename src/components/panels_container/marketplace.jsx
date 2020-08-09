@@ -27,6 +27,7 @@ import BannerImgSix from '../../assets/imgs/explore/banner_image_6.jpg'
 import BannerImgSeven from '../../assets/imgs/explore/banner_image_7.jpg'
 import AwardTag from "../misc/award_tag";
 import LocationTag from "../misc/location_tag";
+import PhotoScroll from "../misc/photo_scroll";
 
 /******* Marketplace Styling *******/
 const FilterIconStyled = styled(FilterIcon)`
@@ -918,6 +919,7 @@ function MarketplacePanel()
     /* The products content needs to overflow to be hidden so I can make the
     * configuration options scrollable... */
     const ProductContents = () => {
+
         return (
             <>
                 <ProductContainer>
@@ -1021,7 +1023,7 @@ function MarketplacePanel()
 
                             {/* Photo Container */}
                             <div>
-
+                                <PhotoScroll/>
                             </div>
 
                             {/* Top Reviews, Additional Important Disclaimers */}
