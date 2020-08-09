@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 
 /* TODO: Possibly optimize this? */
 /* Generates ID's for each products individual stars... yikes. */

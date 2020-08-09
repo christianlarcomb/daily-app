@@ -9,7 +9,7 @@ import {ReactComponent as ReportSVG} from '../../assets/svgs/products/cancel.svg
 import {ReactComponent as WishlistSVG} from '../../assets/svgs/products/wishlist.svg';
 import {ReactComponent as HeartSVG} from '../../assets/svgs/products/heart.svg';
 import {ReactComponent as ViewItemSVG} from '../../assets/svgs/products/send.svg';
-
+import AwardTag from "./award_tag";
 
 const StyledLinkButtons = styled(Link)`
 
@@ -112,37 +112,8 @@ const ItemStyling = styled.div`
     /* Badge Container */
     & > div:nth-child(3)
     {
-    
-      /* Actual Badge Wrapper */
-      & > div
-      {
-        background-color: #1e1e1e;
-        border-radius: 30px;
-        height: 100%;
-        width: 102px;
-        
-        display: grid;
-        grid-template-columns: 30px auto;
-        
-        font-size: 11px;
-        
-        /* Badge Icon */
-        & > div:nth-child(1)
-        {
-          display: grid;
-          place-content: center;
-          & > svg { height: 14px}
-        }
-        
-        /* Text Container */
-        & > div:nth-child(2)
-        {
-          margin: auto 0;
-          width: auto;
-          & > span:nth-child(1) { color: white }
-          & > span:nth-child(2) { color: #6ab26a }
-        }
-      }
+      display: grid;
+      grid-template-columns: auto 1fr;
     }
     
     /* Misc. Info Container */
@@ -262,38 +233,6 @@ const Overlay = styled.div`
 
 export default class GeneralItemObject extends React.Component
 {
-
-    handleBadge = () =>
-    {
-        /* Daily Choice */
-        if(this.props.badge === 1)
-        {
-            return(
-                <div>
-                    <div>
-                        <CertificateSVG/>
-                    </div>
-                    <div>
-                        <span>Daily</span>&nbsp;<span>Choice</span>
-                    </div>
-                </div>
-            )
-
-        /* Top Rated */
-        } else if(this.props.badge === 2)
-        {
-            return(
-                <div>
-                    <div>
-                        <CertificateSVG/>
-                    </div>
-                    <div>
-                        <span>Top</span>&nbsp;<span>Rated</span>
-                    </div>
-                </div>
-            )
-        }
-    }
 
     handleSelect = () =>
     {
@@ -448,7 +387,6 @@ export default class GeneralItemObject extends React.Component
 
                     {/* Images & Ratings */}
                     <div>
-
                         {/* Star Ratings Container */}
                         <div>
                             <StarRating rating={this.props.product_rating}/>
@@ -473,7 +411,7 @@ export default class GeneralItemObject extends React.Component
                         {/* Badges Container */}
                         <div>
                             {/* Rendering the badges */}
-                            { this.handleBadge() }
+                            <AwardTag badge={this.props.badge}/>
                         </div>
 
                         {/* Spacer */}

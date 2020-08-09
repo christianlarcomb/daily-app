@@ -10,9 +10,11 @@ import GeneralItemObject from "../misc/general_item_object";
 
 /* Vectors */
 import { ReactComponent as DailyTextLogo } from '../../assets/svgs/daily/daily_text.svg';
-import { ReactComponent as SearchIcon } from '../../assets/svgs/ui/search.svg';
-import { ReactComponent as ClockIcon } from '../../assets/svgs/explore_header/clock.svg';
-import { ReactComponent as FilterIcon } from '../../assets/svgs/explore_header/sort_vector.svg';
+import { ReactComponent as SearchIcon }    from '../../assets/svgs/ui/search.svg';
+import { ReactComponent as ClockIcon }     from '../../assets/svgs/explore_header/clock.svg';
+import { ReactComponent as FilterIcon }    from '../../assets/svgs/explore_header/sort_vector.svg';
+import { ReactComponent as WishlistSVG }   from '../../assets/svgs/products/wishlist.svg';
+import { ReactComponent as HeartSVG }      from '../../assets/svgs/products/heart.svg';
 
 /* Images */
 import BannerImgOne from '../../assets/imgs/explore/banner_image_1.png'
@@ -339,6 +341,7 @@ const ThirdContainer = styled.div`
 
 /******* Product Pages Styling *******/
 const ProductContainer = styled.div`
+
   display: grid;
   grid-template-rows: 35px 1px 1fr;
   overflow: hidden;
@@ -436,7 +439,23 @@ const ProductContainer = styled.div`
         place-items: center;
         grid-template-columns: 25px auto 20px 20px auto 1fr;
         grid-gap: 8px;
+        
+        & > div{height: 16px;}
+        
+        & > div:nth-child(1)
+        {
+          font-size: 15px;
+          font-weight: 500;
+          margin-bottom: 4px;
+        }
+        
+        & > div > svg
+        {
+          fill: #1e1e1e;
+          height: 16px;
+        }
       }
+      
     }
     
     /* Configuration Section */
@@ -466,7 +485,6 @@ function MarketplacePanel()
 
     /* TODO: It's working!! Refine for better performance */
     useEffect(() => {
-
 
         /* Debugging to see where the search is located */
         //console.log('location event fired:', location)
@@ -949,22 +967,27 @@ function MarketplacePanel()
 
                             {/* Ratings, Like, Wishlist, Awards */}
                             <div>
+                                {/* Product Rating */}
                                 <div>
                                     4.8
                                 </div>
 
+                                {/* Product Rating */}
                                 <div>
                                     <StarRating rating={95}/>
                                 </div>
 
+                                {/* Add to wishlist */}
                                 <div>
-                                    wishlist
+                                    <WishlistSVG/>
                                 </div>
 
+                                {/* Add to liked */}
                                 <div>
-                                    heart
+                                    <HeartSVG/>
                                 </div>
 
+                                {/* Awards */}
                                 <div>
                                     daily
                                 </div>
