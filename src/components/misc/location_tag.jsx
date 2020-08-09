@@ -38,10 +38,10 @@ export default function LocationTag(props)
         <>
             <Badge>
                 <div>
-                    {props.text.map(txt => (
+                    {props.text.map((txt,i) => (
                         <>
                             <TextLink>{txt}</TextLink>
-                            { txt !== props.text[props.text.length-1] ? (<span> > </span>) : <></> }
+                            { i !== props.text.length-1 ? (<span> > </span>) : <></> }
                         </>
                     ))}
                 </div>

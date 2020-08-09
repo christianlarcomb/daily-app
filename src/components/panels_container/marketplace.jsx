@@ -445,8 +445,9 @@ const ProductContainer = styled.div`
         {
           font-size: 15px;
           font-weight: 500;
-          margin-bottom: 4px;
         }
+        
+        & > div:nth-child(3),& > div:nth-child(4){ height: 16px }
         
         & > div > svg
         {
