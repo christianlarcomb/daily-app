@@ -28,6 +28,11 @@ const ScrollContainer = styled.div`
 
 const PhotoContainer = styled.div`
 
+  .animatedSlide
+  {
+    transition: all ease-in-out 0.1s;
+  }
+
   width: 100%;
   height: 275px;
   overflow: hidden;
@@ -57,9 +62,7 @@ const PhotoContainer = styled.div`
       display: grid;
       margin: 0 auto;
       place-items: center;
-      transition: all ease-in-out 0.1s;
-      
-      transform: translateX(${props => props.position * 200}px);
+      transform: translateX(${props => props.position}px);
     }
   }
 `
@@ -69,16 +72,41 @@ export default function PhotoScroll(props)
 
     let images = props.images
 
+    let [index, setIndex] = useState(0)
     let [position, setPosition] = useState(0)
+    let [animated, setAnimated] = useState(false)
 
 
     /* Checks the size of the photo array passed, and utilizes numerous comparators to handle accordingly */
     const handleLeftButtonPress = () =>
     {
+
         /* If there exists more than 4 photos, let the buttons do something... */
         if(images.length > 4)
+        {
+            /* Showing the initial animation */
+            setAnimated(true);
+
             /* Checking that when adding, it wont go over... If so, reset it */
-            (position-1) < 0 ? setPosition(images.length-1) : setPosition(position-1);
+            (index-1) < 0 ? setIndex(images.length-1) : setIndex(index-1);
+
+            /* Pushing the images to the right */
+            setPosition(200);
+
+            /* Slight Delay to see the animation */
+            setTimeout(() =>
+            {
+
+                /* Showing the initial animation */
+                setAnimated(false);
+
+                /* Resetting the images */
+                setPosition(0);
+
+            }, 1000)
+
+        }
+
     }
 
     /* Checks the size of the photo array passed, and utilizes numerous comparators to handle accordingly */
@@ -86,8 +114,27 @@ export default function PhotoScroll(props)
     {
         /* If there exists more than 4 photos, let the buttons do something... */
         if(images.length > 4)
+        {
+            /* Showing the initial animation */
+            setAnimated(true);
+
             /* Checking that when adding, it wont go over... If so, reset it */
-            (position+1) >= (images.length-1) ? setPosition(0) : setPosition(position+1);
+            (index+1) >= (images.length-1) ? setIndex(0) : setIndex(index+1);
+
+            /* Pushing the images to the right */
+            setPosition(-200);
+
+            setTimeout(() => {
+
+                /* Showing the initial animation */
+                setAnimated(false);
+
+                /* Resetting the images */
+                setPosition(0);
+
+            }, 1000)
+
+        }
 
     }
 
@@ -113,21 +160,22 @@ export default function PhotoScroll(props)
 
 
                 <PhotoContainer position={position}>
+
                     <div/>
 
                     {/* Photo Wrapper */}
                     <div>
                         {/**/}
-                        <div>
+                        <div className={animated ? '.animatedSlide' : ''}>
 
                         </div>
-                        <div>
+                        <div className={animated ? '.animatedSlide' : ''}>
 
                         </div>
-                        <div>
+                        <div className={animated ? 'animatedSlide' : ''}>
 
                         </div>
-                        <div>
+                        <div className={animated ? 'animatedSlide' : ''}>
 
                         </div>
                     </div>
