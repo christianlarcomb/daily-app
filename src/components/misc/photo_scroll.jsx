@@ -30,7 +30,7 @@ const PhotoContainer = styled.div`
 
   .animatedSlide
   {
-    transition: all ease-in-out 0.1s;
+    transition: all ease-in-out 0.075s;
   }
 
   width: 100%;
@@ -70,12 +70,11 @@ const PhotoContainer = styled.div`
 export default function PhotoScroll(props)
 {
 
+    /* Necessary Variables */
     let images = props.images
-
     let [index, setIndex] = useState(0)
     let [position, setPosition] = useState(0)
     let [animated, setAnimated] = useState(false)
-
 
     /* Checks the size of the photo array passed, and utilizes numerous comparators to handle accordingly */
     const handleLeftButtonPress = () =>
@@ -103,7 +102,7 @@ export default function PhotoScroll(props)
                 /* Resetting the images */
                 setPosition(0);
 
-            }, 1000)
+            }, 750)
 
         }
 
@@ -124,7 +123,8 @@ export default function PhotoScroll(props)
             /* Pushing the images to the right */
             setPosition(-200);
 
-            setTimeout(() => {
+            setTimeout(() =>
+            {
 
                 /* Showing the initial animation */
                 setAnimated(false);
@@ -132,7 +132,7 @@ export default function PhotoScroll(props)
                 /* Resetting the images */
                 setPosition(0);
 
-            }, 1000)
+            }, 750)
 
         }
 
@@ -166,10 +166,10 @@ export default function PhotoScroll(props)
                     {/* Photo Wrapper */}
                     <div>
                         {/**/}
-                        <div className={animated ? '.animatedSlide' : ''}>
+                        <div className={animated ? 'animatedSlide' : ''}>
 
                         </div>
-                        <div className={animated ? '.animatedSlide' : ''}>
+                        <div className={animated ? 'animatedSlide' : ''}>
 
                         </div>
                         <div className={animated ? 'animatedSlide' : ''}>
