@@ -102,7 +102,7 @@ export default function PhotoScroll(props)
                 /* Resetting the images */
                 setPosition(0);
 
-            }, 750)
+            }, 75)
 
         }
 
@@ -132,7 +132,7 @@ export default function PhotoScroll(props)
                 /* Resetting the images */
                 setPosition(0);
 
-            }, 750)
+            }, 75)
 
         }
 
