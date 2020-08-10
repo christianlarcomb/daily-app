@@ -1025,7 +1025,7 @@ function MarketplacePanel()
 
                             {/* Photo Container */}
                             <div>
-                                <PhotoScroll/>
+                                <PhotoScroll images={['','','','','']}/>
                             </div>
 
                             {/* Top Reviews, Additional Important Disclaimers */}

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 const PrimaryContainer = styled.div`
@@ -57,21 +57,38 @@ const PhotoContainer = styled.div`
       display: grid;
       margin: 0 auto;
       place-items: center;
+      transition: all ease-in-out 0.1s;
       
-      transform: translateX(${props => props.position});
+      transform: translateX(${props => props.position * 200}px);
     }
   }
 `
 
-export default function PhotoScroll()
+export default function PhotoScroll(props)
 {
 
-    let [position, setPosition] = useState(1)
+    let images = props.images
+
+    let [position, setPosition] = useState(0)
+
 
     /* Checks the size of the photo array passed, and utilizes numerous comparators to handle accordingly */
-    const handleButtonPress = (num) =>
+    const handleLeftButtonPress = () =>
     {
-        
+        /* If there exists more than 4 photos, let the buttons do something... */
+        if(images.length > 4)
+            /* Checking that when adding, it wont go over... If so, reset it */
+            (position-1) < 0 ? setPosition(images.length-1) : setPosition(position-1);
+    }
+
+    /* Checks the size of the photo array passed, and utilizes numerous comparators to handle accordingly */
+    const handleRightButtonPress = () =>
+    {
+        /* If there exists more than 4 photos, let the buttons do something... */
+        if(images.length > 4)
+            /* Checking that when adding, it wont go over... If so, reset it */
+            (position+1) >= (images.length-1) ? setPosition(0) : setPosition(position+1);
+
     }
 
     return(
@@ -80,7 +97,7 @@ export default function PhotoScroll()
 
                 <ScrollContainer>
                     {/* Button 1 */}
-                    <div onClick={handleButtonPress(-1)}>
+                    <div onClick={handleLeftButtonPress}>
 
                     </div>
 
@@ -88,7 +105,7 @@ export default function PhotoScroll()
                     <div/>
 
                     {/* Button 2 */}
-                    <div onClick={handleButtonPress(1)}>
+                    <div onClick={handleRightButtonPress}>
 
                     </div>
 
