@@ -47,7 +47,7 @@ const PhotoContainer = styled.div`
     width: 100%;
     height: 100%;  
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(${props => props.arraySize}, 1fr);
     grid-gap: 15px;
     overflow: hidden;
     
@@ -62,7 +62,8 @@ const PhotoContainer = styled.div`
       display: grid;
       margin: 0 auto;
       place-items: center;
-      transform: translateX(${props => props.position}px);
+      transform: translateX(-${props => props.position}px);
+      transition: all ease-in-out 0.075s;
     }
   }
 `
@@ -72,70 +73,73 @@ export default function PhotoScroll(props)
 
     /* Necessary Variables */
     let images = props.images
-    let [index, setIndex] = useState(0)
+    let imagesArrayLength = images.length
+    let [frontImageIndex, setFrontImageIndex] = useState(0)
     let [position, setPosition] = useState(0)
-    let [animated, setAnimated] = useState(false)
+    let [animated, setAnimated] = useState(true)
 
-    /* Checks the size of the photo array passed, and utilizes numerous comparators to handle accordingly */
     const handleLeftButtonPress = () =>
     {
-
-        /* If there exists more than 4 photos, let the buttons do something... */
-        if(images.length > 4)
+        // Checking if their are more than 4 images (to enable the buttons...)
+        if(imagesArrayLength > 4)
         {
-            /* Showing the initial animation */
+            /* If the front images index is greater than its starting position, go ahead */
+            if(frontImageIndex > 0)
+            {
+                setFrontImageIndex(frontImageIndex-=1)
+                setPosition(frontImageIndex * 200)
+                //console.log('Current F.I.I:',frontImageIndex)
+            }
+
+
+            /* INFINITE SCROLL SOLUTION - KEEP FOR POSSIBLE FEATURE / OPTION
+
             setAnimated(true);
 
-            /* Checking that when adding, it wont go over... If so, reset it */
             (index-1) < 0 ? setIndex(images.length-1) : setIndex(index-1);
 
-            /* Pushing the images to the right */
             setPosition(200);
 
-            /* Slight Delay to see the animation */
             setTimeout(() =>
             {
-
-                /* Showing the initial animation */
                 setAnimated(false);
-
-                /* Resetting the images */
                 setPosition(0);
-
             }, 75)
 
+            */
         }
-
     }
 
-    /* Checks the size of the photo array passed, and utilizes numerous comparators to handle accordingly */
     const handleRightButtonPress = () =>
     {
-        /* If there exists more than 4 photos, let the buttons do something... */
-        if(images.length > 4)
+        // Checking if their are more than 4 images (to enable the buttons...)
+        if(imagesArrayLength > 4)
         {
-            /* Showing the initial animation */
+            /* checking whether the length of the image array minus it's current position is  */
+            if((frontImageIndex + 5) <= imagesArrayLength)
+            {
+                setFrontImageIndex(frontImageIndex+=1)
+                setPosition(frontImageIndex * 200)
+                //console.log('Current F.I.I:',frontImageIndex)
+            }
+
+            
+            /* INFINITE SCROLL SOLUTION - KEEP FOR POSSIBLE FEATURE / OPTION
+
             setAnimated(true);
 
-            /* Checking that when adding, it wont go over... If so, reset it */
             (index+1) >= (images.length-1) ? setIndex(0) : setIndex(index+1);
 
-            /* Pushing the images to the right */
             setPosition(-200);
 
             setTimeout(() =>
             {
-
-                /* Showing the initial animation */
                 setAnimated(false);
-
-                /* Resetting the images */
                 setPosition(0);
-
             }, 75)
+            */
 
         }
-
     }
 
     return(
@@ -159,25 +163,18 @@ export default function PhotoScroll(props)
                 </ScrollContainer>
 
 
-                <PhotoContainer position={position}>
+                <PhotoContainer position={position} arraySize={imagesArrayLength}>
 
                     <div/>
 
                     {/* Photo Wrapper */}
                     <div>
-                        {/**/}
-                        <div className={animated ? 'animatedSlide' : ''}>
+                        {/* Enumerating through each image and rendering them accordingly */}
+                        {props.images.map((img) => (
+                            <div>
 
-                        </div>
-                        <div className={animated ? 'animatedSlide' : ''}>
-
-                        </div>
-                        <div className={animated ? 'animatedSlide' : ''}>
-
-                        </div>
-                        <div className={animated ? 'animatedSlide' : ''}>
-
-                        </div>
+                            </div>
+                        ))}
                     </div>
 
                     <div/>
