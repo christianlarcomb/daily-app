@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
+/* SVGs */
+import { ReactComponent as NextArrowSVG } from '../../assets/svgs/image_scroll/next.svg';
+
 const PrimaryContainer = styled.div`
   height: 100%;
   position: relative;
@@ -22,16 +25,34 @@ const ScrollContainer = styled.div`
     background-color: #1e1e1e;
     border-radius: 100%;
     z-index: 10;
+    display: grid;
+    align-items: center;
+    
     &:hover{ cursor: pointer }
+    
+    & > svg
+    {
+      height: 22px;
+      width: 22px;
+      fill: white;
+    }
   }
+  
+  /* Rotating the svg for the left button */
+  & > div:nth-child(1)
+  {
+    padding-left: 10px;
+    & > svg:nth-child(1){ transform: rotate(180deg); }
+  }
+  
+  & > div:nth-child(3)
+  {
+    padding-left: 12px;
+  }
+  
 `
 
 const PhotoContainer = styled.div`
-
-  .animatedSlide
-  {
-    transition: all ease-in-out 0.075s;
-  }
 
   width: 100%;
   height: 275px;
@@ -62,7 +83,7 @@ const PhotoContainer = styled.div`
       display: grid;
       margin: 0 auto;
       place-items: center;
-      transform: translateX(-${props => props.position}px);
+      transform: translateX(${props => parseInt(props.position)}px);
       transition: all ease-in-out 0.075s;
     }
   }
@@ -75,8 +96,7 @@ export default function PhotoScroll(props)
     let images = props.images
     let imagesArrayLength = images.length
     let [frontImageIndex, setFrontImageIndex] = useState(0)
-    let [position, setPosition] = useState(0)
-    let [animated, setAnimated] = useState(true)
+    let [position, setPosition] = useState('')
 
     const handleLeftButtonPress = () =>
     {
@@ -87,10 +107,22 @@ export default function PhotoScroll(props)
             if(frontImageIndex > 0)
             {
                 setFrontImageIndex(frontImageIndex-=1)
-                setPosition(frontImageIndex * 200)
+
+                setPosition((frontImageIndex * -200).toString())
                 //console.log('Current F.I.I:',frontImageIndex)
+
+            /* Cool mini animation */
             }
 
+            if (frontImageIndex === 0)
+            {
+                /* Displacement effect */
+                setPosition('25')
+
+                /* Resetting */
+                setTimeout(() => {setPosition('0');}, 75)
+
+            }
 
             /* INFINITE SCROLL SOLUTION - KEEP FOR POSSIBLE FEATURE / OPTION
 
@@ -119,11 +151,25 @@ export default function PhotoScroll(props)
             if((frontImageIndex + 5) <= imagesArrayLength)
             {
                 setFrontImageIndex(frontImageIndex+=1)
-                setPosition(frontImageIndex * 200)
+                setPosition((frontImageIndex * -200).toString())
                 //console.log('Current F.I.I:',frontImageIndex)
             }
 
-            
+            /* If you reached the end of the line */
+            else if (frontImageIndex+4 === imagesArrayLength)
+            {
+
+                /* Holding the previous position */
+                let prevPosition = parseInt(position)
+
+                /* Setting the bound position */
+                setPosition((prevPosition - 25).toString())
+
+                /* Resetting */
+                setTimeout(() => {setPosition(prevPosition.toString());}, 75)
+
+            }
+
             /* INFINITE SCROLL SOLUTION - KEEP FOR POSSIBLE FEATURE / OPTION
 
             setAnimated(true);
@@ -149,7 +195,7 @@ export default function PhotoScroll(props)
                 <ScrollContainer>
                     {/* Button 1 */}
                     <div onClick={handleLeftButtonPress}>
-
+                        <NextArrowSVG/>
                     </div>
 
                     {/* Gap */}
@@ -157,11 +203,10 @@ export default function PhotoScroll(props)
 
                     {/* Button 2 */}
                     <div onClick={handleRightButtonPress}>
-
+                        <NextArrowSVG/>
                     </div>
 
                 </ScrollContainer>
-
 
                 <PhotoContainer position={position} arraySize={imagesArrayLength}>
 
