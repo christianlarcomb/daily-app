@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 /* SVGs */
@@ -20,8 +20,8 @@ const ScrollContainer = styled.div`
   /* Button Styling */
   & > div:nth-child(1), & > div:nth-child(3)
   {
-    height: 45px;
-    width: 45px;
+    height: 42px;
+    width: 42px;
     background-color: #1e1e1e;
     border-radius: 100%;
     z-index: 10;
@@ -32,8 +32,8 @@ const ScrollContainer = styled.div`
     
     & > svg
     {
-      height: 22px;
-      width: 22px;
+      height: 20px;
+      width: 20px;
       fill: white;
     }
   }
@@ -228,5 +228,4 @@ export default function PhotoScroll(props)
             </PrimaryContainer>
         </>
     )
-
 }
