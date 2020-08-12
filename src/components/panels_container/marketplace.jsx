@@ -28,6 +28,7 @@ import BannerImgSeven from '../../assets/imgs/explore/banner_image_7.jpg'
 import AwardTag from "../misc/award_tag";
 import LocationTag from "../misc/location_tag";
 import PhotoScroll from "../misc/photo_scroll";
+import ReviewScroll from "../misc/review_scroll";
 
 /******* Marketplace Styling *******/
 const FilterIconStyled = styled(FilterIcon)`
@@ -378,7 +379,7 @@ const ProductContainer = styled.div`
     & > div:nth-child(1)
     {
       display:            grid;
-      grid-template-rows: 5px 45px 40px 30px 275px 225px 1fr;
+      grid-template-rows: 5px 45px 40px 30px 275px 1fr 50px;
       grid-gap:           15px;
       width: 829px;
       margin: 0 auto;
@@ -478,6 +479,32 @@ const ProductContainer = styled.div`
         {
           fill: #1e1e1e;
           height: 16px;
+        }
+      }
+      
+      /* Reviews, Disclaimers */
+      & > div:nth-child(6)
+      {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-gap: 40px;
+        place-content: center;
+        
+        /* Review Container */
+        & > div:nth-child(1)
+        {
+            height: 235px;
+            display: grid;
+            grid-gap: 20px;
+            grid-template-rows: 18px 1fr;
+        }
+        
+        /* Disclaimer Container */
+        & > div:nth-child(2)
+        {
+            height: auto;
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
         }
       }
     }
@@ -1030,6 +1057,17 @@ function MarketplacePanel()
 
                             {/* Top Reviews, Additional Important Disclaimers */}
                             <div>
+
+                                {/* Review Container */}
+                                <div>
+                                    <div>Hear what people have to say about this product</div>
+                                    <ReviewScroll reviews={['','','','','','']} />
+                                </div>
+
+                                {/* Disclaimer Container */}
+                                <div>
+
+                                </div>
 
                             </div>
 

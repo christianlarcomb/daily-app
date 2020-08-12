@@ -10,6 +10,7 @@ const PrimaryContainer = styled.div`
 `
 
 const ScrollContainer = styled.div`
+
   position: absolute;
   display: grid;
   grid-template-columns: 45px 1fr 45px;
@@ -52,27 +53,25 @@ const ScrollContainer = styled.div`
   
 `
 
-const PhotoContainer = styled.div`
+const ReviewContainer = styled.div`
 
   width: 100%;
-  height: 275px;
+  height: 100%;
   overflow: hidden;
   
   /* Limiting the photo container for appearances */
   display: grid;
   grid-template-columns: 20px 1fr 20px;
   
-  /* Photos Wrapper */
+  /* Reviews Wrapper */
   & > div:nth-child(2)
   {
     width: 100%;
     height: 100%;  
     display: grid;
     grid-template-columns: repeat(${props => props.arraySize}, 1fr);
-    grid-gap: 15px;
     overflow: hidden;
-    
-    /* Spacing issue is detected here... Fix it up! */
+    background-color: #e9f0ed;
     border-radius: 25px;
     
     /* TRANSITION THESE ITEMS */
@@ -80,8 +79,9 @@ const PhotoContainer = styled.div`
     & > div
     {
       border-radius: 25px;
-      background-color: lightgray;
-      width: 185px;
+      background-color: #2c2f33;
+      
+      width: 486px;
       overflow: hidden;
       display: grid;
       margin: 0 auto;
@@ -92,103 +92,68 @@ const PhotoContainer = styled.div`
   }
 `
 
-export default function PhotoScroll(props)
+export default function ReviewScroll(props)
 {
 
     /* Necessary Variables */
-    let images = props.images
-    let imagesArrayLength = images.length
-    let [frontImageIndex, setFrontImageIndex] = useState(0)
+    let reviews = props.reviews
+    let reviewsArrayLength = reviews.length
+    let [reviewsIndex, setReviewsIndex] = useState(0)
     let [position, setPosition] = useState('')
 
     const handleLeftButtonPress = () =>
     {
         // Checking if their are more than 4 images (to enable the buttons...)
-        if(imagesArrayLength > 4)
+        if(reviewsArrayLength > 1)
         {
             /* If the front images index is greater than its starting position, go ahead */
-            if(frontImageIndex > 0)
+            if(reviewsIndex > 0)
             {
-                setFrontImageIndex(frontImageIndex-=1)
+                setReviewsIndex(reviewsIndex-=1)
 
-                setPosition((frontImageIndex * -200).toString())
+                setPosition((reviewsIndex * -486).toString())
                 //console.log('Current F.I.I:',frontImageIndex)
-
-            /* Cool mini animation */
             }
 
-            if (frontImageIndex === 0)
+            /* Animation Sequence */
+            if (reviewsIndex === 0)
             {
                 /* Displacement effect */
                 setPosition('25')
 
                 /* Resetting */
                 setTimeout(() => {setPosition('0');}, 75)
-
             }
 
-            /* INFINITE SCROLL SOLUTION - KEEP FOR POSSIBLE FEATURE / OPTION
-
-            setAnimated(true);
-
-            (index-1) < 0 ? setIndex(images.length-1) : setIndex(index-1);
-
-            setPosition(200);
-
-            setTimeout(() =>
-            {
-                setAnimated(false);
-                setPosition(0);
-            }, 75)
-
-            */
         }
     }
 
     const handleRightButtonPress = () =>
     {
-        // Checking if their are more than 4 images (to enable the buttons...)
-        if(imagesArrayLength > 4)
+
+        /*   */
+        if((reviewsIndex + 1) < reviewsArrayLength)
         {
-            /* checking whether the length of the image array minus it's current position is  */
-            if((frontImageIndex + 5) <= imagesArrayLength)
-            {
-                setFrontImageIndex(frontImageIndex+=1)
-                setPosition((frontImageIndex * -200).toString())
-                //console.log('Current F.I.I:',frontImageIndex)
-            }
+            setReviewsIndex(reviewsIndex+=1)
+            setPosition((reviewsIndex * -486).toString())
+            //console.log('Current F.I.I:',frontImageIndex)
+        }
 
-            /* If you reached the end of the line */
-            else if (frontImageIndex+4 === imagesArrayLength)
-            {
+        /* If you reached the end of the line */
+        else if (reviewsArrayLength === reviewsArrayLength)
+        {
 
-                /* Holding the previous position */
-                let prevPosition = parseInt(position)
+            /* Holding the previous position */
+            let prevPosition = parseInt(position)
 
-                /* Setting the bound position */
-                setPosition((prevPosition - 25).toString())
+            /* Setting the bound position */
+            setPosition((prevPosition - 25).toString())
 
-                /* Resetting */
-                setTimeout(() => {setPosition(prevPosition.toString());}, 75)
-
-            }
-
-            /* INFINITE SCROLL SOLUTION - KEEP FOR POSSIBLE FEATURE / OPTION
-
-            setAnimated(true);
-
-            (index+1) >= (images.length-1) ? setIndex(0) : setIndex(index+1);
-
-            setPosition(-200);
-
-            setTimeout(() =>
-            {
-                setAnimated(false);
-                setPosition(0);
-            }, 75)
-            */
+            /* Resetting */
+            setTimeout(() => {setPosition(prevPosition.toString());}, 75)
 
         }
+
     }
 
     return(
@@ -211,14 +176,14 @@ export default function PhotoScroll(props)
 
                 </ScrollContainer>
 
-                <PhotoContainer position={position} arraySize={imagesArrayLength}>
+                <ReviewContainer position={position} arraySize={reviewsArrayLength}>
 
                     <div/>
 
                     {/* Photo Wrapper */}
                     <div>
                         {/* Enumerating through each image and rendering them accordingly */}
-                        {props.images.map((img) => (
+                        {props.reviews.map((review) => (
                             <div>
 
                             </div>
@@ -226,7 +191,7 @@ export default function PhotoScroll(props)
                     </div>
 
                     <div/>
-                </PhotoContainer>
+                </ReviewContainer>
 
             </PrimaryContainer>
         </>
