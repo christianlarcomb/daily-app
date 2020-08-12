@@ -87,7 +87,7 @@ const PhotoContainer = styled.div`
       margin: 0 auto;
       place-items: center;
       transform: translateX(${props => parseInt(props.position)}px);
-      transition: all ease-in-out 0.075s;
+      transition: all ease-in-out 0.15s;
     }
   }
 `
@@ -123,7 +123,7 @@ export default function PhotoScroll(props)
                 setPosition('25')
 
                 /* Resetting */
-                setTimeout(() => {setPosition('0');}, 75)
+                setTimeout(() => {setPosition('0');}, 150)
 
             }
 
@@ -169,7 +169,7 @@ export default function PhotoScroll(props)
                 setPosition((prevPosition - 25).toString())
 
                 /* Resetting */
-                setTimeout(() => {setPosition(prevPosition.toString());}, 75)
+                setTimeout(() => {setPosition(prevPosition.toString());}, 150)
 
             }
 

@@ -486,7 +486,7 @@ const ProductContainer = styled.div`
       & > div:nth-child(6)
       {
         display: grid;
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: 5fr 3fr;
         grid-gap: 40px;
         place-content: center;
         
@@ -495,8 +495,20 @@ const ProductContainer = styled.div`
         {
             height: 235px;
             display: grid;
-            grid-gap: 20px;
-            grid-template-rows: 18px 1fr;
+            grid-gap: 16px;
+            grid-template-rows: 18px 1px 1fr;
+            
+            & > div:nth-child(1)
+            {
+              font-size: 16px;
+              font-weight: 600;
+            }
+            
+            /* Divider */
+            & > div:nth-child(2)
+            {
+              background-color: #C2C2C2;
+            }
         }
         
         /* Disclaimer Container */
@@ -1060,7 +1072,8 @@ function MarketplacePanel()
 
                                 {/* Review Container */}
                                 <div>
-                                    <div>Hear what people have to say about this product</div>
+                                    <div>Featured Reviews</div>
+                                    <div/>
                                     <ReviewScroll reviews={['','','','','','']} />
                                 </div>
 

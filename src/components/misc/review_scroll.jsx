@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, {useState, useRef, useEffect, useLayoutEffect} from 'react'
 import styled from 'styled-components'
 
 /* SVGs */
-import { ReactComponent as NextArrowSVG } from '../../assets/svgs/image_scroll/next.svg';
+import { ReactComponent as NextArrowSVG } from '../../assets/svgs/scroll_components/next.svg';
+import { ReactComponent as QuoteSVG } from '../../assets/svgs/scroll_components/quote-solid.svg';
 
 const PrimaryContainer = styled.div`
   height: 100%;
@@ -67,27 +68,73 @@ const ReviewContainer = styled.div`
   & > div:nth-child(2)
   {
     width: 100%;
-    height: 100%;  
+    height: 185px;  
     display: grid;
     grid-template-columns: repeat(${props => props.arraySize}, 1fr);
     overflow: hidden;
-    background-color: #e9f0ed;
     border-radius: 25px;
+    position: relative;
     
-    /* TRANSITION THESE ITEMS */
-    /* Individual Photo Container */
+    /* INDIVIDUAL REVIEW */
     & > div
     {
       border-radius: 25px;
-      background-color: #2c2f33;
-      
-      width: 486px;
+      width: 453px;
+      height: 185px;
       overflow: hidden;
       display: grid;
-      margin: 0 auto;
-      place-items: center;
+      grid-template-columns: 1fr 184px 185px 1fr;
+      grid-gap: 10px;
+      
+      /* Moves all of the containers giving the illusion of group movement */
       transform: translateX(${props => parseInt(props.position)}px);
-      transition: all ease-in-out 0.075s;
+      transition: all ease-in-out 0.15s;
+      
+      /* Styling the image alongside the rating */
+      & > div:nth-child(2)
+      {
+        border-radius: 25px;
+        background-color: #1e1e1e;
+      }
+      
+      /* Review Passages / Text */
+      & > div:nth-child(3)
+      {
+        display: grid;
+        height: 185px;
+        grid-template-rows: 1fr 16px 13px 6px 15px auto 15px 1fr;
+        grid-gap: 2px;
+        margin: 0 10px;
+        
+        /* User Text */
+        & > div:nth-child(2) { font-weight: 500; font-size: 16px }
+        & > div:nth-child(3) { font-weight: 500; font-size: 13px; color: #9B9B9B }
+        
+        /* Quote SVG Top */
+        & > div:nth-child(5)
+        {
+          margin-right: auto;
+          
+          & > svg { height: 15px; width: 15px; fill: #9B9B9B}
+        }
+        
+        /* Review Text */
+        & > div:nth-child(6) 
+        { 
+          font-size: 14px;
+          color: #9B9B9B;
+        }
+        
+        /* Quote SVG Bottom */
+        & > div:nth-child(7)
+        {
+          margin-left: auto;
+          
+          & > svg { height: 15px; width: 15px; transform: rotate(180deg); fill: #9B9B9B}
+        }
+        
+      }
+      
     }
   }
 `
@@ -111,7 +158,7 @@ export default function ReviewScroll(props)
             {
                 setReviewsIndex(reviewsIndex-=1)
 
-                setPosition((reviewsIndex * -486).toString())
+                setPosition((reviewsIndex * -453).toString())
                 //console.log('Current F.I.I:',frontImageIndex)
             }
 
@@ -122,7 +169,7 @@ export default function ReviewScroll(props)
                 setPosition('25')
 
                 /* Resetting */
-                setTimeout(() => {setPosition('0');}, 75)
+                setTimeout(() => {setPosition('0');}, 150)
             }
 
         }
@@ -135,7 +182,7 @@ export default function ReviewScroll(props)
         if((reviewsIndex + 1) < reviewsArrayLength)
         {
             setReviewsIndex(reviewsIndex+=1)
-            setPosition((reviewsIndex * -486).toString())
+            setPosition((reviewsIndex * -453).toString())
             //console.log('Current F.I.I:',frontImageIndex)
         }
 
@@ -150,7 +197,7 @@ export default function ReviewScroll(props)
             setPosition((prevPosition - 25).toString())
 
             /* Resetting */
-            setTimeout(() => {setPosition(prevPosition.toString());}, 75)
+            setTimeout(() => {setPosition(prevPosition.toString());}, 150)
 
         }
 
@@ -185,7 +232,24 @@ export default function ReviewScroll(props)
                         {/* Enumerating through each image and rendering them accordingly */}
                         {props.reviews.map((review) => (
                             <div>
+                                <div/>
 
+                                <div>
+
+                                </div>
+
+                                <div>
+                                    <div/>
+                                    <div>Michael Janlaeo</div>
+                                    <div>@michaeljanlaeo</div>
+                                    <div/>
+                                    <div><QuoteSVG/></div>
+                                    <div>This service was nothing but perfect. My business partner loves every single design that this team has produced! </div>
+                                    <div><QuoteSVG/></div>
+                                    <div/>
+                                </div>
+
+                                <div/>
                             </div>
                         ))}
                     </div>
