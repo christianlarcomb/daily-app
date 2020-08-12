@@ -163,13 +163,13 @@ export default function PhotoScroll(props)
             {
 
                 /* Holding the previous position */
-                let prevPosition = parseInt(position)
+                let finalPosition = (imagesArrayLength-4) * -200
 
                 /* Setting the bound position */
-                setPosition((prevPosition - 25).toString())
+                setPosition((finalPosition - 25).toString())
 
                 /* Resetting */
-                setTimeout(() => {setPosition(prevPosition.toString());}, 150)
+                setTimeout(() => {setPosition(finalPosition.toString());}, 150)
 
             }
 

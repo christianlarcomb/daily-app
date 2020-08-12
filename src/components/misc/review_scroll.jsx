@@ -191,13 +191,13 @@ export default function ReviewScroll(props)
         {
 
             /* Holding the previous position */
-            let prevPosition = parseInt(position)
+            let finalPosition = (reviewsArrayLength-1) * -453
 
             /* Setting the bound position */
-            setPosition((prevPosition - 25).toString())
+            setPosition((finalPosition-25).toString())
 
             /* Resetting */
-            setTimeout(() => {setPosition(prevPosition.toString());}, 150)
+            setTimeout(() => {setPosition(finalPosition.toString());}, 150)
 
         }
 
