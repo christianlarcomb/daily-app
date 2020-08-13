@@ -1061,7 +1061,7 @@ function MarketplacePanel()
 
                                 {/* Review Container */}
                                 <div>
-                                    <RatingsBarGraph/>
+                                    <RatingsBarGraph ratings={[56,28,4,2,1]}/>
                                 </div>
 
                                 {/* Disclaimer Container */}
