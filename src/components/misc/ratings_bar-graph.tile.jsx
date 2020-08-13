@@ -30,7 +30,7 @@ const RatingsContainer = styled.div`
     grid-template-rows: 5fr 1px 1fr;
     height: 100%;
     width: 100%;
-    padding: 0 35px 6px 35px;
+    padding: 0 35px 8px 35px;
     
     /* Border */
     & > div:nth-child(6)
@@ -49,12 +49,17 @@ const RatingsContainer = styled.div`
       width: 44px;
       margin: auto auto 0 auto;
       border-radius: 10px 10px 0 0;
-      
       display: grid;
       place-content: center;
-      
       font-size: 14px;
       font-weight: 500;
+      transition: all ease-in-out 0.8s;
+      
+      & > span
+      {
+        transition: opacity ease-in-out 0.8s;
+        opacity: ${props => props.textOpacity}%
+      }
     }
     
     /* Bar 1 */
@@ -92,6 +97,7 @@ const RatingsContainer = styled.div`
       height: ${props => props.percentages[4]}%;
     }
     
+    /* Styling the rating & stars */
     & > div:nth-child(7),
     & > div:nth-child(8),
     & > div:nth-child(9),
@@ -123,7 +129,8 @@ const RatingsContainer = styled.div`
 export default function RatingsBarGraph(props)
 {
 
-    let [starPercentages, setStarPercentages] = useState([])
+    let [starPercentages, setStarPercentages] = useState([0,0,0,0,0])
+    let [textOpacity, setTextOpacity] = useState(0)
 
     /* Doing some calculations */
     useEffect(() => {
@@ -138,7 +145,11 @@ export default function RatingsBarGraph(props)
         amt_star_ratings.map((amt, i) => perc_ratings[i] = Math.floor((amt/stars_sum) * 100))
 
         /* Setting the state with the percentages */
-        setStarPercentages(perc_ratings)
+        setTimeout(() => {
+            setStarPercentages(perc_ratings)
+            setTextOpacity(100)
+        }
+        , 500)
 
     }, [])
 
@@ -150,7 +161,7 @@ export default function RatingsBarGraph(props)
 
     return(
         <>
-            <RatingsContainer percentages={starPercentages}>
+            <RatingsContainer percentages={starPercentages} textOpacity={textOpacity}>
 
                 {/* Floating Text */}
                 <div>
@@ -161,7 +172,9 @@ export default function RatingsBarGraph(props)
 
                     { starPercentages.map(val => (
                       <div>
-                          {val >= 10 ? `${val}%` : ''}
+                          <span>
+                              {val >= 10 ? `${val}%` : ''}
+                          </span>
                       </div>
                     ))}
 
