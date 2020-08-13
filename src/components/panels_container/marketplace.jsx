@@ -27,8 +27,9 @@ import BannerImgSix from '../../assets/imgs/explore/banner_image_6.jpg'
 import BannerImgSeven from '../../assets/imgs/explore/banner_image_7.jpg'
 import AwardTag from "../misc/award_tag";
 import LocationTag from "../misc/location_tag";
-import PhotoScroll from "../misc/photo_scroll";
-import ReviewScroll from "../misc/review_scroll";
+import PhotoScroll from "../misc/photo_scroll.tile";
+import ReviewScroll from "../misc/review_scroll.tile";
+import RatingsBarGraph from "../misc/ratings_bar-graph.tile";
 
 /******* Marketplace Styling *******/
 const FilterIconStyled = styled(FilterIcon)`
@@ -379,7 +380,7 @@ const ProductContainer = styled.div`
     & > div:nth-child(1)
     {
       display:            grid;
-      grid-template-rows: 5px 45px 40px 30px 275px 1fr 50px;
+      grid-template-rows: 5px 45px 40px 30px 275px 215px 50px;
       grid-gap:           15px;
       width: 829px;
       margin: 0 auto;
@@ -482,36 +483,23 @@ const ProductContainer = styled.div`
         }
       }
       
-      /* Reviews, Disclaimers */
+      /* Ratings, Featured Reviews | Tiles */
       & > div:nth-child(6)
       {
         display: grid;
-        grid-template-columns: 5fr 3fr;
-        grid-gap: 40px;
-        place-content: center;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 15px;
         
-        /* Review Container */
+        /* Rating Container */
         & > div:nth-child(1)
         {
-            height: 235px;
             display: grid;
             grid-gap: 16px;
-            grid-template-rows: 18px 1px 1fr;
-            
-            & > div:nth-child(1)
-            {
-              font-size: 16px;
-              font-weight: 600;
-            }
-            
-            /* Divider */
-            & > div:nth-child(2)
-            {
-              background-color: #C2C2C2;
-            }
+            grid-template-rows: 1fr;
+            height: 215px;
         }
         
-        /* Disclaimer Container */
+        /* Review Container */
         & > div:nth-child(2)
         {
             height: auto;
@@ -959,7 +947,8 @@ function MarketplacePanel()
 
     /* The products content needs to overflow to be hidden so I can make the
     * configuration options scrollable... */
-    const ProductContents = () => {
+    const ProductContents = () =>
+    {
 
         return (
             <>
@@ -1072,14 +1061,12 @@ function MarketplacePanel()
 
                                 {/* Review Container */}
                                 <div>
-                                    <div>Featured Reviews</div>
-                                    <div/>
-                                    <ReviewScroll reviews={['','','','','','']} />
+                                    <RatingsBarGraph/>
                                 </div>
 
                                 {/* Disclaimer Container */}
                                 <div>
-
+                                    <ReviewScroll reviews={['','','','','','']} />
                                 </div>
 
                             </div>

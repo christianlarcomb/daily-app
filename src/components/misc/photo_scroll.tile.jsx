@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 /* SVGs */
-import { ReactComponent as NextArrowSVG } from '../../assets/svgs/image_scroll/next.svg';
+import { ReactComponent as NextArrowSVG } from '../../assets/svgs/scroll_components/next.svg';
 
 const PrimaryContainer = styled.div`
   height: 100%;
@@ -10,9 +10,10 @@ const PrimaryContainer = styled.div`
 `
 
 const ScrollContainer = styled.div`
+
   position: absolute;
   display: grid;
-  grid-template-columns: 45px 1fr 45px;
+  grid-template-columns: 34px 1fr 34px;
   place-content: center;
   height: 100%;
   width: 100%;
@@ -20,36 +21,46 @@ const ScrollContainer = styled.div`
   /* Button Styling */
   & > div:nth-child(1), & > div:nth-child(3)
   {
-    height: 42px;
-    width: 42px;
+    height: 75px;
+    width: 34px;
     background-color: #1e1e1e;
-    border-radius: 100%;
     z-index: 10;
     display: grid;
     align-items: center;
+    grid-template-columns: 1fr;
     
     &:hover{ cursor: pointer }
     
     & > svg
     {
-      height: 20px;
-      width: 20px;
+      height: 18px;
+      width: 18px;
       fill: white;
     }
   }
   
-  /* Rotating the svg for the left button */
+  /* Left Button Styling */
   & > div:nth-child(1)
   {
-    padding-left: 10px;
-    & > svg:nth-child(1){ transform: rotate(180deg); }
+    border-radius: 0 10px 10px 0;
+    
+    & > svg 
+    { 
+      transform: rotate(180deg);
+      margin-left: 7px;
+    }
   }
   
-  & > div:nth-child(3)
+  /* Right Button Styling */
+  & > div:nth-child(3) 
   {
-    padding-left: 12px;
+    border-radius: 10px 0 0 10px;
+    
+    & > svg 
+    { 
+      margin-left: 9px;
+    }
   }
-  
 `
 
 const PhotoContainer = styled.div`
@@ -60,10 +71,10 @@ const PhotoContainer = styled.div`
   
   /* Limiting the photo container for appearances */
   display: grid;
-  grid-template-columns: 20px 1fr 20px;
+  grid-template-columns: 1fr;
   
   /* Photos Wrapper */
-  & > div:nth-child(2)
+  & > div
   {
     width: 100%;
     height: 100%;  
@@ -80,8 +91,8 @@ const PhotoContainer = styled.div`
     & > div
     {
       border-radius: 25px;
-      background-color: lightgray;
-      width: 185px;
+      background-color: #F2F2F2;
+      width: 196px;
       overflow: hidden;
       display: grid;
       margin: 0 auto;
@@ -111,13 +122,13 @@ export default function PhotoScroll(props)
             {
                 setFrontImageIndex(frontImageIndex-=1)
 
-                setPosition((frontImageIndex * -200).toString())
+                setPosition((frontImageIndex * -211).toString())
                 //console.log('Current F.I.I:',frontImageIndex)
 
             /* Cool mini animation */
             }
 
-            if (frontImageIndex === 0)
+            else if (frontImageIndex === 0)
             {
                 /* Displacement effect */
                 setPosition('25')
@@ -154,8 +165,7 @@ export default function PhotoScroll(props)
             if((frontImageIndex + 5) <= imagesArrayLength)
             {
                 setFrontImageIndex(frontImageIndex+=1)
-                setPosition((frontImageIndex * -200).toString())
-                //console.log('Current F.I.I:',frontImageIndex)
+                setPosition((frontImageIndex * -211).toString())
             }
 
             /* If you reached the end of the line */
@@ -163,7 +173,7 @@ export default function PhotoScroll(props)
             {
 
                 /* Holding the previous position */
-                let finalPosition = (imagesArrayLength-4) * -200
+                let finalPosition = (imagesArrayLength-4) * -211
 
                 /* Setting the bound position */
                 setPosition((finalPosition - 25).toString())
@@ -213,8 +223,6 @@ export default function PhotoScroll(props)
 
                 <PhotoContainer position={position} arraySize={imagesArrayLength}>
 
-                    <div/>
-
                     {/* Photo Wrapper */}
                     <div>
                         {/* Enumerating through each image and rendering them accordingly */}
@@ -225,7 +233,6 @@ export default function PhotoScroll(props)
                         ))}
                     </div>
 
-                    <div/>
                 </PhotoContainer>
 
             </PrimaryContainer>

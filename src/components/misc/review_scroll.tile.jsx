@@ -14,16 +14,16 @@ const ScrollContainer = styled.div`
 
   position: absolute;
   display: grid;
-  grid-template-columns: 45px 1fr 45px;
+  grid-template-columns: 34px 1fr 34px;
   place-content: center;
-  height: 100%;
+  height: 215px;
   width: 100%;
   
   /* Button Styling */
   & > div:nth-child(1), & > div:nth-child(3)
   {
-    height: 42px;
-    width: 42px;
+    height: 75px;
+    width: 34px;
     background-color: #1e1e1e;
     border-radius: 100%;
     z-index: 10;
@@ -34,22 +34,33 @@ const ScrollContainer = styled.div`
     
     & > svg
     {
-      height: 20px;
-      width: 20px;
+      height: 18px;
+      width: 18px;
       fill: white;
     }
   }
   
-  /* Rotating the svg for the left button */
+  /* Left Button Styling */
   & > div:nth-child(1)
   {
-    padding-left: 10px;
-    & > svg:nth-child(1){ transform: rotate(180deg); }
+    border-radius: 0 10px 10px 0;
+    
+    & > svg 
+    { 
+      transform: rotate(180deg);
+      margin-left: 7px;
+    }
   }
   
-  & > div:nth-child(3)
+  /* Right Button Styling */
+  & > div:nth-child(3) 
   {
-    padding-left: 12px;
+    border-radius: 10px 0 0 10px;
+    
+    & > svg 
+    { 
+      margin-left: 9px;
+    }
   }
   
 `
@@ -62,13 +73,13 @@ const ReviewContainer = styled.div`
   
   /* Limiting the photo container for appearances */
   display: grid;
-  grid-template-columns: 20px 1fr 20px;
+  grid-template-columns: 1fr;
   
   /* Reviews Wrapper */
-  & > div:nth-child(2)
+  & > div:nth-child(1)
   {
     width: 100%;
-    height: 185px;  
+    height: 215px;  
     display: grid;
     grid-template-columns: repeat(${props => props.arraySize}, 1fr);
     overflow: hidden;
@@ -79,32 +90,37 @@ const ReviewContainer = styled.div`
     & > div
     {
       border-radius: 25px;
-      width: 453px;
-      height: 185px;
+      width: 407px;
+      height: 215px;
       overflow: hidden;
       display: grid;
-      grid-template-columns: 1fr 184px 185px 1fr;
-      grid-gap: 10px;
+      grid-template-columns: 200px 207px;
+      grid-template-rows: 215px;
+      
+      background-color: #F2F2F2;
       
       /* Moves all of the containers giving the illusion of group movement */
       transform: translateX(${props => parseInt(props.position)}px);
       transition: all ease-in-out 0.15s;
       
+      
       /* Styling the image alongside the rating */
-      & > div:nth-child(2)
+      & > div:nth-child(1)
       {
-        border-radius: 25px;
+        border-radius: 25px 0 0 25px;
         background-color: #1e1e1e;
+        height: 215px;
       }
       
       /* Review Passages / Text */
-      & > div:nth-child(3)
+      & > div:nth-child(2)
       {
         display: grid;
         height: 185px;
-        grid-template-rows: 1fr 16px 13px 6px 15px auto 15px 1fr;
+        grid-template-rows: 1fr 16px 13px 6px 14px auto 14px 1fr;
         grid-gap: 2px;
-        margin: 0 10px;
+        margin: auto 12px;
+        width: 150px;
         
         /* User Text */
         & > div:nth-child(2) { font-weight: 500; font-size: 16px }
@@ -115,7 +131,7 @@ const ReviewContainer = styled.div`
         {
           margin-right: auto;
           
-          & > svg { height: 15px; width: 15px; fill: #9B9B9B}
+          & > svg { height: 14px; width: 14px; fill: #9B9B9B}
         }
         
         /* Review Text */
@@ -158,12 +174,13 @@ export default function ReviewScroll(props)
             {
                 setReviewsIndex(reviewsIndex-=1)
 
-                setPosition((reviewsIndex * -453).toString())
+                setPosition((reviewsIndex * -407).toString())
                 //console.log('Current F.I.I:',frontImageIndex)
-            }
 
             /* Animation Sequence */
-            if (reviewsIndex === 0)
+            }
+
+            else if (reviewsIndex === 0)
             {
                 /* Displacement effect */
                 setPosition('25')
@@ -182,7 +199,7 @@ export default function ReviewScroll(props)
         if((reviewsIndex + 1) < reviewsArrayLength)
         {
             setReviewsIndex(reviewsIndex+=1)
-            setPosition((reviewsIndex * -453).toString())
+            setPosition((reviewsIndex * -407).toString())
             //console.log('Current F.I.I:',frontImageIndex)
         }
 
@@ -191,7 +208,7 @@ export default function ReviewScroll(props)
         {
 
             /* Holding the previous position */
-            let finalPosition = (reviewsArrayLength-1) * -453
+            let finalPosition = (reviewsArrayLength-1) * -407
 
             /* Setting the bound position */
             setPosition((finalPosition-25).toString())
@@ -225,19 +242,18 @@ export default function ReviewScroll(props)
 
                 <ReviewContainer position={position} arraySize={reviewsArrayLength}>
 
-                    <div/>
-
                     {/* Photo Wrapper */}
                     <div>
                         {/* Enumerating through each image and rendering them accordingly */}
                         {props.reviews.map((review) => (
                             <div>
-                                <div/>
 
+                                {/* Rating with Blurred Back */}
                                 <div>
 
                                 </div>
 
+                                {/* Comment Area */}
                                 <div>
                                     <div/>
                                     <div>Michael Janlaeo</div>
@@ -249,12 +265,10 @@ export default function ReviewScroll(props)
                                     <div/>
                                 </div>
 
-                                <div/>
                             </div>
                         ))}
                     </div>
 
-                    <div/>
                 </ReviewContainer>
 
             </PrimaryContainer>
