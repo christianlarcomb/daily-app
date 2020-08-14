@@ -30,6 +30,7 @@ import LocationTag from "../misc/location_tag";
 import PhotoScroll from "../misc/tiles/photo_scroll.tile";
 import ReviewScroll from "../misc/tiles/review_scroll.tile";
 import RatingsBarGraph from "../misc/tiles/ratings_bar-graph.tile";
+import ReviewsContainer from "../misc/containers/reviews.container";
 
 /******* Marketplace Styling *******/
 const FilterIconStyled = styled(FilterIcon)`
@@ -382,22 +383,6 @@ const ProductContainer = styled.div`
       width: 850px;
       height: calc(100vh - 90px);
       margin: 0 auto;
-      
-      &::-webkit-scrollbar
-      {
-        width: 5px;
-      }
-      
-      &::-webkit-scrollbar-track
-      {
-        background-color: #fefefe;
-      }
-      
-      &::-webkit-scrollbar-thumb
-      {
-        background-color: #DFDFDF;
-        border-radius: 20px;
-      }
     
         /* Content Wrapper */
         & > div
@@ -519,7 +504,7 @@ const ProductContainer = styled.div`
             & > div:nth-child(1){ grid-column: 1/3; }
             
             /* General Styling Tiles Backs */
-             & > div:nth-child(4), & > div:nth-child(5), & > div:nth-child(6){ background-color: #F2F2F2; border-radius: 25px; overflow: hidden }
+            & > div:nth-child(4), & > div:nth-child(5), & > div:nth-child(6){ background-color: #F2F2F2; border-radius: 25px; overflow: hidden }
             
             /* Community Photo Scroll */
             & > div:nth-child(4)
@@ -574,6 +559,8 @@ const ProductContainer = styled.div`
                 font-weight: 500;
                 font-size: 17px;
               }
+              
+              & > div:nth-child()
             }
             
             /* Disclaimer Grid */
@@ -598,7 +585,6 @@ const ProductContainer = styled.div`
 `
 
 function useQuery() { return new URLSearchParams(useLocation().search) }
-
 
 function MarketplacePanel()
 {
@@ -1024,7 +1010,6 @@ function MarketplacePanel()
     * configuration options scrollable... */
     const ProductContents = () =>
     {
-
         return (
             <>
                 <ProductContainer>
@@ -1176,16 +1161,17 @@ function MarketplacePanel()
                                     <div>
                                         <div>Reviews</div>
 
+                                        {/* Reviews Scroll Container */}
                                         <div>
-
+                                            <ReviewsContainer reviews={[{},{},{},{},{},{},{}]}/>
                                         </div>
                                     </div>
 
                                     {/* Disclaimer Grid */}
                                     <div>
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
+                                        <div>test</div>
+                                        <div>tst</div>
+                                        <div>test</div>
 
                                     </div>
                                 </div>
