@@ -103,6 +103,16 @@ export default class StarRating extends React.Component
         })
     }
 
+    handleStarColor = () =>
+    {
+        try
+        {
+            return(this.props.options.primaryColor)
+        } catch (e) {
+            return '#FCC034'
+        }
+    }
+
     render()
     {
         return (
@@ -118,8 +128,8 @@ export default class StarRating extends React.Component
                     >
                         <defs>
                             <linearGradient id={`starOne-${this.state.starOneID}`}>
-                                <stop offset="0%" stopColor="#FCC034"/>
-                                <stop offset={this.state.starOne + `%`} stopColor="#FCC034"/>
+                                <stop offset="0%" stopColor={this.handleStarColor()}/>
+                                <stop offset={this.state.starOne + `%`} stopColor={this.handleStarColor()}/>
                                 <stop offset={this.state.starOne + `%`} stopColor="rgba(0,0,0,0.5)"/>
                                 <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
                             </linearGradient>
@@ -138,8 +148,8 @@ export default class StarRating extends React.Component
                     >
                         <defs>
                             <linearGradient id={`starTwo-${this.state.starTwoID}`}>
-                                <stop offset="0%" stopColor="#FCC034"/>
-                                <stop offset={this.state.starTwo + `%`} stopColor="#FCC034"/>
+                                <stop offset="0%" stopColor={this.handleStarColor()}/>
+                                <stop offset={this.state.starTwo + `%`} stopColor={this.handleStarColor()}/>
                                 <stop offset={this.state.starTwo + `%`} stopColor="rgba(0,0,0,0.5)"/>
                                 <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
                             </linearGradient>
@@ -157,8 +167,8 @@ export default class StarRating extends React.Component
                     >
                         <defs>
                             <linearGradient id={`starThree-${this.state.starThreeID}`}>
-                                <stop offset="0%" stopColor="#FCC034"/>
-                                <stop offset={this.state.starThree + `%`} stopColor="#FCC034"/>
+                                <stop offset="0%" stopColor={this.handleStarColor()}/>
+                                <stop offset={this.state.starThree + `%`} stopColor={this.handleStarColor()}/>
                                 <stop offset={this.state.starThree + `%`} stopColor="rgba(0,0,0,0.5)"/>
                                 <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
                             </linearGradient>
@@ -176,8 +186,8 @@ export default class StarRating extends React.Component
                     >
                         <defs>
                             <linearGradient id={`starFour-${this.state.starFourID}`}>
-                                <stop offset="0%" stopColor="#FCC034"/>
-                                <stop offset={this.state.starFour + `%`} stopColor="#FCC034"/>
+                                <stop offset="0%" stopColor={this.handleStarColor()}/>
+                                <stop offset={this.state.starFour + `%`} stopColor={this.handleStarColor()}/>
                                 <stop offset={this.state.starFour + `%`} stopColor="rgba(0,0,0,0.5)"/>
                                 <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
                             </linearGradient>
@@ -195,8 +205,8 @@ export default class StarRating extends React.Component
                     >
                         <defs>
                             <linearGradient id={`starFive-${this.state.starFiveID}`}>
-                                <stop offset="0%" stopColor="#FCC034"/>
-                                <stop offset={this.state.starFive + `%`} stopColor="#FCC034"/>
+                                <stop offset="0%" stopColor={this.handleStarColor()}/>
+                                <stop offset={this.state.starFive + `%`} stopColor={this.handleStarColor()}/>
                                 <stop offset={this.state.starFive + `%`} stopColor="rgba(0,0,0,0.5)"/>
                                 <stop offset="100%" stopColor="rgba(0,0,0,0.5)"/>
                             </linearGradient>

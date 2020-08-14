@@ -32,6 +32,23 @@ import ReviewScroll from "../misc/tiles/review_scroll.tile";
 import RatingsBarGraph from "../misc/tiles/ratings_bar-graph.tile";
 import ReviewsContainer from "../misc/containers/reviews.container";
 
+/* SAMPLE PHOTOS */
+/* TODO: Replace these with restAPI calls! */
+import SamplePhoto1 from '../../assets/imgs/sample_photos/1.png'
+import SamplePhoto2 from '../../assets/imgs/sample_photos/2.jpg'
+import SamplePhoto3 from '../../assets/imgs/sample_photos/3.jpg'
+import SamplePhoto4 from '../../assets/imgs/sample_photos/4.jpg'
+import SamplePhoto5 from '../../assets/imgs/sample_photos/5.jpg'
+import SamplePhoto6 from '../../assets/imgs/sample_photos/6.jpg'
+import SamplePhoto7 from '../../assets/imgs/sample_photos/7.jpg'
+import SamplePhoto8 from '../../assets/imgs/sample_photos/8.jpg'
+import SamplePhoto9 from '../../assets/imgs/sample_photos/9.jpg'
+import SamplePhoto10 from '../../assets/imgs/sample_photos/10.jpg'
+import SamplePhoto11 from '../../assets/imgs/sample_photos/11.jpg'
+import SamplePhoto12 from '../../assets/imgs/sample_photos/12.jpg'
+import SamplePhoto13 from '../../assets/imgs/sample_photos/13.jpg'
+import SamplePhoto14 from '../../assets/imgs/sample_photos/14.jpg'
+
 /******* Marketplace Styling *******/
 const FilterIconStyled = styled(FilterIcon)`
   height: 12px;
@@ -415,7 +432,11 @@ const ProductContainer = styled.div`
               display: grid;
               place-content: center;
               border-radius: 100%;
-              background-color: #2c2f33;
+              background-color: #f2f2f2;
+              overflow: hidden;
+              
+              /* Image Itself */
+              & > img {height: 40px;}
             }
             
             /* Brand Text */
@@ -559,8 +580,6 @@ const ProductContainer = styled.div`
                 font-weight: 500;
                 font-size: 17px;
               }
-              
-              & > div:nth-child()
             }
             
             /* Disclaimer Grid */
@@ -1060,7 +1079,7 @@ function MarketplacePanel()
                                 <div>
                                     {/* Brand Photo */}
                                     <div>
-
+                                        <img src={SamplePhoto14} alt='Brand Photo'/>
                                     </div>
 
                                     {/* Brand Tag and Name */}
@@ -1119,7 +1138,7 @@ function MarketplacePanel()
                                 <div>
                                     {/* Product Images Scroll */}
                                     <PhotoScroll
-                                        images={['','','','','','','']}
+                                        images={[SamplePhoto1,SamplePhoto2,SamplePhoto3,SamplePhoto4,SamplePhoto5,SamplePhoto6,SamplePhoto7]}
                                         options={{
                                             height: 275,
                                             tilesShown: 4
@@ -1130,7 +1149,36 @@ function MarketplacePanel()
                                     <RatingsBarGraph ratings={[46,28,4,12,1]}/>
 
                                     {/* Featured Reviews Scroll */}
-                                    <ReviewScroll reviews={['','','','','','']} />
+                                    <ReviewScroll reviews={[
+                                        {
+                                            name: 'Mick Nano',
+                                            tag: 'mikenano224',
+                                            stars: 5,
+                                            review: 'One of the best brands on Daily. Wonderful people.',
+                                            profile_image: SamplePhoto14
+                                        },
+                                        {
+                                            name: 'Rochel Danni',
+                                            tag: 'rgirllovesyou',
+                                            stars: 4,
+                                            review: `I can't express enough how fantastic Mara and Michael are!!! Excellent!`,
+                                            profile_image: SamplePhoto13
+                                        },
+                                        {
+                                            name: 'Mick Thomson',
+                                            tag: 'numseven',
+                                            stars: 3,
+                                            review: 'One of the best brands on the market. Thank you.',
+                                            profile_image: SamplePhoto12
+                                        },
+                                        {
+                                            name: 'Danni California',
+                                            tag: 'dcali',
+                                            stars: 2,
+                                            review: 'One word. Amazing. I wish I could give more than 5 stars.',
+                                            profile_image: SamplePhoto11
+                                        }
+                                    ]} />
 
                                     {/* Community Photos */}
                                     <div>
@@ -1138,7 +1186,7 @@ function MarketplacePanel()
 
                                         <div>
                                             <PhotoScroll
-                                                images={['','','','','','','']}
+                                                images={[SamplePhoto8,SamplePhoto9,SamplePhoto10,SamplePhoto11,SamplePhoto12,SamplePhoto13,SamplePhoto14]}
                                                 options={{
                                                     height: 180,
                                                     width: 300,
@@ -1163,7 +1211,60 @@ function MarketplacePanel()
 
                                         {/* Reviews Scroll Container */}
                                         <div>
-                                            <ReviewsContainer reviews={[{},{},{},{},{},{},{}]}/>
+                                            <ReviewsContainer reviews={[
+                                                {
+                                                    name: 'Mick Nano',
+                                                    tag: 'mikenano224',
+                                                    profile_image: SamplePhoto14,
+                                                    stars: 5,
+                                                    review: 'Absolutely wonderful seller! They\'ve made my companies 3D designs in\n' +
+                                                        'about a day and they look wonderful! Check them out!',
+                                                    images: []
+                                                },
+                                                {
+                                                    name: 'Rachel Touly',
+                                                    tag: 'rachelgirl4232',
+                                                    profile_image: SamplePhoto13,
+                                                    stars: 4,
+                                                    review: 'This team responded to my questions within an hour and proved to be\n' +
+                                                        'one of the best experiences I\'ve had on this platform. Wonderful!',
+                                                    images: []
+                                                },
+                                                {
+                                                    name: 'John McNiel',
+                                                    tag: 'jboy33',
+                                                    profile_image: SamplePhoto12,
+                                                    stars: 5,
+                                                    review: 'Absolutely wonderful seller! They\'ve made my companies 3D designs in\n' +
+                                                        'about a day and they look wonderful! Check them out!',
+                                                    images: []
+                                                },
+                                                {
+                                                    name: 'Sal Gomez',
+                                                    tag: 'happymez',
+                                                    profile_image: SamplePhoto11,
+                                                    stars: 5,
+                                                    review: 'Epic epic epic.',
+                                                    images: []
+                                                },
+                                                {
+                                                    name: 'Rick Gerviaz',
+                                                    tag: 'rickboytheman',
+                                                    profile_image: SamplePhoto10,
+                                                    stars: 5,
+                                                    review: 'Thank you!! My company is super happy with your guys work!',
+                                                    images: []
+                                                },
+                                                {
+                                                    name: 'Mike Ike',
+                                                    tag: 'mikeandike',
+                                                    profile_image: SamplePhoto9,
+                                                    stars: 5,
+                                                    review: 'noice',
+                                                    images: []
+                                                }
+                                                ]}
+                                            />
                                         </div>
                                     </div>
 

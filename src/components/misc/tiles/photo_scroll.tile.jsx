@@ -99,6 +99,12 @@ const PhotoContainer = styled.div`
       place-items: center;
       transform: translateX(${props => parseInt(props.position)}px);
       transition: all ease-in-out 0.15s;
+      place-content: center;
+      
+      & > img
+      {
+        height: 100%;
+      }
     }
   }
 `
@@ -245,9 +251,9 @@ export default function PhotoScroll(props)
                     {/* Photo Wrapper */}
                     <div>
                         {/* Enumerating through each image and rendering them accordingly */}
-                        {props.images.map((img) => (
+                        {props.images.map((img, i) => (
                             <div>
-
+                                <img src={img} alt={`Product Image ${i+1}`}/>
                             </div>
                         ))}
                     </div>

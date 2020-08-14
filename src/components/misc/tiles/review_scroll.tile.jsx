@@ -4,6 +4,7 @@ import styled from 'styled-components'
 /* SVGs */
 import { ReactComponent as NextArrowSVG } from '../../../assets/svgs/scroll_components/next.svg';
 import { ReactComponent as QuoteSVG } from '../../../assets/svgs/scroll_components/quote-solid.svg';
+import StarRating from "../star_rating";
 
 const PrimaryContainer = styled.div`
   height: 100%;
@@ -106,9 +107,43 @@ const ReviewContainer = styled.div`
       /* Styling the image alongside the rating */
       & > div:nth-child(1)
       {
+        display: grid;
         border-radius: 25px 0 0 25px;
         background-color: #1e1e1e;
         height: 215px;
+        overflow: hidden;
+        place-content: center;
+        position: relative;
+        
+        /* Number + Stars */
+        & > div:nth-child(1)
+        {
+          height: 100%;
+          width: 100%;
+          position: absolute;
+          background-color: rgba(30,30,30,0.85);
+          backdrop-filter: blur(20px) saturate(400%);
+          
+          display: grid;
+          grid-gap: 10px;
+          grid-template-rows: 22px 15px;
+          place-content: center;
+          
+          & > div:nth-child(1)
+          {
+            margin: 0 auto;
+            font-size: 22px;
+            color: white;
+          }
+          
+          & > div:nth-child(2)
+          {
+            width: 75px;
+          }
+        }
+        
+        /* Image Back */
+        & > img { height: 215px; }
       }
       
       /* Review Passages / Text */
@@ -262,16 +297,25 @@ export default function ReviewScroll(props)
                                 {/* Rating with Blurred Back */}
                                 <div>
 
+                                    {/* Data Grid */}
+                                    <div>
+                                        <div>{review.stars}</div>
+                                        <div><StarRating rating={review.stars*20} options={{primaryColor: '#fff'}}/></div>
+                                    </div>
+
+                                    {/* Image Back */}
+                                    <img src={review.profile_image}/>
+
                                 </div>
 
                                 {/* Comment Area */}
                                 <div>
                                     <div/>
-                                    <div>Michael Janlaeo</div>
-                                    <div>@michaeljanlaeo</div>
+                                    <div>{review.name}</div>
+                                    <div>{review.tag}</div>
                                     <div/>
                                     <div><QuoteSVG/></div>
-                                    <div>This service was nothing but perfect. My business partner loves every single design that this team has produced! </div>
+                                    <div>{review.review}</div>
                                     <div><QuoteSVG/></div>
                                     <div/>
                                 </div>

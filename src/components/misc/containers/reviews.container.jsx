@@ -10,30 +10,36 @@ const CommentContainer = styled.div`
   height: 520px;
   width: 100%;
   
-  /* Styling the comment container */
+  /* Styling the reviews container */
   & > div
   {
     height: auto;
     
     display: grid;
-    grid-template-rows: 42px auto auto;
+    grid-template-rows: 40px auto auto;
     grid-gap: 10px;
-    margin: 0 40px;
+    margin: 0 30px;
     
     /* Image, Name/Tag, Rating Given */
     & > div:nth-child(1)
     {
       display: grid;
-      grid-template-columns: 42px auto 10px 15px auto 1fr;
+      grid-template-columns: 40px auto 2px 15px auto 1fr;
       grid-gap: 6px;
       
       /* Profile Picture Container */
       & > div:nth-child(1)
-      {;
+      {
         background-color: #2c2f33;
         border-radius: 100%;
         display: grid;
         place-items: center;
+        overflow: hidden;
+        
+        & > img 
+        {
+          height: 40px;
+        }
       }
       
       /* Name / Tag - Grid */
@@ -47,6 +53,7 @@ const CommentContainer = styled.div`
         {
           font-size: 14px;
           margin-top: auto;
+          transform: translateY(1px);
         }
         /* Tag */
         & > div:nth-child(2)
@@ -104,13 +111,13 @@ export default function ReviewsContainer(props)
                                 <div>
                                     {/* Image */}
                                     <div>
-
+                                        <img src={review.profile_image} alt='Profile Image'/>
                                     </div>
 
                                     {/* Brand Text */}
                                     <div>
-                                        <div>Sarah Posh</div>
-                                        <div>@sarahposh</div>
+                                        <div>{review.name}</div>
+                                        <div>@{review.tag}</div>
                                     </div>
 
                                     {/* Spacer */}
@@ -121,15 +128,14 @@ export default function ReviewsContainer(props)
 
                                     {/* Amount of Stars */}
                                     <div>
-                                        5 Stars
+                                        {review.stars} Stars
                                     </div>
 
                                     {/* Spacer */}
                                     <div/>
                                 </div>
                                 <div>
-                                    Absolutely wonderful seller! They've made my companies 3D designs in
-                                    about a day and they look wonderful! Check them out!
+                                    {review.review}
                                 </div>
                                 <div>
 
