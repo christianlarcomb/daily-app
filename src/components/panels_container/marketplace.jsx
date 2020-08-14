@@ -373,140 +373,157 @@ const ProductContainer = styled.div`
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-gap: 15px;
-   
-    /* TODO: After work, continue styling the products page until completion. That's where you left off... */
     
-    /* Content Section */
+    /* Content Container */
     & > div:nth-child(1)
     {
-      display:            grid;
-      grid-template-rows: 5px 45px 40px 30px 275px 215px 50px;
-      grid-gap:           15px;
-      width: 829px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      width: 850px;
+      height: calc(100vh - 90px);
       margin: 0 auto;
       
-      /* Product Title */
-      & > div:nth-child(2) 
-      { 
-        font-weight: 600;
-        color: #1e1e1e;
+      &::-webkit-scrollbar
+      {
+        width: 5px;
       }
       
-      /* Brand Contact Bar */
-      & > div:nth-child(3)
+      &::-webkit-scrollbar-track
       {
-        display: grid;
-        grid-template-columns: 40px auto 1fr 140px;
-        grid-gap: 10px;
-        height: 40px;
-        
-        /* Photo Container */
-        & > div:nth-child(1)
+        background-color: #fefefe;
+      }
+      
+      &::-webkit-scrollbar-thumb
+      {
+        background-color: #DFDFDF;
+        border-radius: 20px;
+      }
+    
+        /* Content Wrapper */
+        & > div
         {
-          display: grid;
-          place-content: center;
-          border-radius: 100%;
-          background-color: #2c2f33;
-        }
-        
-        /* Brand Text */
-        & > div:nth-child(2)
-        {
-          display: grid;
-          grid-template-rows: repeat(1fr, 2);
-          place-content: center;
+          display:            grid;
+          grid-template-rows: 5px 45px 40px 30px auto;
+          grid-gap:           15px;
+          width: 829px;
+          margin: 0 auto;
+          height: auto;
           
-          & > div:nth-child(1)
-          {
-            font-size: 15px;
-            font-weight: 500;
+          /* Product Title */
+          & > div:nth-child(2) 
+          { 
+            font-weight: 600;
             color: #1e1e1e;
           }
           
-          & > div:nth-child(2)
+          /* Brand Contact Bar */
+          & > div:nth-child(3)
           {
-            font-size: 13px;
-            color: #AAAAAA;
-          }
-        }
-        
-        /* Contact Button */
-        & > div:nth-child(4)
-        {
-          background-color: #1e1e1e;
-          border-radius: 8px;
-          margin: 1px 0;
-          display: grid;
-          grid-template-columns: 36px 1fr;
-          
-          /* SVG Container */
-          & > div:nth-child(1)
-          {
-            margin: auto;
-            height: 16px;
-            padding-left: 8px;
+            display: grid;
+            grid-template-columns: 40px auto 1fr 140px;
+            grid-gap: 10px;
+            height: 40px;
             
-            & > svg { height: 16px; width: 16px; fill: white}
+            /* Photo Container */
+            & > div:nth-child(1)
+            {
+              display: grid;
+              place-content: center;
+              border-radius: 100%;
+              background-color: #2c2f33;
+            }
+            
+            /* Brand Text */
+            & > div:nth-child(2)
+            {
+              display: grid;
+              grid-template-rows: repeat(1fr, 2);
+              place-content: center;
+              
+              & > div:nth-child(1)
+              {
+                font-size: 15px;
+                font-weight: 500;
+                color: #1e1e1e;
+              }
+              
+              & > div:nth-child(2)
+              {
+                font-size: 13px;
+                color: #AAAAAA;
+              }
+            }
+            
+            /* Contact Button */
+            & > div:nth-child(4)
+            {
+              background-color: #1e1e1e;
+              border-radius: 8px;
+              margin: 1px 0;
+              display: grid;
+              grid-template-columns: 36px 1fr;
+              
+              /* SVG Container */
+              & > div:nth-child(1)
+              {
+                margin: auto;
+                height: 16px;
+                padding-left: 8px;
+                
+                & > svg { height: 16px; width: 16px; fill: white}
+              }
+              
+              /* Contact Text */
+              & > div:nth-child(2)
+              {
+                margin: auto 0;
+                padding-left: 4px;
+                color: white;
+                font-size: 14px;
+              }
+            }
           }
           
-          /* Contact Text */
-          & > div:nth-child(2)
+          /* Ratings, Statuses, Awards */
+          & > div:nth-child(4)
           {
-            margin: auto 0;
-            padding-left: 4px;
-            color: white;
-            font-size: 14px;
+            display: grid;
+            place-items: center;
+            grid-template-columns: 25px auto 20px 20px auto 1fr;
+            grid-gap: 8px;
+            
+            & > div:nth-child(1)
+            {
+              font-size: 15px;
+              font-weight: 500;
+            }
+            
+            & > div:nth-child(3),& > div:nth-child(4){ height: 16px }
+            
+            & > div > svg
+            {
+              fill: #1e1e1e;
+              height: 16px;
+            }
           }
-        }
-      }
-      
-      /* Ratings, Statuses, Awards */
-      & > div:nth-child(4)
-      {
-        display: grid;
-        place-items: center;
-        grid-template-columns: 25px auto 20px 20px auto 1fr;
-        grid-gap: 8px;
-        
-        & > div:nth-child(1)
-        {
-          font-size: 15px;
-          font-weight: 500;
-        }
-        
-        & > div:nth-child(3),& > div:nth-child(4){ height: 16px }
-        
-        & > div > svg
-        {
-          fill: #1e1e1e;
-          height: 16px;
-        }
-      }
-      
-      /* Ratings, Featured Reviews | Tiles */
-      & > div:nth-child(6)
-      {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 15px;
-        
-        /* Rating Container */
-        & > div:nth-child(1)
-        {
+          
+          /* Tiles Grid */
+          & > div:nth-child(5)
+          {
             display: grid;
-            grid-gap: 16px;
-            grid-template-rows: 1fr;
-            height: 215px;
-        }
-        
-        /* Review Container */
-        & > div:nth-child(2)
-        {
-            height: auto;
-            display: grid;
-            grid-template-rows: 1fr 1fr 1fr 1fr;
-        }
-      }
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 275px 215px 245px 375px;
+            grid-gap: 15px;
+            
+            /* Photo Scroll */
+            & > div:nth-child(1){ grid-column: 1/3; }
+            
+            & > div:nth-child(4){ grid-column: 1/3; background-color: #F2F2F2 }
+            
+            & > div:nth-child(5), & > div:nth-child(6){ background-color: #F2F2F2 }
+          }
+          
+        } 
     }
     
     /* Configuration Section */
@@ -981,101 +998,96 @@ function MarketplacePanel()
 
                     {/* Content Container Divider */}
                     <div>
-                        {/* Content */}
+
+                        {/* Content Container */}
                         <div>
 
-                            {/* Top Spacer */}
-                            <div/>
-
-                            {/* Product Title */}
+                            {/* Content Wrapper */}
                             <div>
-                                Request epic 3D designs and our team will get them out to you within a week. We will provide sketches either same-or-next day! Message us if you have any questions.
-                            </div>
 
-                            {/* Brand & Contact */}
-                            <div>
-                                {/* Brand Photo */}
-                                <div>
-
-                                </div>
-
-                                {/* Brand Tag and Name */}
-                                <div>
-                                    <div>
-                                        HooHooFarms
-                                    </div>
-                                    <div>
-                                        View brand profile
-                                    </div>
-                                </div>
-
-                                {/* Spacer */}
+                                {/* Top Spacer */}
                                 <div/>
 
-                                {/* Button */}
+                                {/* Product Title */}
                                 <div>
+                                    Request epic 3D designs and our team will get them out to you within a week. We will provide sketches either same-or-next day! Message us if you have any questions.
+                                </div>
+
+                                {/* Brand & Contact */}
+                                <div>
+                                    {/* Brand Photo */}
                                     <div>
-                                        <ChatBubblesSVG/>
+
                                     </div>
+
+                                    {/* Brand Tag and Name */}
                                     <div>
-                                        Contact Seller
+                                        <div>
+                                            HooHooFarms
+                                        </div>
+                                        <div>
+                                            View brand profile
+                                        </div>
+                                    </div>
+
+                                    {/* Spacer */}
+                                    <div/>
+
+                                    {/* Button */}
+                                    <div>
+                                        <div>
+                                            <ChatBubblesSVG/>
+                                        </div>
+                                        <div>
+                                            Contact Seller
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Ratings, Like, Wishlist, Awards */}
-                            <div>
-                                {/* Product Rating */}
+                                {/* Ratings, Like, Wishlist, Awards */}
                                 <div>
-                                    4.8
+                                    {/* Product Rating */}
+                                    <div>
+                                        4.8
+                                    </div>
+
+                                    {/* Product Rating */}
+                                    <div>
+                                        <StarRating rating={95}/>
+                                    </div>
+
+                                    {/* Add to wishlist */}
+                                    <div>
+                                        <WishlistSVG/>
+                                    </div>
+
+                                    {/* Add to liked */}
+                                    <div>
+                                        <HeartSVG/>
+                                    </div>
+
+                                    {/* Awards */}
+                                    <div>
+                                        <AwardTag badge={1} />
+                                    </div>
                                 </div>
 
-                                {/* Product Rating */}
+                                {/* TILE CONTAINER */}
                                 <div>
-                                    <StarRating rating={95}/>
-                                </div>
+                                    <PhotoScroll images={['','','','','','','']}/>
 
-                                {/* Add to wishlist */}
-                                <div>
-                                    <WishlistSVG/>
-                                </div>
+                                    <RatingsBarGraph ratings={[54,28,4,2,1]}/>
 
-                                {/* Add to liked */}
-                                <div>
-                                    <HeartSVG/>
-                                </div>
-
-                                {/* Awards */}
-                                <div>
-                                    <AwardTag badge={1} />
-                                </div>
-                            </div>
-
-                            {/* Photo Container */}
-                            <div>
-                                <PhotoScroll images={['','','','','','','']}/>
-                            </div>
-
-                            {/* Top Reviews, Additional Important Disclaimers */}
-                            <div>
-
-                                {/* Review Container */}
-                                <div>
-                                    <RatingsBarGraph ratings={[56,28,4,2,1]}/>
-                                </div>
-
-                                {/* Disclaimer Container */}
-                                <div>
                                     <ReviewScroll reviews={['','','','','','']} />
+
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
                                 </div>
-
-                            </div>
-
-                            {/* Misc. space... Review Button Container? */}
-                            <div>
 
                             </div>
                         </div>
+
 
                         {/* Configuration Settings */}
                         <div>
