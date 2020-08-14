@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 
 /* SVGs Imported */
-import {ReactComponent as StarSVG } from '../../assets/svgs/products/star.svg';
+import {ReactComponent as StarSVG } from '../../../assets/svgs/products/star.svg';
 
 const RatingsContainer = styled.div`
   background-color: #1e1e1e;
@@ -129,11 +129,13 @@ const RatingsContainer = styled.div`
 export default function RatingsBarGraph(props)
 {
 
+    /* Necessary Local State */
     let [starPercentages, setStarPercentages] = useState([0,0,0,0,0])
     let [textOpacity, setTextOpacity] = useState(0)
 
     /* Doing some calculations */
-    useEffect(() => {
+    useEffect(() =>
+    {
 
         let amt_star_ratings = props.ratings
         let perc_ratings = []
@@ -161,7 +163,10 @@ export default function RatingsBarGraph(props)
 
     return(
         <>
-            <RatingsContainer percentages={starPercentages} textOpacity={textOpacity}>
+            <RatingsContainer
+                percentages={starPercentages}
+                textOpacity={textOpacity}
+            >
 
                 {/* Floating Text */}
                 <div>

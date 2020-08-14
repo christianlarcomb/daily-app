@@ -2,8 +2,8 @@ import React, {useState, useRef, useEffect, useLayoutEffect} from 'react'
 import styled from 'styled-components'
 
 /* SVGs */
-import { ReactComponent as NextArrowSVG } from '../../assets/svgs/scroll_components/next.svg';
-import { ReactComponent as QuoteSVG } from '../../assets/svgs/scroll_components/quote-solid.svg';
+import { ReactComponent as NextArrowSVG } from '../../../assets/svgs/scroll_components/next.svg';
+import { ReactComponent as QuoteSVG } from '../../../assets/svgs/scroll_components/quote-solid.svg';
 
 const PrimaryContainer = styled.div`
   height: 100%;
@@ -66,7 +66,6 @@ const ScrollContainer = styled.div`
 `
 
 const ReviewContainer = styled.div`
-
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -90,7 +89,7 @@ const ReviewContainer = styled.div`
     & > div
     {
       border-radius: 25px;
-      width: 407px;
+      width: ${props => props.containerWidth}px;
       height: 215px;
       overflow: hidden;
       display: grid;
@@ -150,7 +149,6 @@ const ReviewContainer = styled.div`
         }
         
       }
-      
     }
   }
 `
@@ -158,11 +156,24 @@ const ReviewContainer = styled.div`
 export default function ReviewScroll(props)
 {
 
+    /*  */
+    let primaryContainerRef = useRef(null)
+
     /* Necessary Variables */
     let reviews = props.reviews
     let reviewsArrayLength = reviews.length
     let [reviewsIndex, setReviewsIndex] = useState(0)
     let [position, setPosition] = useState('')
+    let [containerWidth, setContainerWidth] = useState(0)
+
+    /* Handling the width of the frames */
+    useEffect(() => {
+        if(primaryContainerRef)
+        {
+            let containerWidth = primaryContainerRef.current.clientWidth
+            setContainerWidth(containerWidth)
+        }
+    }, [primaryContainerRef])
 
     const handleLeftButtonPress = () =>
     {
@@ -173,11 +184,8 @@ export default function ReviewScroll(props)
             if(reviewsIndex > 0)
             {
                 setReviewsIndex(reviewsIndex-=1)
-
-                setPosition((reviewsIndex * -407).toString())
-                //console.log('Current F.I.I:',frontImageIndex)
-
-            /* Animation Sequence */
+                setPosition((reviewsIndex * -containerWidth).toString())
+                //console.log(containerWidth)
             }
 
             else if (reviewsIndex === 0)
@@ -186,9 +194,8 @@ export default function ReviewScroll(props)
                 setPosition('25')
 
                 /* Resetting */
-                setTimeout(() => {setPosition('0');}, 150)
+                setTimeout(() => { setPosition('0') }, 150)
             }
-
         }
     }
 
@@ -199,7 +206,7 @@ export default function ReviewScroll(props)
         if((reviewsIndex + 1) < reviewsArrayLength)
         {
             setReviewsIndex(reviewsIndex+=1)
-            setPosition((reviewsIndex * -407).toString())
+            setPosition((reviewsIndex * -containerWidth).toString())
             //console.log('Current F.I.I:',frontImageIndex)
         }
 
@@ -208,7 +215,7 @@ export default function ReviewScroll(props)
         {
 
             /* Holding the previous position */
-            let finalPosition = (reviewsArrayLength-1) * -407
+            let finalPosition = (reviewsArrayLength-1) * -containerWidth
 
             /* Setting the bound position */
             setPosition((finalPosition-25).toString())
@@ -222,7 +229,7 @@ export default function ReviewScroll(props)
 
     return(
         <>
-            <PrimaryContainer>
+            <PrimaryContainer ref={primaryContainerRef}>
 
                 <ScrollContainer>
                     {/* Button 1 */}
@@ -240,12 +247,16 @@ export default function ReviewScroll(props)
 
                 </ScrollContainer>
 
-                <ReviewContainer position={position} arraySize={reviewsArrayLength}>
+                <ReviewContainer
+                    position={position}
+                    arraySize={reviewsArrayLength}
+                    containerWidth={containerWidth}
+                >
 
                     {/* Photo Wrapper */}
                     <div>
                         {/* Enumerating through each image and rendering them accordingly */}
-                        {props.reviews.map((review) => (
+                        {props.reviews.map(review => (
                             <div>
 
                                 {/* Rating with Blurred Back */}

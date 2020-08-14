@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import styled from 'styled-components'
 
 /* SVGs */
-import { ReactComponent as NextArrowSVG } from '../../assets/svgs/scroll_components/next.svg';
+import { ReactComponent as NextArrowSVG } from '../../../assets/svgs/scroll_components/next.svg';
 
 const PrimaryContainer = styled.div`
   height: 100%;
@@ -66,7 +66,7 @@ const ScrollContainer = styled.div`
 const PhotoContainer = styled.div`
 
   width: 100%;
-  height: 275px;
+  height: ${props => props.options.height ? props.options.height : 275}px;
   overflow: hidden;
   
   /* Limiting the photo container for appearances */
@@ -91,8 +91,8 @@ const PhotoContainer = styled.div`
     & > div
     {
       border-radius: 25px;
-      background-color: #F2F2F2;
-      width: 196px;
+      background-color: #d5d5d5;
+      width: ${props => props.dim}px;
       overflow: hidden;
       display: grid;
       margin: 0 auto;
@@ -106,23 +106,35 @@ const PhotoContainer = styled.div`
 export default function PhotoScroll(props)
 {
 
+    let primaryContainerRef = useRef(null)
+
     /* Necessary Variables */
     let images = props.images
     let imagesArrayLength = images.length
     let [frontImageIndex, setFrontImageIndex] = useState(0)
     let [position, setPosition] = useState('')
+    let [imageWidth, setImageWidth] = useState(0)
+
+    /* Handling the width of the frames */
+    useEffect(() => {
+        if(primaryContainerRef)
+        {
+            let containerWidth = primaryContainerRef.current.clientWidth
+            setImageWidth((containerWidth - ((props.options.tilesShown-1) * 15)) / props.options.tilesShown)
+        }
+    }, [primaryContainerRef])
 
     const handleLeftButtonPress = () =>
     {
         // Checking if their are more than 4 images (to enable the buttons...)
-        if(imagesArrayLength > 4)
+        if(imagesArrayLength > props.options.tilesShown)
         {
             /* If the front images index is greater than its starting position, go ahead */
             if(frontImageIndex > 0)
             {
                 setFrontImageIndex(frontImageIndex-=1)
 
-                setPosition((frontImageIndex * -211).toString())
+                setPosition((frontImageIndex * -(imageWidth+15)).toString())
                 //console.log('Current F.I.I:',frontImageIndex)
 
             /* Cool mini animation */
@@ -159,21 +171,21 @@ export default function PhotoScroll(props)
     const handleRightButtonPress = () =>
     {
         // Checking if their are more than 4 images (to enable the buttons...)
-        if(imagesArrayLength > 4)
+        if(imagesArrayLength > props.options.tilesShown)
         {
             /* checking whether the length of the image array minus it's current position is  */
-            if((frontImageIndex + 5) <= imagesArrayLength)
+            if((frontImageIndex + props.options.tilesShown+1) <= imagesArrayLength)
             {
                 setFrontImageIndex(frontImageIndex+=1)
-                setPosition((frontImageIndex * -211).toString())
+                setPosition((frontImageIndex * -(imageWidth+15)).toString())
             }
 
             /* If you reached the end of the line */
-            else if (frontImageIndex+4 === imagesArrayLength)
+            else if (frontImageIndex+props.options.tilesShown === imagesArrayLength)
             {
 
                 /* Holding the previous position */
-                let finalPosition = (imagesArrayLength-4) * -211
+                let finalPosition = (imagesArrayLength-props.options.tilesShown) * -(imageWidth+15)
 
                 /* Setting the bound position */
                 setPosition((finalPosition - 25).toString())
@@ -203,7 +215,9 @@ export default function PhotoScroll(props)
 
     return(
         <>
-            <PrimaryContainer>
+            <PrimaryContainer
+                ref={primaryContainerRef}
+            >
 
                 <ScrollContainer>
                     {/* Button 1 */}
@@ -221,7 +235,12 @@ export default function PhotoScroll(props)
 
                 </ScrollContainer>
 
-                <PhotoContainer position={position} arraySize={imagesArrayLength}>
+                <PhotoContainer
+                    position={position}
+                    arraySize={imagesArrayLength}
+                    options={props.options}
+                    dim={imageWidth}
+                >
 
                     {/* Photo Wrapper */}
                     <div>

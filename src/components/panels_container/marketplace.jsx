@@ -27,9 +27,9 @@ import BannerImgSix from '../../assets/imgs/explore/banner_image_6.jpg'
 import BannerImgSeven from '../../assets/imgs/explore/banner_image_7.jpg'
 import AwardTag from "../misc/award_tag";
 import LocationTag from "../misc/location_tag";
-import PhotoScroll from "../misc/photo_scroll.tile";
-import ReviewScroll from "../misc/review_scroll.tile";
-import RatingsBarGraph from "../misc/ratings_bar-graph.tile";
+import PhotoScroll from "../misc/tiles/photo_scroll.tile";
+import ReviewScroll from "../misc/tiles/review_scroll.tile";
+import RatingsBarGraph from "../misc/tiles/ratings_bar-graph.tile";
 
 /******* Marketplace Styling *******/
 const FilterIconStyled = styled(FilterIcon)`
@@ -512,17 +512,79 @@ const ProductContainer = styled.div`
           {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: 275px 215px 245px 375px;
+            grid-template-rows: 275px 215px 245px 575px 150px;
             grid-gap: 15px;
             
-            /* Photo Scroll */
+            /* Product Photo Scroll */
             & > div:nth-child(1){ grid-column: 1/3; }
             
-            & > div:nth-child(4){ grid-column: 1/3; background-color: #F2F2F2 }
+            /* General Styling Tiles Backs */
+             & > div:nth-child(4), & > div:nth-child(5), & > div:nth-child(6){ background-color: #F2F2F2; border-radius: 25px; overflow: hidden }
             
-            & > div:nth-child(5), & > div:nth-child(6){ background-color: #F2F2F2 }
+            /* Community Photo Scroll */
+            & > div:nth-child(4)
+            {
+              grid-column: 1/3;
+              display: grid;
+              grid-template-rows: 55px 1fr;
+              
+              /* Tile Label */
+              & > div:nth-child(1)
+              {
+                display: grid;
+                place-items: center;
+                font-weight: 500;
+                font-size: 17px;
+              }
+              
+              /* Scroll Container */
+              & > div:nth-child(2)
+              {
+                margin: 0 10px;
+              }
+            }
+            
+            /* Product Description */
+            & > div:nth-child(5)
+            {
+              display: grid;
+              grid-template-rows: 55px 1fr;
+              
+              /* Tile Label */
+              & > div:nth-child(1)
+              {
+                display: grid;
+                place-items: center;
+                font-weight: 500;
+                font-size: 17px;
+              }
+            }
+            
+            /* Reviews */
+            & > div:nth-child(6)
+            {
+              display: grid;
+              grid-template-rows: 55px 1fr;
+              
+              /* Tile Label */
+              & > div:nth-child(1)
+              {
+                display: grid;
+                place-items: center;
+                font-weight: 500;
+                font-size: 17px;
+              }
+            }
+            
+            /* Disclaimer Grid */
+            & > div:nth-child(7)
+            {
+              grid-column: 1/3;
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+              background-color: #2c2f33;
+            }
           }
-          
         } 
     }
     
@@ -535,13 +597,11 @@ const ProductContainer = styled.div`
   }
 `
 
-
 function useQuery() { return new URLSearchParams(useLocation().search) }
 
 
 function MarketplacePanel()
 {
-
     /* Getting the url parameters */
     let query = useQuery()
     let puid = query.get('puid')
@@ -551,13 +611,11 @@ function MarketplacePanel()
     /* Getting url location */
     let location = useLocation()
 
-    /* TODO: It's working!! Refine for better performance */
-    useEffect(() => {
-
+    /**/
+    useEffect(() =>
+    {
         /* Debugging to see where the search is located */
-        //console.log('location event fired:', location)
         location.search !== '' ? setProductView(true) : setProductView(false)
-
     }, [location])
 
     /* List of functions which render specific pseudo-components */
@@ -1074,15 +1132,62 @@ function MarketplacePanel()
 
                                 {/* TILE CONTAINER */}
                                 <div>
-                                    <PhotoScroll images={['','','','','','','']}/>
+                                    {/* Product Images Scroll */}
+                                    <PhotoScroll
+                                        images={['','','','','','','']}
+                                        options={{
+                                            height: 275,
+                                            tilesShown: 4
+                                        }}
+                                    />
 
-                                    <RatingsBarGraph ratings={[54,28,4,2,1]}/>
+                                    {/* Product Ratings Tile */}
+                                    <RatingsBarGraph ratings={[46,28,4,12,1]}/>
 
+                                    {/* Featured Reviews Scroll */}
                                     <ReviewScroll reviews={['','','','','','']} />
 
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
+                                    {/* Community Photos */}
+                                    <div>
+                                        <div>Community Photos</div>
+
+                                        <div>
+                                            <PhotoScroll
+                                                images={['','','','','','','']}
+                                                options={{
+                                                    height: 180,
+                                                    width: 300,
+                                                    tilesShown: 5
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Product Description */}
+                                    <div>
+                                        <div>Product Description</div>
+
+                                        <div>
+
+                                        </div>
+                                    </div>
+
+                                    {/* Full Reviews */}
+                                    <div>
+                                        <div>Reviews</div>
+
+                                        <div>
+
+                                        </div>
+                                    </div>
+
+                                    {/* Disclaimer Grid */}
+                                    <div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+
+                                    </div>
                                 </div>
 
                             </div>
