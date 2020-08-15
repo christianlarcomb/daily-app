@@ -2,38 +2,38 @@ import React from 'react'
 import styled from "styled-components";
 
 /* Components */
-import RatingsBarGraph from "../tiles/ratings_bar-graph.tile";
-import ReviewScroll from "../tiles/review_scroll.tile";
-import LocationTag from "../location_tag";
+import RatingsBarGraph  from "../tiles/ratings_bar-graph.tile";
+import ReviewScroll     from "../tiles/review_scroll.tile";
+import LocationTag      from "../location_tag";
+import StarRating       from "../star_rating";
+import AwardTag         from "../award_tag";
+import PhotoScroll      from "../tiles/photo_scroll.tile";
+import ReviewsContainer from "./reviews.container";
 
 /* Photos */
-
 import {ReactComponent as ChatBubblesSVG} from "../../../assets/svgs/ui/chat-bubbles.svg";
-import StarRating from "../star_rating";
-import {ReactComponent as WishlistSVG} from "../../../assets/svgs/products/wishlist.svg";
-import {ReactComponent as HeartSVG} from "../../../assets/svgs/products/heart.svg";
-import AwardTag from "../award_tag";
-import PhotoScroll from "../tiles/photo_scroll.tile";
+import {ReactComponent as WishlistSVG}    from "../../../assets/svgs/products/wishlist.svg";
+import {ReactComponent as HeartSVG}       from "../../../assets/svgs/products/heart.svg";
 
-import SamplePhoto1 from "../../../assets/imgs/sample_photos/1.png";
-import SamplePhoto2 from "../../../assets/imgs/sample_photos/2.jpg";
-import SamplePhoto3 from "../../../assets/imgs/sample_photos/3.jpg";
-import SamplePhoto4 from "../../../assets/imgs/sample_photos/4.jpg";
-import SamplePhoto5 from "../../../assets/imgs/sample_photos/5.jpg";
-import SamplePhoto6 from "../../../assets/imgs/sample_photos/6.jpg";
-import SamplePhoto7 from "../../../assets/imgs/sample_photos/7.jpg";
+/* Photos */
+import SamplePhoto1  from "../../../assets/imgs/sample_photos/1.png";
+import SamplePhoto2  from "../../../assets/imgs/sample_photos/2.jpg";
+import SamplePhoto3  from "../../../assets/imgs/sample_photos/3.jpg";
+import SamplePhoto4  from "../../../assets/imgs/sample_photos/4.jpg";
+import SamplePhoto5  from "../../../assets/imgs/sample_photos/5.jpg";
+import SamplePhoto6  from "../../../assets/imgs/sample_photos/6.jpg";
+import SamplePhoto7  from "../../../assets/imgs/sample_photos/7.jpg";
 import SamplePhoto14 from "../../../assets/imgs/sample_photos/14.jpg";
 import SamplePhoto13 from "../../../assets/imgs/sample_photos/13.jpg";
 import SamplePhoto12 from "../../../assets/imgs/sample_photos/12.jpg";
 import SamplePhoto11 from "../../../assets/imgs/sample_photos/11.jpg";
-import SamplePhoto8 from "../../../assets/imgs/sample_photos/8.jpg";
-import SamplePhoto9 from "../../../assets/imgs/sample_photos/9.jpg";
+import SamplePhoto8  from "../../../assets/imgs/sample_photos/8.jpg";
+import SamplePhoto9  from "../../../assets/imgs/sample_photos/9.jpg";
 import SamplePhoto10 from "../../../assets/imgs/sample_photos/10.jpg";
 
-import ReviewsContainer from "./reviews.container";
-
-import {ReactComponent as SafeSVG} from "../../../assets/svgs/disclaimers/safe-box.svg";
-import {ReactComponent as ShippingSVG} from "../../../assets/svgs/disclaimers/box.svg";
+/* SVGs */
+import {ReactComponent as SafeSVG}         from "../../../assets/svgs/disclaimers/safe-box.svg";
+import {ReactComponent as ShippingSVG}     from "../../../assets/svgs/disclaimers/box.svg";
 import {ReactComponent as ConversationSVG} from "../../../assets/svgs/disclaimers/conversation.svg";
 
 const ProductContainer = styled.div`
@@ -61,249 +61,250 @@ const ProductContainer = styled.div`
   & > div:nth-child(3)
   {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-gap: 15px;
-    
-    /* Content Container */
-    & > div:nth-child(1)
+    grid-template-columns: 1fr 847px 45px 425px 1fr;
+  }
+`
+
+const ContentContainer = styled.div`
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 850px;
+  height: calc(100vh - 90px);
+  margin: 0 auto;
+
+    /* Content Wrapper */
+    & > div
     {
-      overflow-y: scroll;
-      overflow-x: hidden;
-      width: 850px;
-      height: calc(100vh - 90px);
+      display:            grid;
+      grid-template-rows: 5px 45px 40px 30px auto;
+      grid-gap:           15px;
+      width: 829px;
       margin: 0 auto;
-    
-        /* Content Wrapper */
-        & > div
+      height: auto;
+      
+      /* Product Title */
+      & > div:nth-child(2) 
+      { 
+        font-weight: 600;
+        color: #1e1e1e;
+      }
+      
+      /* Brand Contact Bar */
+      & > div:nth-child(3)
+      {
+        display: grid;
+        grid-template-columns: 40px auto 1fr 140px;
+        grid-gap: 10px;
+        height: 40px;
+        
+        /* Photo Container */
+        & > div:nth-child(1)
         {
-          display:            grid;
-          grid-template-rows: 5px 45px 40px 30px auto;
-          grid-gap:           15px;
-          width: 829px;
-          margin: 0 auto;
-          height: auto;
+          display: grid;
+          place-content: center;
+          border-radius: 100%;
+          background-color: #f2f2f2;
+          overflow: hidden;
           
-          /* Product Title */
-          & > div:nth-child(2) 
-          { 
-            font-weight: 600;
+          /* Image Itself */
+          & > img {height: 40px;}
+        }
+        
+        /* Brand Text */
+        & > div:nth-child(2)
+        {
+          display: grid;
+          grid-template-rows: repeat(1fr, 2);
+          place-content: center;
+          
+          & > div:nth-child(1)
+          {
+            font-size: 15px;
+            font-weight: 500;
             color: #1e1e1e;
           }
           
-          /* Brand Contact Bar */
-          & > div:nth-child(3)
+          & > div:nth-child(2)
           {
-            display: grid;
-            grid-template-columns: 40px auto 1fr 140px;
-            grid-gap: 10px;
-            height: 40px;
+            font-size: 13px;
+            color: #AAAAAA;
+          }
+        }
+        
+        /* Contact Button */
+        & > div:nth-child(4)
+        {
+          background-color: #1e1e1e;
+          border-radius: 8px;
+          margin: 1px 0;
+          display: grid;
+          grid-template-columns: 36px 1fr;
+          
+          /* SVG Container */
+          & > div:nth-child(1)
+          {
+            margin: auto;
+            height: 16px;
+            padding-left: 8px;
             
-            /* Photo Container */
-            & > div:nth-child(1)
-            {
-              display: grid;
-              place-content: center;
-              border-radius: 100%;
-              background-color: #f2f2f2;
-              overflow: hidden;
-              
-              /* Image Itself */
-              & > img {height: 40px;}
-            }
-            
-            /* Brand Text */
-            & > div:nth-child(2)
-            {
-              display: grid;
-              grid-template-rows: repeat(1fr, 2);
-              place-content: center;
-              
-              & > div:nth-child(1)
-              {
-                font-size: 15px;
-                font-weight: 500;
-                color: #1e1e1e;
-              }
-              
-              & > div:nth-child(2)
-              {
-                font-size: 13px;
-                color: #AAAAAA;
-              }
-            }
-            
-            /* Contact Button */
-            & > div:nth-child(4)
-            {
-              background-color: #1e1e1e;
-              border-radius: 8px;
-              margin: 1px 0;
-              display: grid;
-              grid-template-columns: 36px 1fr;
-              
-              /* SVG Container */
-              & > div:nth-child(1)
-              {
-                margin: auto;
-                height: 16px;
-                padding-left: 8px;
-                
-                & > svg { height: 16px; width: 16px; fill: white}
-              }
-              
-              /* Contact Text */
-              & > div:nth-child(2)
-              {
-                margin: auto 0;
-                padding-left: 4px;
-                color: white;
-                font-size: 14px;
-              }
-            }
+            & > svg { height: 16px; width: 16px; fill: white}
           }
           
-          /* Ratings, Statuses, Awards */
-          & > div:nth-child(4)
+          /* Contact Text */
+          & > div:nth-child(2)
+          {
+            margin: auto 0;
+            padding-left: 4px;
+            color: white;
+            font-size: 14px;
+          }
+        }
+      }
+      
+      /* Ratings, Statuses, Awards */
+      & > div:nth-child(4)
+      {
+        display: grid;
+        place-items: center;
+        grid-template-columns: 25px auto 20px 20px auto 1fr;
+        grid-gap: 8px;
+        
+        & > div:nth-child(1)
+        {
+          font-size: 15px;
+          font-weight: 500;
+        }
+        
+        & > div:nth-child(3),& > div:nth-child(4){ height: 16px }
+        
+        & > div > svg
+        {
+          fill: #1e1e1e;
+          height: 16px;
+        }
+      }
+      
+      /* Tiles Grid */
+      & > div:nth-child(5)
+      {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 275px 215px 245px 575px 100px 5px;
+        grid-gap: 15px;
+        
+        /* Product Photo Scroll */
+        & > div:nth-child(1){ grid-column: 1/3; }
+        
+        /* General Styling Tiles Backs */
+        & > div:nth-child(4), & > div:nth-child(5), & > div:nth-child(6){ background-color: #F2F2F2; border-radius: 25px; overflow: hidden }
+        
+        /* Community Photo Scroll */
+        & > div:nth-child(4)
+        {
+          grid-column: 1/3;
+          display: grid;
+          grid-template-rows: 55px 1fr;
+          
+          /* Tile Label */
+          & > div:nth-child(1)
           {
             display: grid;
             place-items: center;
-            grid-template-columns: 25px auto 20px 20px auto 1fr;
-            grid-gap: 8px;
-            
-            & > div:nth-child(1)
-            {
-              font-size: 15px;
-              font-weight: 500;
-            }
-            
-            & > div:nth-child(3),& > div:nth-child(4){ height: 16px }
-            
-            & > div > svg
-            {
-              fill: #1e1e1e;
-              height: 16px;
-            }
+            font-weight: 500;
+            font-size: 17px;
           }
           
-          /* Tiles Grid */
-          & > div:nth-child(5)
+          /* Scroll Container */
+          & > div:nth-child(2)
+          {
+            margin: 0 10px;
+          }
+        }
+        
+        /* Product Description */
+        & > div:nth-child(5)
+        {
+          display: grid;
+          grid-template-rows: 55px 1fr;
+          padding: 0 30px 30px 30px;
+          
+          /* Tile Label */
+          & > div:nth-child(1)
           {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 275px 215px 245px 575px 100px 5px;
-            grid-gap: 15px;
+            place-items: center;
+            font-weight: 500;
+            font-size: 17px;
+          }
+          
+          & > div:nth-child(2)
+          {
+            font-size: 14px;
             
-            /* Product Photo Scroll */
-            & > div:nth-child(1){ grid-column: 1/3; }
-            
-            /* General Styling Tiles Backs */
-            & > div:nth-child(4), & > div:nth-child(5), & > div:nth-child(6){ background-color: #F2F2F2; border-radius: 25px; overflow: hidden }
-            
-            /* Community Photo Scroll */
-            & > div:nth-child(4)
+            & > h3
             {
-              grid-column: 1/3;
-              display: grid;
-              grid-template-rows: 55px 1fr;
-              
-              /* Tile Label */
-              & > div:nth-child(1)
-              {
-                display: grid;
-                place-items: center;
-                font-weight: 500;
-                font-size: 17px;
-              }
-              
-              /* Scroll Container */
-              & > div:nth-child(2)
-              {
-                margin: 0 10px;
-              }
-            }
-            
-            /* Product Description */
-            & > div:nth-child(5)
-            {
-              display: grid;
-              grid-template-rows: 55px 1fr;
-              padding: 0 30px 30px 30px;
-              
-              /* Tile Label */
-              & > div:nth-child(1)
-              {
-                display: grid;
-                place-items: center;
-                font-weight: 500;
-                font-size: 17px;
-              }
-              
-              & > div:nth-child(2)
-              {
-                font-size: 14px;
-                
-                & > h3
-                {
-                  font-weight: 500;
-                }
-              }
-            }
-            
-            /* Reviews */
-            & > div:nth-child(6)
-            {
-              display: grid;
-              grid-template-rows: 55px 1fr;
-              
-              /* Tile Label */
-              & > div:nth-child(1)
-              {
-                display: grid;
-                place-items: center;
-                font-weight: 500;
-                font-size: 17px;
-              }
-            }
-            
-            /* Disclaimer Grid */
-            & > div:nth-child(7)
-            {
-              grid-column: 1/3;
-              display: grid;
-              grid-template-columns: auto auto auto;
-              margin: 0 auto;
-              grid-gap: 30px;
-              place-content: center;
-              
-              /* Individual Disclaimers */
-              & > div
-              {
-                grid-template-columns: 25px auto;
-                grid-gap: 10px;
-                display: grid;
-                place-items: center;
-                font-size: 11px;
-                color: #979797;
-                
-                /* Styling SVG container */
-                & > div:nth-child(1)
-                {
-                  height: 25px;
-                  width: 25px;
-                }
-              }
+              font-weight: 500;
             }
           }
-        } 
+        }
+        
+        /* Reviews */
+        & > div:nth-child(6)
+        {
+          display: grid;
+          grid-template-rows: 55px 1fr;
+          
+          /* Tile Label */
+          & > div:nth-child(1)
+          {
+            display: grid;
+            place-items: center;
+            font-weight: 500;
+            font-size: 17px;
+          }
+        }
+        
+        /* Disclaimer Grid */
+        & > div:nth-child(7)
+        {
+          grid-column: 1/3;
+          display: grid;
+          grid-template-columns: auto auto auto;
+          margin: 0 auto;
+          grid-gap: 30px;
+          place-content: center;
+          
+          /* Individual Disclaimers */
+          & > div
+          {
+            grid-template-columns: 25px auto;
+            grid-gap: 10px;
+            display: grid;
+            place-items: center;
+            font-size: 11px;
+            color: #979797;
+            
+            /* Styling SVG container */
+            & > div:nth-child(1)
+            {
+              height: 25px;
+              width: 25px;
+            }
+          }
+        }
+      }
+       
     }
-    
-    /* Configuration Section */
-    & > div:nth-child(2)
-    {
-      overflow-y: scroll;
-      overflow-x: hidden;
-    }
-  }
+`
+
+const ConfigurationContainer = styled.div`
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 425px;
+  margin: 0 auto;
+  display: grid;
+  background-color: #2c2f33;
 `
 
 export default function ProductInterest(props)
@@ -340,8 +341,11 @@ export default function ProductInterest(props)
                 {/* Content Container Divider */}
                 <div>
 
+                    {/* Spacer */}
+                    <div/>
+
                     {/* Content Container */}
-                    <div>
+                    <ContentContainer>
 
                         {/* Content Wrapper */}
                         <div>
@@ -584,13 +588,18 @@ export default function ProductInterest(props)
                             </div>
 
                         </div>
-                    </div>
+                    </ContentContainer>
 
+                    {/* Spacer */}
+                    <div/>
 
                     {/* Configuration Settings */}
-                    <div>
+                    <ConfigurationContainer>
 
-                    </div>
+                    </ConfigurationContainer>
+
+                    {/* Spacer */}
+                    <div/>
                 </div>
 
             </ProductContainer>

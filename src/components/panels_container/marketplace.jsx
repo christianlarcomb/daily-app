@@ -1,11 +1,11 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
-
 import Tilt from 'react-tilt'
 
-/* Misc. Items */
+/* Components */
 import GeneralItemObject from "../misc/general_item_object";
+import ProductInterest from "../misc/containers/product-interest.container";
 
 /* Vectors */
 import { ReactComponent as DailyTextLogo } from '../../assets/svgs/daily/daily_text.svg';
@@ -22,23 +22,6 @@ import BannerImgFive from '../../assets/imgs/explore/banner_image_5.png'
 import BannerImgSix from '../../assets/imgs/explore/banner_image_6.jpg'
 import BannerImgSeven from '../../assets/imgs/explore/banner_image_7.jpg'
 
-/* SAMPLE PHOTOS */
-/* TODO: Replace these with restAPI calls! */
-import SamplePhoto1 from '../../assets/imgs/sample_photos/1.png'
-import SamplePhoto2 from '../../assets/imgs/sample_photos/2.jpg'
-import SamplePhoto3 from '../../assets/imgs/sample_photos/3.jpg'
-import SamplePhoto4 from '../../assets/imgs/sample_photos/4.jpg'
-import SamplePhoto5 from '../../assets/imgs/sample_photos/5.jpg'
-import SamplePhoto6 from '../../assets/imgs/sample_photos/6.jpg'
-import SamplePhoto7 from '../../assets/imgs/sample_photos/7.jpg'
-import SamplePhoto8 from '../../assets/imgs/sample_photos/8.jpg'
-import SamplePhoto9 from '../../assets/imgs/sample_photos/9.jpg'
-import SamplePhoto10 from '../../assets/imgs/sample_photos/10.jpg'
-import SamplePhoto11 from '../../assets/imgs/sample_photos/11.jpg'
-import SamplePhoto12 from '../../assets/imgs/sample_photos/12.jpg'
-import SamplePhoto13 from '../../assets/imgs/sample_photos/13.jpg'
-import SamplePhoto14 from '../../assets/imgs/sample_photos/14.jpg'
-import ProductInterest from "../misc/containers/product-interest.container";
 
 /******* Marketplace Styling *******/
 const FilterIconStyled = styled(FilterIcon)`
@@ -768,7 +751,7 @@ function MarketplacePanel()
 
             {/* Header Containing Search & Other Functions */}
             {SearchBarHeader()}
-    
+
             {/* Primary Marketplace */}
             {puid === null ? MarketplaceContents() : <ProductInterest/>}
 
