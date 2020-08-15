@@ -2,12 +2,12 @@ import React from 'react';
 import styled from "styled-components";
 
 /* Redux Elements */
-import { darkModeToggled } from "../../redux/actions";
+import { darkModeToggled } from "../../../redux/actions";
 import { useSelector } from "react-redux";
-import store from "../../redux/store";
+import store from "../../../redux/store";
 
 /* Reg Icons */
-import SuccessIcon from '../../assets/svgs/notifications/icons/success.svg';
+import SuccessIcon from '../../../assets/svgs/notifications/icons/success.svg';
 
 import { notify } from "../Notifications";
 

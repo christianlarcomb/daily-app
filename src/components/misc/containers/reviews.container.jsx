@@ -86,6 +86,7 @@ const CommentContainer = styled.div`
     & > div:nth-child(2)
     {
       font-size: 13px;
+      color: #1e1e1e;
     }
   }
 `

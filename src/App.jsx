@@ -19,7 +19,7 @@ import store from "./redux/store";
 import { useSelector } from "react-redux";
 import { userLoggedIn, darkModeToggled } from "./redux/actions";
 
-import Notifications, { notify } from "./components/Notifications";
+import Notifications, { notify } from "./components/misc/Notifications";
 import SuccessSvg from "./assets/svgs/notifications/icons/success.svg";
 
 function App()

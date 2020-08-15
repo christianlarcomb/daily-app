@@ -102,8 +102,7 @@ const ReviewContainer = styled.div`
       /* Moves all of the containers giving the illusion of group movement */
       transform: translateX(${props => parseInt(props.position)}px);
       transition: all ease-in-out 0.15s;
-      
-      
+     
       /* Styling the image alongside the rating */
       & > div:nth-child(1)
       {

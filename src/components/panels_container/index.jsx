@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import {Route, Redirect, Link, Switch} from "react-router-dom";
 import ReactTooltip from "react-tooltip";
-import ToggleButton from '../toggles/ToggleButton'
-import { notify } from "../Notifications";
+import ToggleButton from '../misc/toggles/ToggleButton'
+import { notify } from "../misc/Notifications";
 
 /* Panels */
 import SettingsPanels from "./settings_panels";

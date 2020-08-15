@@ -15,7 +15,7 @@ import { ReactComponent as GoogleLogo } from "../../assets/svgs/apple-google-etc
 
 import { Link } from "react-router-dom";
 
-import { notify } from "../Notifications";
+import { notify } from "../misc/Notifications";
 
 import SuccessSvg from '../../assets/svgs/notifications/icons/success.svg'
 

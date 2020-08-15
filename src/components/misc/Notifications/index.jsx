@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import ee from 'event-emitter'
 
 /* Exit Icons */
-import { ReactComponent as ExitIcon } from '../../assets/svgs/notifications/exit/cross.svg';
+import { ReactComponent as ExitIcon } from '../../../assets/svgs/notifications/exit/cross.svg';
 
 /* Reg Icons */
-import AlertDefaultIcon   from '../../assets/svgs/notifications/icons/warning.svg';
+import AlertDefaultIcon   from '../../../assets/svgs/notifications/icons/warning.svg';
 
 const Container = styled.div`
 
