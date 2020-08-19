@@ -44,8 +44,7 @@ const PrimaryContainer = styled.div`
   position: relative;
   
   // TODO: Figure out how to prevent scrolling for product page.
-  overflow-y: scroll;
-  
+  overflow-y: hidden;
   overflow-x: hidden;
 `
 
@@ -336,7 +335,6 @@ const ThirdContainer = styled.div`
     border-radius: 10px;
   }
 `
-
 
 function useQuery() { return new URLSearchParams(useLocation().search) }
 

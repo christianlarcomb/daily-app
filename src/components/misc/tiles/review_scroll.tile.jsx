@@ -120,8 +120,7 @@ const ReviewContainer = styled.div`
           height: 100%;
           width: 100%;
           position: absolute;
-          background-color: rgba(30,30,30,0.85);
-          backdrop-filter: blur(20px) saturate(400%);
+          background-color: rgba(30,30,30,0.9);
           
           display: grid;
           grid-gap: 10px;

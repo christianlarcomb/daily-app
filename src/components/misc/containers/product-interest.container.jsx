@@ -60,17 +60,17 @@ const ProductContainer = styled.div`
   /* Two main dividers */
   & > div:nth-child(3)
   {
+    overflow-x: hidden;
+    overflow-y: scroll;
     display: grid;
     grid-template-columns: 1fr 847px 45px 425px 1fr;
+    position: relative;
   }
 `
 
 const ContentContainer = styled.div`
 
-  overflow-y: scroll;
-  overflow-x: hidden;
   width: 850px;
-  height: calc(100vh - 90px);
   margin: 0 auto;
 
     /* Content Wrapper */
@@ -184,127 +184,122 @@ const ContentContainer = styled.div`
           height: 16px;
         }
       }
-      
-      /* Tiles Grid */
-      & > div:nth-child(5)
-      {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 275px 215px 245px 575px 100px 5px;
-        grid-gap: 15px;
-        
-        /* Product Photo Scroll */
-        & > div:nth-child(1){ grid-column: 1/3; }
-        
-        /* General Styling Tiles Backs */
-        & > div:nth-child(4), & > div:nth-child(5), & > div:nth-child(6){ background-color: #F2F2F2; border-radius: 25px; overflow: hidden }
-        
-        /* Community Photo Scroll */
-        & > div:nth-child(4)
-        {
-          grid-column: 1/3;
-          display: grid;
-          grid-template-rows: 55px 1fr;
-          
-          /* Tile Label */
-          & > div:nth-child(1)
-          {
-            display: grid;
-            place-items: center;
-            font-weight: 500;
-            font-size: 17px;
-          }
-          
-          /* Scroll Container */
-          & > div:nth-child(2)
-          {
-            margin: 0 10px;
-          }
-        }
-        
-        /* Product Description */
-        & > div:nth-child(5)
-        {
-          display: grid;
-          grid-template-rows: 55px 1fr;
-          padding: 0 30px 30px 30px;
-          
-          /* Tile Label */
-          & > div:nth-child(1)
-          {
-            display: grid;
-            place-items: center;
-            font-weight: 500;
-            font-size: 17px;
-          }
-          
-          & > div:nth-child(2)
-          {
-            font-size: 14px;
-            
-            & > h3
-            {
-              font-weight: 500;
-            }
-          }
-        }
-        
-        /* Reviews */
-        & > div:nth-child(6)
-        {
-          display: grid;
-          grid-template-rows: 55px 1fr;
-          
-          /* Tile Label */
-          & > div:nth-child(1)
-          {
-            display: grid;
-            place-items: center;
-            font-weight: 500;
-            font-size: 17px;
-          }
-        }
-        
-        /* Disclaimer Grid */
-        & > div:nth-child(7)
-        {
-          grid-column: 1/3;
-          display: grid;
-          grid-template-columns: auto auto auto;
-          margin: 0 auto;
-          grid-gap: 30px;
-          place-content: center;
-          
-          /* Individual Disclaimers */
-          & > div
-          {
-            grid-template-columns: 25px auto;
-            grid-gap: 10px;
-            display: grid;
-            place-items: center;
-            font-size: 11px;
-            color: #979797;
-            
-            /* Styling SVG container */
-            & > div:nth-child(1)
-            {
-              height: 25px;
-              width: 25px;
-            }
-          }
-        }
-      }
-       
     }
 `
 
 const ConfigurationContainer = styled.div`
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: hidden;
   width: 425px;
   margin: 0 auto;
   display: grid;
+  height: calc(100vh - 90px);
   background-color: #2c2f33;
+  position: sticky;
+  top: 0;
+`
+
+const TileContainer = styled.div`
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 275px 215px 245px 575px 100px 5px;
+    grid-gap: 15px;
+    
+    /* Product Photo Scroll */
+    & > div:nth-child(1){ grid-column: 1/3; }
+    
+    /* General Styling Tiles Backs */
+    & > div:nth-child(4), & > div:nth-child(5), & > div:nth-child(6){ background-color: #F2F2F2; border-radius: 25px; overflow: hidden }
+    
+    /* Disclaimer Grid */
+    & > div:nth-child(7)
+    {
+      grid-column: 1/3;
+      display: grid;
+      grid-template-columns: auto auto auto;
+      margin: 0 auto;
+      grid-gap: 30px;
+      place-content: center;
+      
+      /* Individual Disclaimers */
+      & > div
+      {
+        grid-template-columns: 25px auto;
+        grid-gap: 10px;
+        display: grid;
+        place-items: center;
+        font-size: 11px;
+        color: #979797;
+        
+        /* Styling SVG container */
+        & > div:nth-child(1)
+        {
+          height: 25px;
+          width: 25px;
+        }
+      }
+    }
+  }
+`
+
+const CommunityPhotos = styled.div`
+  grid-column: 1/3;
+  display: grid;
+  grid-template-rows: 55px 1fr;
+  
+  /* Tile Label */
+  & > div:nth-child(1)
+  {
+    display: grid;
+    place-items: center;
+    font-weight: 500;
+    font-size: 17px;
+  }
+  
+  /* Scroll Container */
+  & > div:nth-child(2)
+  {
+    margin: 0 10px;
+  }
+`
+
+const ProductDescriptions = styled.div`
+  display: grid;
+  grid-template-rows: 55px 1fr;
+  padding: 0 30px 30px 30px;
+  
+  /* Tile Label */
+  & > div:nth-child(1)
+  {
+    display: grid;
+    place-items: center;
+    font-weight: 500;
+    font-size: 17px;
+  }
+  
+  & > div:nth-child(2)
+  {
+    font-size: 14px;
+    
+    & > h3
+    {
+      font-weight: 500;
+    }
+  }
+`
+
+const FullReviews = styled.div`
+  display: grid;
+  grid-template-rows: 55px 1fr;
+  
+  /* Tile Label */
+  & > div:nth-child(1)
+  {
+    display: grid;
+    place-items: center;
+    font-weight: 500;
+    font-size: 17px;
+  }
 `
 
 export default function ProductInterest(props)
@@ -418,7 +413,8 @@ export default function ProductInterest(props)
                             </div>
 
                             {/* TILE CONTAINER */}
-                            <div>
+                            <TileContainer>
+
                                 {/* Product Images Scroll */}
                                 <PhotoScroll
                                     images={[SamplePhoto1,SamplePhoto2,SamplePhoto3,SamplePhoto4,SamplePhoto5,SamplePhoto6,SamplePhoto7]}
@@ -464,7 +460,7 @@ export default function ProductInterest(props)
                                 ]} />
 
                                 {/* Community Photos */}
-                                <div>
+                                <CommunityPhotos>
                                     <div>Community Photos</div>
 
                                     <div>
@@ -477,10 +473,10 @@ export default function ProductInterest(props)
                                             }}
                                         />
                                     </div>
-                                </div>
+                                </CommunityPhotos>
 
                                 {/* Product Description */}
-                                <div>
+                                <ProductDescriptions>
                                     <div>Product Description</div>
 
                                     <div>
@@ -493,10 +489,10 @@ export default function ProductInterest(props)
 
                                         I've listed off the configuration options on the right hand side and for anything that I may have missed or if their are any special requests, I've added an optional description box so I can review and possibly attempt your special request.
                                     </div>
-                                </div>
+                                </ProductDescriptions>
 
                                 {/* Full Reviews */}
-                                <div>
+                                <FullReviews>
                                     <div>Reviews</div>
 
                                     {/* Reviews Scroll Container */}
@@ -556,7 +552,7 @@ export default function ProductInterest(props)
                                         ]}
                                         />
                                     </div>
-                                </div>
+                                </FullReviews>
 
                                 {/* Disclaimer Grid */}
                                 <div>
@@ -585,7 +581,8 @@ export default function ProductInterest(props)
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+
+                            </TileContainer>
 
                         </div>
                     </ContentContainer>
