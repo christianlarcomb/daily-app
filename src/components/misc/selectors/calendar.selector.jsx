@@ -103,10 +103,12 @@ export default function CalendarSelector()
         for(let i = 0, x = months[monthIndex].startingNumber; i <= 41; i++, x++)
         {
 
-            // TODO: Do a much better job at cleaning this up and writing annotations
+            /* The final day of the previous, current, and next month which is determined but boolean logic */
             if(firstHalfRender)
             {
-                if(x > months[monthIndex > 0 ? monthIndex-1 : 11].totalDays || x === i+1){
+                /*  */
+                if(x > months[monthIndex > 0 ? monthIndex-1 : 11].totalDays || x === i+1)                                              // Is the displayed day greater than the previous months maximum day or is x equal to the first index plus 1
+                {
                     x = 1
                     firstHalfRender = false
                     secondHalfRender = true
@@ -114,7 +116,8 @@ export default function CalendarSelector()
             }
             if(secondHalfRender)
             {
-                if(x > months[monthIndex].totalDays){
+                if(x > months[monthIndex].totalDays)                                                                                   // Is the displayed day greater than the current months max day
+                {
                     x = 1
                     secondHalfRender = false
                     thirdHalfRender = true
@@ -122,36 +125,29 @@ export default function CalendarSelector()
             }
             if(thirdHalfRender)
             {
-                if(x > months[monthIndex].totalDays){
+                if(x > months[monthIndex < 11 ? monthIndex + 1 : 0].totalDays)                                                         // Is the displayed day greater than the next months max day
                     x = 1
-
-                }
             }
-
 
             /* If the index is within the range of the monthIndex selected */
-            if (
-                i >= months[monthIndex].startingIndex
-                && i <= months[monthIndex].startingIndex + (months[monthIndex].totalDays - 1)
-            )
+            if (i >= months[monthIndex].startingIndex && i <= months[monthIndex].startingIndex + (months[monthIndex].totalDays - 1))
             {
-
-                 setDaysToRender(prevState => [...prevState, <SelectableCalendarDates>{x}</SelectableCalendarDates>])
-
+                setDaysToRender(prevState => [...prevState, <SelectableCalendarDates>{x}</SelectableCalendarDates>])
             } else {
-                 setDaysToRender(prevState => [...prevState, <NonSelectableCalendarDates>{x}</NonSelectableCalendarDates>])
+                setDaysToRender(prevState => [...prevState, <NonSelectableCalendarDates>{x}</NonSelectableCalendarDates>])
             }
-
         }
 
     }, [monthIndex])
 
-    const handleLeftButton = () => {
+    const handleLeftButton = () =>
+    {
         if(monthIndex > 0)
             setMonthIndex(monthIndex-1)
     }
 
-    const handleRightButton = () => {
+    const handleRightButton = () =>
+    {
         if(monthIndex < 11)
             setMonthIndex(monthIndex+1)
     }
