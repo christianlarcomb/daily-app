@@ -197,7 +197,7 @@ const ConfigurationContainer = styled.div`
   position: sticky;
   top: 0;
   
-  grid-template-rows: 5px 20px 1fr 300px 1fr 200px 100px;
+  grid-template-rows: 5px 20px 1fr 280px 1fr 225px 65px;
   grid-gap: 15px;
   
   & > div:nth-child(2)
@@ -230,9 +230,8 @@ const TileContainer = styled.div`
 const DisclaimerGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  margin: 0 auto;
   grid-gap: 20px;
-  place-content: center;
+  padding-bottom: 20px;
   
   /* Individual Disclaimers */
   & > div
@@ -319,8 +318,8 @@ const FullReviews = styled.div`
   grid-template-rows: 55px 1fr;
   
   border-color: #D5D5D5;
-      border-style: solid;
-      border-width: 1px;
+  border-style: solid;
+  border-width: 1px;
   
   /* Tile Label */
   & > div:nth-child(1)
@@ -330,6 +329,26 @@ const FullReviews = styled.div`
     padding-left: 18px;
     font-weight: 500;
     font-size: 17px;
+  }
+`
+
+const TransactionDetails = styled.div`
+  display: grid;
+  grid-template-rows: 45px 1fr;
+  background-color: #f2f2f2;
+  border-color: #D5D5D5;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  
+  /* Tile Label */
+  & > div:nth-child(1)
+  {
+    display: grid;
+    align-items: center;
+    padding-left: 18px;
+    font-weight: 500;
+    font-size: 15px;
   }
 `
 
@@ -618,7 +637,7 @@ export default function ProductInterest(props)
                         {/* Configuration Scroll */}
                         <GeneralScroll options={{
                             tilesShown: 1,
-                            height: 300,
+                            height: 280,
                             borderRadius: 10
                         }}>
                             <div/>
@@ -630,9 +649,15 @@ export default function ProductInterest(props)
                         <div/>
 
                         {/* Transaction Details */}
-                        <div>
+                        <TransactionDetails>
+                            <div>
+                                Transaction Details
+                            </div>
 
-                        </div>
+                            <div>
+
+                            </div>
+                        </TransactionDetails>
 
                         {/* Disclaimers */}
                         <DisclaimerGrid>
