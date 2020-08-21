@@ -101,6 +101,9 @@ const ChildTagContainer = styled.div`
       transform: translateX(${props => parseInt(props.position)}px);
       transition: all ease-in-out 0.15s;
       place-content: center;
+      border-color: #D5D5D5;
+      border-style: solid;
+      border-width: 1px;
       
       & > img
       {

@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import {ReactComponent as StarSVG } from '../../../assets/svgs/products/star.svg';
 
 const RatingsContainer = styled.div`
-  background-color: #1e1e1e;
+  background-color: #f2f2f2;
   height: 100%;
   position: relative;
   border-radius: 25px;
@@ -13,13 +13,17 @@ const RatingsContainer = styled.div`
   grid-template-rows: 36px 1fr;
   grid-gap: 6px;
   
+  border-color: #D5D5D5;
+      border-style: solid;
+      border-width: 1px;
+  
   /* Floating Text */
   & > div:nth-child(1)
   {
     margin-top: auto;
     padding-left: 18px;
-    color: white;
-    font-weight: 400;
+    color: #1e1e1e;
+    font-weight: 500;
   }
   
   /* Bar Graph Container */
@@ -107,8 +111,8 @@ const RatingsContainer = styled.div`
       display: grid;
       grid-template-columns: 1fr auto 20px 1fr;
       place-items: center;
-      fill: white;
-      color: white;
+      fill: #1e1e1e;
+      color: #1e1e1e;
       
       /* Text */
       & > span

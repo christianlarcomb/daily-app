@@ -84,13 +84,13 @@ const PhotoContainer = styled.div`
     overflow: hidden;
     
     /* Spacing issue is detected here... Fix it up! */
-    border-radius: 25px;
+    border-radius: ${props => props.options.borderRadius ? props.options.borderRadius : 25}px;
     
     /* TRANSITION THESE ITEMS */
     /* Individual Photo Container */
     & > div
     {
-      border-radius: 25px;
+      border-radius: ${props => props.options.borderRadius ? props.options.borderRadius : 25}px;
       background-color: #d5d5d5;
       width: ${props => props.dim}px;
       overflow: hidden;

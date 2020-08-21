@@ -262,13 +262,18 @@ const DisclaimerGrid = styled.div`
 const CommunityPhotos = styled.div`
   grid-column: 1/3;
   display: grid;
-  grid-template-rows: 55px 1fr;
+  grid-template-rows: 55px 1fr 18px;
+  
+  border-color: #D5D5D5;
+  border-style: solid;
+  border-width: 1px;
   
   /* Tile Label */
   & > div:nth-child(1)
   {
     display: grid;
-    place-items: center;
+    align-items: center;
+    padding-left: 18px;
     font-weight: 500;
     font-size: 17px;
   }
@@ -276,20 +281,24 @@ const CommunityPhotos = styled.div`
   /* Scroll Container */
   & > div:nth-child(2)
   {
-    margin: 0 10px;
+    margin: 0 18px;
   }
 `
 
 const ProductDescriptions = styled.div`
   display: grid;
   grid-template-rows: 55px 1fr;
-  padding: 0 30px 30px 30px;
+  padding: 0 18px 18px 18px;
+  
+  border-color: #D5D5D5;
+  border-style: solid;
+  border-width: 1px;
   
   /* Tile Label */
   & > div:nth-child(1)
   {
     display: grid;
-    place-items: center;
+    align-items: center;
     font-weight: 500;
     font-size: 17px;
   }
@@ -309,11 +318,16 @@ const FullReviews = styled.div`
   display: grid;
   grid-template-rows: 55px 1fr;
   
+  border-color: #D5D5D5;
+      border-style: solid;
+      border-width: 1px;
+  
   /* Tile Label */
   & > div:nth-child(1)
   {
     display: grid;
-    place-items: center;
+    align-items: center;
+    padding-left: 18px;
     font-weight: 500;
     font-size: 17px;
   }
@@ -489,12 +503,15 @@ export default function ProductInterest(props)
                                         <PhotoScroll
                                             images={[SamplePhoto8,SamplePhoto9,SamplePhoto10,SamplePhoto11,SamplePhoto12,SamplePhoto13,SamplePhoto14]}
                                             options={{
-                                                height: 180,
-                                                width: 300,
-                                                tilesShown: 5
+                                                height: 172,
+                                                tilesShown: 5,
+                                                borderRadius: 18
                                             }}
                                         />
                                     </div>
+
+                                    {/* Spacer */}
+                                    <div/>
                                 </CommunityPhotos>
 
                                 {/* Product Description */}

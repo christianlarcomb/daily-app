@@ -96,8 +96,11 @@ const ReviewContainer = styled.div`
       display: grid;
       grid-template-columns: 200px 207px;
       grid-template-rows: 215px;
-      
       background-color: #F2F2F2;
+      
+      border-color: #D5D5D5;
+      border-style: solid;
+      border-width: 1px;
       
       /* Moves all of the containers giving the illusion of group movement */
       transform: translateX(${props => parseInt(props.position)}px);
