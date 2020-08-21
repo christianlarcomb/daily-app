@@ -55,6 +55,7 @@ const NonSelectableCalendarDates = styled.div`
 `
 
 const SelectableCalendarDates = styled.div`
+
   border-radius: 100%;
   cursor: pointer;
   place-items: center;
@@ -63,8 +64,9 @@ const SelectableCalendarDates = styled.div`
   
   &:hover
   {
-    background-color: #1e1e1e;
+    background-color: #33d56e;
     color: white;
+    transition: background-color ease-in-out 0.05s, color ease-in-out 0.05s;
   }
 `
 
