@@ -9,6 +9,7 @@ import StarRating       from "../star_rating";
 import AwardTag         from "../award_tag";
 import PhotoScroll      from "../tiles/photo_scroll.tile";
 import ReviewsContainer from "./reviews.container";
+import GeneralScroll from "../tiles/general-scroll.tile";
 
 /* Photos */
 import {ReactComponent as ChatBubblesSVG} from "../../../assets/svgs/ui/chat-bubbles.svg";
@@ -193,16 +194,23 @@ const ConfigurationContainer = styled.div`
   margin: 0 auto;
   display: grid;
   height: calc(100vh - 90px);
-  background-color: #2c2f33;
   position: sticky;
   top: 0;
+  
+  grid-template-rows: 5px 20px 1fr 300px 1fr 200px 100px;
+  grid-gap: 15px;
+  
+  & > div:nth-child(2)
+  {
+    font-weight: 500;
+  }
 `
 
 const TileContainer = styled.div`
 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 275px 215px 245px 575px 100px 5px;
+    grid-template-rows: 275px 215px 245px 575px 5px;
     grid-gap: 15px;
     
     /* Product Photo Scroll */
@@ -214,29 +222,38 @@ const TileContainer = styled.div`
     /* Disclaimer Grid */
     & > div:nth-child(7)
     {
-      grid-column: 1/3;
-      display: grid;
-      grid-template-columns: auto auto auto;
-      margin: 0 auto;
-      grid-gap: 30px;
-      place-content: center;
       
-      /* Individual Disclaimers */
-      & > div
+    }
+  }
+`
+
+const DisclaimerGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 0 auto;
+  grid-gap: 20px;
+  place-content: center;
+  
+  /* Individual Disclaimers */
+  & > div
+  {
+    grid-template-columns: 25px auto;
+    grid-gap: 8px;
+    display: grid;
+    align-items: center;
+    font-size: 11px;
+    color: #979797;
+    
+    /* Styling SVG container */
+    & > div:nth-child(1)
+    {
+      height: 22px;
+      width: 22px;
+      
+      & > svg
       {
-        grid-template-columns: 25px auto;
-        grid-gap: 10px;
-        display: grid;
-        place-items: center;
-        font-size: 11px;
-        color: #979797;
-        
-        /* Styling SVG container */
-        & > div:nth-child(1)
-        {
-          height: 25px;
-          width: 25px;
-        }
+      height: 22px;
+      width: 22px;
       }
     }
   }
@@ -302,6 +319,11 @@ const FullReviews = styled.div`
   }
 `
 
+/*
+*   Description:
+*     Component is responsible for the individual product selections; displaying
+*     information on the product,images, and allows users to order from this page.
+*/
 export default function ProductInterest(props)
 {
     return (
@@ -554,34 +576,6 @@ export default function ProductInterest(props)
                                     </div>
                                 </FullReviews>
 
-                                {/* Disclaimer Grid */}
-                                <div>
-                                    <div>
-                                        <div>
-                                            <SafeSVG/>
-                                        </div>
-                                        <div>
-                                            Secure transactions protected by the worlds leading cyber security technology.
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div>
-                                            <ShippingSVG/>
-                                        </div>
-                                        <div>
-                                            This service does not require shipping.
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div>
-                                            <ConversationSVG/>
-                                        </div>
-                                        <div>
-                                            Have a question? <br/> This brand has enabled instant messaging, try it out by pressing contact seller above.
-                                        </div>
-                                    </div>
-                                </div>
-
                             </TileContainer>
 
                         </div>
@@ -592,6 +586,64 @@ export default function ProductInterest(props)
 
                     {/* Configuration Settings */}
                     <ConfigurationContainer>
+
+                        {/* Spacer */}
+                        <div/>
+
+                        {/* Text */}
+                        <div>
+                            Configuration
+                        </div>
+
+                        {/* Spacer */}
+                        <div/>
+
+                        {/* Configuration Scroll */}
+                        <GeneralScroll options={{
+                            tilesShown: 1,
+                            height: 300,
+                            borderRadius: 10
+                        }}>
+                            <div/>
+                            <div/>
+                            <div/>
+                        </GeneralScroll>
+
+                        {/* Spacer */}
+                        <div/>
+
+                        {/* Transaction Details */}
+                        <div>
+
+                        </div>
+
+                        {/* Disclaimers */}
+                        <DisclaimerGrid>
+                            <div>
+                                <div>
+                                    <SafeSVG/>
+                                </div>
+                                <div>
+                                    Secured transaction
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <ShippingSVG/>
+                                </div>
+                                <div>
+                                    No shipping
+                                </div>
+                            </div>
+                            <div>
+                                <div>
+                                    <ConversationSVG/>
+                                </div>
+                                <div>
+                                    Have a question? <br/> Message this brand today.
+                                </div>
+                            </div>
+                        </DisclaimerGrid>
 
                     </ConfigurationContainer>
 
