@@ -36,6 +36,7 @@ import SamplePhoto10 from "../../../assets/imgs/sample_photos/10.jpg";
 import {ReactComponent as SafeSVG}         from "../../../assets/svgs/disclaimers/safe-box.svg";
 import {ReactComponent as ShippingSVG}     from "../../../assets/svgs/disclaimers/box.svg";
 import {ReactComponent as ConversationSVG} from "../../../assets/svgs/disclaimers/conversation.svg";
+import CalendarSelector from "../selectors/calendar.selector";
 
 const ProductContainer = styled.div`
 
@@ -352,6 +353,7 @@ const TransactionDetails = styled.div`
   }
 `
 
+
 /*
 *   Description:
 *     Component is responsible for the individual product selections; displaying
@@ -522,7 +524,7 @@ export default function ProductInterest(props)
                                         <PhotoScroll
                                             images={[SamplePhoto8,SamplePhoto9,SamplePhoto10,SamplePhoto11,SamplePhoto12,SamplePhoto13,SamplePhoto14]}
                                             options={{
-                                                height: 172,
+                                                height: 171,
                                                 tilesShown: 5,
                                                 borderRadius: 18
                                             }}
@@ -640,7 +642,9 @@ export default function ProductInterest(props)
                             height: 280,
                             borderRadius: 10
                         }}>
-                            <div/>
+                            {/* Calendar Container */}
+                            <CalendarSelector/>
+
                             <div/>
                             <div/>
                         </GeneralScroll>
