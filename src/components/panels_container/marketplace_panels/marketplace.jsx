@@ -4,23 +4,23 @@ import { useLocation } from 'react-router-dom'
 import Tilt from 'react-tilt'
 
 /* Components */
-import GeneralItemObject from "../misc/general_item_object";
-import ProductInterest from "../misc/containers/product-interest.container";
+import GeneralItemObject from "../../misc/general_item_object";
+import ProductInterest from "./product-interest.container";
 
 /* Vectors */
-import { ReactComponent as DailyTextLogo } from '../../assets/svgs/daily/daily_text.svg';
-import { ReactComponent as SearchIcon }    from '../../assets/svgs/ui/search.svg';
-import { ReactComponent as ClockIcon }     from '../../assets/svgs/explore_header/clock.svg';
-import { ReactComponent as FilterIcon }    from '../../assets/svgs/explore_header/sort_vector.svg';
+import { ReactComponent as DailyTextLogo } from '../../../assets/svgs/daily/daily_text.svg';
+import { ReactComponent as SearchIcon }    from '../../../assets/svgs/ui/search.svg';
+import { ReactComponent as ClockIcon }     from '../../../assets/svgs/explore_header/clock.svg';
+import { ReactComponent as FilterIcon }    from '../../../assets/svgs/explore_header/sort_vector.svg';
 
 /* Images */
-import BannerImgOne from '../../assets/imgs/explore/banner_image_1.png'
-import BannerImgTwo from '../../assets/imgs/explore/banner_image_2.jpg'
-import BannerImgThree from '../../assets/imgs/explore/banner_image_3.jpg'
-import BannerImgFour from '../../assets/imgs/explore/banner_image_4.png'
-import BannerImgFive from '../../assets/imgs/explore/banner_image_5.png'
-import BannerImgSix from '../../assets/imgs/explore/banner_image_6.jpg'
-import BannerImgSeven from '../../assets/imgs/explore/banner_image_7.jpg'
+import BannerImgOne from '../../../assets/imgs/explore/banner_image_1.png'
+import BannerImgTwo from '../../../assets/imgs/explore/banner_image_2.jpg'
+import BannerImgThree from '../../../assets/imgs/explore/banner_image_3.jpg'
+import BannerImgFour from '../../../assets/imgs/explore/banner_image_4.png'
+import BannerImgFive from '../../../assets/imgs/explore/banner_image_5.png'
+import BannerImgSix from '../../../assets/imgs/explore/banner_image_6.jpg'
+import BannerImgSeven from '../../../assets/imgs/explore/banner_image_7.jpg'
 
 
 /******* Marketplace Styling *******/
@@ -62,48 +62,6 @@ const Header = styled.div`
     {
       fill: ${props => props.theme.SiteVectorSvg};
       height: 32px;
-    }
-  }
-  
-  /* Search Bar Grid Container */
-  & > div:nth-child(2)
-  {
-    align-items: center;
-    display: flex;
-    
-    /* Search Bar Wrapper */
-    & > div:nth-child(1)
-    {
-      margin: 0 auto;
-      height: 36px;
-      width:  100%;
-      max-width: 646px;
-      display: grid;
-      grid-template-columns: 1fr 46px;
-      background-color: #F2F2F2;
-      border-radius: 8px;
-      overflow: hidden;
-      align-items: center;
-      
-      /* Search Input Tag */
-      & > div:nth-child(1) > input
-      {
-        background-color: rgba(0,0,0,0);
-        border-style: hidden;
-        height: 30px;
-        width: 100%;
-        max-width: 600px;
-        padding-left: 14px;
-        font-size: 15px;
-        
-        &:focus{outline: none;}
-      }
-      /* Search Icon */
-      & > div:nth-child(2)
-      {
-        display: grid;
-        place-items: center;
-      }
     }
   }
   
@@ -159,6 +117,46 @@ const Header = styled.div`
       
     }
   }
+`
+
+const SearchBar = styled.div`
+  align-items: center;
+    display: flex;
+    
+    /* Search Bar Wrapper */
+    & > div:nth-child(1)
+    {
+      margin: 0 auto;
+      height: 36px;
+      width:  100%;
+      max-width: 646px;
+      display: grid;
+      grid-template-columns: 1fr 46px;
+      background-color: #F2F2F2;
+      border-radius: 8px;
+      overflow: hidden;
+      align-items: center;
+      
+      /* Search Input Tag */
+      & > div:nth-child(1) > input
+      {
+        background-color: rgba(0,0,0,0);
+        border-style: hidden;
+        height: 30px;
+        width: 100%;
+        max-width: 600px;
+        padding-left: 14px;
+        font-size: 15px;
+        
+        &:focus{outline: none;}
+      }
+      /* Search Icon */
+      & > div:nth-child(2)
+      {
+        display: grid;
+        place-items: center;
+      }
+    }
 `
 
 const ContentHolder = styled.div`
@@ -692,7 +690,7 @@ function MarketplacePanel()
                 </div>
 
                 {/* Search Container */}
-                <div>
+                <SearchBar>
                     <div>
                         {/* Search Container */}
                         <div>
@@ -710,7 +708,7 @@ function MarketplacePanel()
                             <SearchIconStyled/>
                         </div>
                     </div>
-                </div>
+                </SearchBar>
 
                 {/* Buttons Container */}
                 <div>

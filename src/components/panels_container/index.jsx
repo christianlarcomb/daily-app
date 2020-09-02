@@ -7,8 +7,8 @@ import { notify } from "../misc/Notifications";
 
 /* Panels */
 import SettingsPanels from "./settings_panels";
-import MarketplacePanels from './marketplace';
-import MessengerPanel from './messenger';
+import MarketplacePanels from './marketplace_panels/marketplace';
+import ChatPanel from './chat_panels';
 import ShopPanel from './shop';
 
 /* Logo SVG */
@@ -960,9 +960,9 @@ function PanelsContainer()
 
                 {/* Conditionally rendering the route specifically */}
                 <Switch>
-                    <Route path="/app/marketplace" component={MarketplacePanels}/>
+                    <Route path="/app/marketplace"     component={MarketplacePanels}/>
                     <Route path="/app/shop"      exact component={ShopPanel}/>
-                    <Route path="/app/messenger" exact component={MessengerPanel}/>
+                    <Route path="/app/chat"      exact component={ChatPanel}/>
                     <Route path="/app/settings"        component={SettingsPanels}/>
                 </Switch>
 

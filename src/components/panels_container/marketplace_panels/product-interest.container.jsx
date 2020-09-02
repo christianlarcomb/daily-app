@@ -2,14 +2,14 @@ import React from 'react'
 import styled from "styled-components";
 
 /* Components */
-import RatingsBarGraph  from "../tiles/ratings_bar-graph.tile";
-import ReviewScroll     from "../tiles/review_scroll.tile";
-import LocationTag      from "../location_tag";
-import StarRating       from "../star_rating";
-import AwardTag         from "../award_tag";
-import PhotoScroll      from "../tiles/photo_scroll.tile";
+import RatingsBarGraph  from "../../misc/tiles/ratings_bar-graph.tile";
+import ReviewScroll     from "../../misc/tiles/review_scroll.tile";
+import LocationTag      from "../../misc/location_tag";
+import StarRating       from "../../misc/star_rating";
+import AwardTag         from "../../misc/award_tag";
+import PhotoScroll      from "../../misc/tiles/photo_scroll.tile";
 import ReviewsContainer from "./reviews.container";
-import GeneralScroll from "../tiles/general-scroll.tile";
+import GeneralScroll from "../../misc/tiles/general-scroll.tile";
 
 /* Photos */
 import {ReactComponent as ChatBubblesSVG} from "../../../assets/svgs/ui/chat-bubbles.svg";
@@ -36,7 +36,7 @@ import SamplePhoto10 from "../../../assets/imgs/sample_photos/10.jpg";
 import {ReactComponent as SafeSVG}         from "../../../assets/svgs/disclaimers/safe-box.svg";
 import {ReactComponent as ShippingSVG}     from "../../../assets/svgs/disclaimers/box.svg";
 import {ReactComponent as ConversationSVG} from "../../../assets/svgs/disclaimers/conversation.svg";
-import CalendarSelector from "../selectors/calendar.selector";
+import CalendarSelector from "../../misc/selectors/calendar.selector";
 
 const ProductContainer = styled.div`
 
