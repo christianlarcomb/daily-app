@@ -8,7 +8,7 @@ import UserOne from '../../../assets/imgs/sample_photos/14.jpg';
 
 const PrimaryContainer = styled.div`
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 270px 1fr;
 `
 
 const SelectionMenu = styled.div`
@@ -80,7 +80,7 @@ const SearchIconStyled = styled(SearchIcon)`
 `
 
 const MessagesContainer = styled.div`
-  
+ 
   
 `
 
@@ -88,26 +88,57 @@ const ContentDivider = styled.div`
   background-color: #f2f2f2;
   display: grid;
   grid-template-columns: 1fr 315px;
+  grid-gap: 20px;
 `
 
 const MessageScrollContainer = styled.div`
-  background-color: #a6c5ba;
+  display: grid;
+  grid-template-rows: 40px 1fr;
+  padding-left: 20px;
+  
+  /* Header Section */
+  & > div:nth-child(1)
+  {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    grid-gap: 8px;
+    place-content: center;
+    place-items: center;
+    
+    
+    & > div:nth-child(1)
+    {
+      font-weight: 500;
+    }
+    
+    /* Online Indicator */
+    & > div:nth-child(2)
+    {
+      background-color: #6ab26a;
+      height: 10px;
+      width: 10px;
+      border-radius: 100%;
+    }
+  }
+ 
 `
 
 const WidgetContainer = styled.div`
-  background-color: #4285F4;
+  
 `
 
 const IndividualMessage = styled.div`
 
-    height: 44px;
+    height: 48px;
     width: 100%;
     display: grid;
     grid-template-columns: 44px 1fr 24px;
     grid-gap: 6px;
     
-    border-radius: 8px;
+    border-radius: 6px;
     margin-bottom: 6px;
+    
+    padding: 0 5px;
     
     /* Image Container */
     & > div:nth-child(1)
@@ -115,7 +146,7 @@ const IndividualMessage = styled.div`
       height: 36px;
       width: 36px;
       background-color: #f2f2f2;
-      border-radius: 8px;
+      border-radius: 100%;
       margin: auto;
       overflow: hidden;
       display: grid;
@@ -136,7 +167,7 @@ const IndividualMessage = styled.div`
       & div:nth-child(1)
       {
         font-size: 14px;
-        transform: translateY(5px);
+        transform: translateY(8px);
       }
       & div:nth-child(2)
       {
@@ -149,8 +180,8 @@ const IndividualMessage = styled.div`
     /* Verified Container */
     & > div:nth-child(3)
     {
-      height: 15px;
-      width: 15px;
+      height: 14px;
+      width: 14px;
       background-color: #6ab26a;
       margin: auto 0;
       
@@ -159,10 +190,10 @@ const IndividualMessage = styled.div`
     
     &:hover
     { 
-      background-color: #1e1e1e;
+      background-color: #f2f2f2;
       cursor: pointer;
       transition: all ease-in-out 0.075s;
-      color: white;
+      
     }
 `
 
@@ -397,9 +428,18 @@ function ChatPanel()
             {/* Content Section */}
             <ContentDivider>
 
-                {/*  */}
+                {/* Displaying the Chat contents */}
                 <MessageScrollContainer>
+                    <div>
 
+                        <div>@richardmichael</div>
+
+                        {/* Online Indicator */}
+                        <div></div>
+                    </div>
+                    <div>
+
+                    </div>
                 </MessageScrollContainer>
 
                 {/*  */}
