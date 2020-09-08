@@ -93,7 +93,7 @@ const ContentDivider = styled.div`
 
 const MessagesContentContainer = styled.div`
   display: grid;
-  grid-template-rows: 40px 1fr;
+  grid-template-rows: 40px auto 50px;
   padding-left: 20px;
   position: relative;
   
@@ -121,12 +121,12 @@ const MessagesContentContainer = styled.div`
       border-radius: 100%;
     }
   }
- 
 `
 
 const MessagesScrollContainer = styled.div`
    overflow-y: scroll;
-   height: calc(100vh - 40px);
+   height: calc(100vh - 90px);
+   position: relative;
 `
 
 const MessageContext = styled.div`
@@ -238,11 +238,11 @@ const IndividualMessage = styled.div`
       }
     }
     
-    /* Verified Container */
+    /* Online Indicator */
     & > div:nth-child(3)
     {
-      height: 14px;
-      width: 14px;
+      height: 12px;
+      width: 12px;
       background-color: #6ab26a;
       margin: auto 0;
       
@@ -256,6 +256,28 @@ const IndividualMessage = styled.div`
       transition: all ease-in-out 0.075s;
       
     }
+`
+
+const MessageFiller = styled.div`
+  margin: 8px;
+`
+
+const MessageInjector = styled.div`
+  position: absolute;
+  height: 50px;
+  background-color: #f2f2f2;
+  width: calc(100% - 20px);
+  bottom: 0;
+  margin-left: 20px;
+  
+  & > div:nth-child(1)
+  {
+    background-color: grey;
+    border-radius: 6px;
+    height: 40px;
+    transform: translateY(-4px);
+    margin-right: 8px;
+  }
 `
 
 function ChatPanel()
@@ -329,7 +351,7 @@ function ChatPanel()
                     }
             },
 
-            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+            text: `Boop.`,
 
             image: '',
 
@@ -925,34 +947,16 @@ function ChatPanel()
                     <MessagesScrollContainer>
 
                         {/* Rendering the list of messages */}
-                        {/* TODO: Figure out what's going on with this. Reference your own code somewhere */}
-                        <>
-                            {DisplayMessages}
-                        </>
+                        { DisplayMessages }
 
-                        <MessageContext>
-
-                            {/* Image Container */}
-                            <div></div>
-
-                            {/* Text Container */}
-                            <div>
-                                {/* Name & Timestamp */}
-                                <div>
-                                    <div>Sarah May</div>
-                                    <div>Yesterday at 10:31pm</div>
-                                </div>
-
-                                {/* Text */}
-                                <div>Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.</div>
-
-                                {/* Images & Other Content */}
-                                <div></div>
-                            </div>
-
-                        </MessageContext>
+                        <MessageFiller/>
 
                     </MessagesScrollContainer>
+
+                    <MessageInjector>
+                        <div></div>
+                    </MessageInjector>
+
                 </MessagesContentContainer>
 
                 {/*  */}
