@@ -91,10 +91,11 @@ const ContentDivider = styled.div`
   grid-gap: 20px;
 `
 
-const MessageScrollContainer = styled.div`
+const MessagesContentContainer = styled.div`
   display: grid;
   grid-template-rows: 40px 1fr;
   padding-left: 20px;
+  position: relative;
   
   /* Header Section */
   & > div:nth-child(1)
@@ -121,6 +122,66 @@ const MessageScrollContainer = styled.div`
     }
   }
  
+`
+
+const MessagesScrollContainer = styled.div`
+   overflow-y: scroll;
+   height: calc(100vh - 40px);
+`
+
+const MessageContext = styled.div`
+   display: grid;
+   grid-template-columns: 30px auto;
+   grid-gap: 8px;
+   padding: 10px 0;
+   
+   /* Image Section */
+   & > div:nth-child(1)
+   {
+    background-color: #6ab26a;
+    border-radius: 100%;
+    height: 30px;
+    width: 30px;
+   }
+   
+   /* Text + Content Grid */
+   & > div:nth-child(2)
+   {
+    display: grid;
+    grid-template-rows: 15px auto auto;
+    grid-gap: 2px;
+    
+    /* Name and timestamp */
+    & > div:nth-child(1)
+    {
+      
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      grid-gap: 10px;
+      place-items: center;
+      place-content: center;
+    
+      /* Name */
+      & > div:nth-child(1)
+      {
+        font-weight: 500;
+        font-size: 14px;
+      }
+      
+      /* Timestamp */
+      & > div:nth-child(2)
+      {
+        font-size: 12px;
+        color: #9D9D9D;
+      }
+    }
+    
+    & > div:nth-child(2)
+    {
+      font-size: 14px;
+    }
+   }
+   
 `
 
 const WidgetContainer = styled.div`
@@ -231,7 +292,7 @@ function ChatPanel()
         }
 
         return(
-                <SearchBar>
+            <SearchBar>
                     <div>
                         {/* Search Container */}
                         <div>
@@ -253,6 +314,427 @@ function ChatPanel()
         )
     }
 
+    let [messages, setMessages] = useState([
+        {
+            meta:
+            {
+                epoch_timestamp: 49587358723,
+                geo_loc: null,
+                uuid: 324203948239,
+                host_uuid: 2493242432,
+                posters_name:
+                    {
+                        first: 'Richard',
+                        last: 'Michael'
+                    }
+            },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: '',
+
+            update: {
+                type: 'upgrade',
+                data: {
+                    from_val: 10.00,
+                    to_val: 20.00,
+                    from_tier: 1,
+                    to_tier: 3
+                }
+            }
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+        {
+            meta:
+                {
+                    epoch_timestamp: 49587358723,
+                    geo_loc: null,
+                    uuid: 324203948239,
+                    host_uuid: 2493242432,
+                    posters_name:
+                        {
+                            first: 'Richard',
+                            last: 'Michael'
+                        }
+                },
+
+            text: `Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.`,
+
+            image: undefined,
+
+            update: {}
+        },
+    ])
+
+    const DisplayMessages = messages.map(message =>
+    {
+        const posters_name = message.meta.posters_name.first + ' ' + message.meta.posters_name.last
+        const timestamp = message.meta.epoch_timestamp
+        const message_text = message.text
+
+        return(
+            <>
+                <MessageContext>
+                    {/* Image Container */}
+                    <div></div>
+
+                    {/* Text Container */}
+                    <div>
+                        {/* Name & Timestamp */}
+                        <div>
+                            <div>{posters_name}</div>
+                            <div>{timestamp}</div>
+                        </div>
+
+                        {/* Text */}
+                        <div>{message_text}</div>
+
+                        {/* Images & Other Content */}
+                        <div></div>
+                    </div>
+                </MessageContext>
+            </>
+        )
+    })
+
     return(
         <PrimaryContainer>
 
@@ -260,7 +742,7 @@ function ChatPanel()
             <SelectionMenu>
 
                 {/* Title */}
-                <div>Messages</div>
+                <div>Chat</div>
 
                 {/* Search Container */}
                 { SearchBarHeader() }
@@ -429,18 +911,49 @@ function ChatPanel()
             <ContentDivider>
 
                 {/* Displaying the Chat contents */}
-                <MessageScrollContainer>
-                    <div>
+                <MessagesContentContainer>
 
+                    {/* Who | Online | Buttons */}
+                    <div>
                         <div>@richardmichael</div>
 
                         {/* Online Indicator */}
                         <div></div>
                     </div>
-                    <div>
 
-                    </div>
-                </MessageScrollContainer>
+                    {/* Message Content Grid */}
+                    <MessagesScrollContainer>
+
+                        {/* Rendering the list of messages */}
+                        {/* TODO: Figure out what's going on with this. Reference your own code somewhere */}
+                        <>
+                            {DisplayMessages}
+                        </>
+
+                        <MessageContext>
+
+                            {/* Image Container */}
+                            <div></div>
+
+                            {/* Text Container */}
+                            <div>
+                                {/* Name & Timestamp */}
+                                <div>
+                                    <div>Sarah May</div>
+                                    <div>Yesterday at 10:31pm</div>
+                                </div>
+
+                                {/* Text */}
+                                <div>Good news! I've just finished up my order and you should be seeing it submitted here shortly. I know once payments go through their are updated tabs.</div>
+
+                                {/* Images & Other Content */}
+                                <div></div>
+                            </div>
+
+                        </MessageContext>
+
+                    </MessagesScrollContainer>
+                </MessagesContentContainer>
 
                 {/*  */}
                 <WidgetContainer>
