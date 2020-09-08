@@ -22,19 +22,14 @@ import SuccessSvg from '../../assets/svgs/notifications/icons/success.svg'
 const InfoSectionContainer = styled.div`
     display: grid;
     place-items: center;
-    min-width: 800px;
     position: relative;
-    height: 100vh;
-    width: 100%;
+    padding: 30px 30px;
+    
 `
 
 const InfoSectionWrapper = styled.div`
-    height: 100%;
     display: grid;
     place-items: center;
-    grid-template-rows: 15% 70% 15%;
-    min-width: 800px;
-    width: 100%;
     position: relative;
 `
 
@@ -60,39 +55,98 @@ const SubmitButton = styled.div`
 `
 
 const FormContainer = styled.div`
+
     display: grid;
-    grid-template-columns: repeat(2, minmax(min-content, 250px));
+    grid-template-columns: 1fr 1fr;
     grid-auto-rows: max-content;
     place-content: center;
     row-gap: 20px;
     column-gap: 40px;
-    min-height: 570px;
     
-    & > h1
+    /* Signup Text & Change Panels */
+    & > div:nth-child(1)
     {
       grid-column: 1 / 3;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      
+      /* Signup Text */
+      & > div:nth-child(1)
+      {
+        font-weight: 600;
+        font-size: 26px;
+      }
+      
+      & > div:nth-child(2)
+      {
+        margin: auto 0;
+        text-align: right;
+      }
+    }
+    
+    & > a:nth-child(2), & > a:nth-child(3)
+    {
+      width: auto;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: max-content;
+      column-gap: 15px;
+      place-content: center;
+      font-family: Helvetica, Arial, sans-serif;
+      border-radius: 8px;
+      font-size: 16px;
+      place-items: center;
+      text-decoration: none;
+      color: white;
+      height: 50px;
+      background-color: black;
+      
+      & > svg
+      {
+        height: 16px;
+      }
+    }
+    
+    /* Or Divider */
+    & > div:nth-child(4)
+    {
+      display: grid;
+      grid-column: 1 / 3;
+      grid-auto-flow: column;
+      place-items: center;
+      grid-template-columns: 1fr 50px 1fr;
+      color: #A6C5BA;
       font-weight: 600;
+      
+      & > div:nth-child(1), & > div:nth-child(3)
+      {
+        height: 1px;
+        width: 100%;
+        background-color: #2c2f33; 
+      }
     }
     
     & > a:nth-of-type(1)
     {
-    background-color: black;
+      background-color: black;
     }
 
     & > a:nth-of-type(2)
     {
-        background-color: #4285F4;
+      background-color: #4285F4;
     }
 `
 
 const FormWrapper = styled.div`
 
     grid-column: 1 / 3;
+    
     display: grid;
+    
+    grid-template-columns: 1fr 1fr;
     column-gap: 40px;
     row-gap: 20px;
-    grid-template-columns: repeat(2, minmax(min-content, 250px));
-   
+    
     /* Styling Input Fields */
     & > div
     {
@@ -100,11 +154,10 @@ const FormWrapper = styled.div`
         row-gap: 5px;
     }
     
-    & > div:nth-of-type(3), & > div:nth-of-type(4)
-    {
-        grid-column: 1 / 3;
-    }
+    /* Email and Password */
+    & > div:nth-of-type(3), & > div:nth-of-type(4) { grid-column: 1 / 3; }
     
+    /* Checkbox */
     & > div:nth-of-type(5)
     {
         grid-column: 1 / 3;
@@ -112,7 +165,14 @@ const FormWrapper = styled.div`
         grid-auto-flow: column;
         column-gap: 20px;
         align-items: center;
+        
+        & > div:nth-child(2)
+        {
+          font-size: 14px;
+        }
     }
+    
+    & > div:nth-child(7){ grid-column: 1/3; }
     
     & > div > input
     {
@@ -124,34 +184,34 @@ const FormWrapper = styled.div`
     & > div:nth-child(3) > input:focus,
     & > div:nth-child(4) > input:focus
     {
-        background-color: #E9F0ED;
-        border-color: #A6C5BA;
-        outline: none;
+      background-color: #E9F0ED;
+      border-color: #A6C5BA;
+      outline: none;
     }
 
     /* Styling Errors */
     & > div:nth-child(1) > input 
     {
-        background-color: ${prop => prop.errorStates.name ? "#F2D5D5" : "#E9F0ED" };
-        border-color: ${prop => prop.errorStates.name ? "red" : "#A6C5BA" };
+      background-color: ${prop => prop.errorStates.name ? "#F2D5D5" : "#E9F0ED" };
+      border-color: ${prop => prop.errorStates.name ? "red" : "#A6C5BA" };
     }
   
     & > div:nth-child(2) > input 
     {
-    background-color: ${prop => prop.errorStates.username ? "#F2D5D5" : "#E9F0ED" };
-        border-color: ${prop => prop.errorStates.username ? "red" : "#A6C5BA" };
+      background-color: ${prop => prop.errorStates.username ? "#F2D5D5" : "#E9F0ED" };
+      border-color: ${prop => prop.errorStates.username ? "red" : "#A6C5BA" };
     }
     
     & > div:nth-child(3) > input 
     {
-    background-color: ${prop => prop.errorStates.email ? "#F2D5D5" : "#E9F0ED" };
-        border-color: ${prop => prop.errorStates.email ? "red" : "#A6C5BA" };
+      background-color: ${prop => prop.errorStates.email ? "#F2D5D5" : "#E9F0ED" };
+      border-color: ${prop => prop.errorStates.email ? "red" : "#A6C5BA" };
     }
     
     & > div:nth-child(4) > input 
     {
-    background-color: ${prop => prop.errorStates.password ? "#F2D5D5" : "#E9F0ED" };
-        border-color: ${prop => prop.errorStates.password ? "red" : "#A6C5BA" };
+      background-color: ${prop => prop.errorStates.password ? "#F2D5D5" : "#E9F0ED" };
+      border-color: ${prop => prop.errorStates.password ? "red" : "#A6C5BA" };
     }
     
     & > div:nth-child(5) > input 
@@ -198,33 +258,12 @@ const CaptchaProtection = styled.div`
     place-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 14px;
+    font-size: 13px;
     
     & > a
     {
       color: blue;    
     }
-`
-
-const SwitchPanelContainer = styled.div`
-
-    position: relative;
-    width: 100%;
-    height: 100%;
-    
-    & > div 
-    {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      
-        & > a 
-        {
-          text-decoration: none;
-        }
-    
-    }
-    
 `
 
 class SignupSection extends React.Component
@@ -435,13 +474,10 @@ class SignupSection extends React.Component
 
     }
 
-
     render()
     {
-
         return (
             <>
-
                 <InfoSectionContainer>
 
                     <ReCaptchaContainer enabledState={this.state.captcha.enabled}>
@@ -470,33 +506,35 @@ class SignupSection extends React.Component
 
                     <InfoSectionWrapper>
 
-                        <SwitchPanelContainer>
-                            <div>
-                                <p>
-                                    Already a member?&nbsp;
-                                    <Link to="/account/login">Sign in</Link>
-                                </p>
-                            </div>
-                        </SwitchPanelContainer>
-
                         <FormContainer>
 
-                            <h1>Sign up</h1>
+                            {/* Sign up message and panel change link */}
+                            <div>
+                                <div>Sign up</div>
 
-                            <a className="platform-button" href="/">
+                                <div>
+                                    <p>
+                                        Already a member?&nbsp;
+                                        <Link to="/account/login">Sign in</Link>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <a href="/">
                                 <AppleLogo/>
                                 <p>Sign up with Apple</p>
                             </a>
 
-                            <a className="platform-button" href="/">
+                            <a href="/">
                                 <GoogleLogo/>
                                 <p>Sign up with Google</p>
                             </a>
 
-                            <div className="or-divider">
-                                <hr/>
-                                    Or
-                                <hr/>
+                            {/* Or Divider */}
+                            <div>
+                                <div/>
+                                <div>or</div>
+                                <div/>
                             </div>
 
                             <FormWrapper id="df7f-2fj2" errorStates={this.state.errorChecks}>
@@ -511,6 +549,7 @@ class SignupSection extends React.Component
                                         onChange={this.handleInput}
                                     />
                                 </div>
+
                                 <div>
                                     <label>Username</label>
                                     <input
@@ -518,8 +557,10 @@ class SignupSection extends React.Component
                                         name="username"
                                         id="username"
                                         value={this.state.values.username}
-                                        onChange={this.handleInput}/>
+                                        onChange={this.handleInput}
+                                    />
                                 </div>
+
                                 <div>
                                     <label>Email</label>
                                     <input
@@ -530,6 +571,7 @@ class SignupSection extends React.Component
                                         onChange={this.handleInput}
                                     />
                                 </div>
+
                                 <div>
                                     <label>Password</label>
                                     <input
@@ -540,6 +582,7 @@ class SignupSection extends React.Component
                                         onChange={this.handleInput}
                                     />
                                 </div>
+
                                 <div>
                                     <input
                                         name="checkbox"
@@ -547,26 +590,24 @@ class SignupSection extends React.Component
                                         value={this.state.values.checkbox}
                                         onChange={this.handleInput}
                                     />
-                                    <label htmlFor="checkbox">Creating an account means you are okay with our Terms of Service, Privacy Policy, and our default Notification Settings policies.</label>
+                                    <div>Creating an account means you are okay with our Terms of Service, Privacy Policy, and our default Notification Settings policies.</div>
                                 </div>
 
                                 <SubmitButton onClick={this.handleCreateAccount}>Create Account</SubmitButton>
 
+                                <CaptchaProtection>
+                                    <p>
+                                        This site is protected by reCAPTCHA and the Google&nbsp;
+                                        <a href="https://google.com/">Privacy Policy</a>&nbsp;
+                                        and&nbsp;
+                                        <a href="https://google.com/">Terms of Service</a>&nbsp;
+                                        apply.
+                                    </p>
+                                </CaptchaProtection>
 
                             </FormWrapper>
 
                         </FormContainer>
-
-                        {/* TODO: Fix this text section to have proper links */}
-                        <CaptchaProtection>
-                            <p>
-                                This site is protected by reCAPTCHA and the Google&nbsp;
-                                <a href="https://google.com/">Privacy Policy</a>&nbsp;
-                                and&nbsp;
-                                <a href="https://google.com/">Terms of Service</a>&nbsp;
-                                apply.
-                            </p>
-                        </CaptchaProtection>
 
                     </InfoSectionWrapper>
 
@@ -574,6 +615,7 @@ class SignupSection extends React.Component
             </>
         )
     }
+
 }
 
 export default SignupSection

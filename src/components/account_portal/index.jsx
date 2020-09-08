@@ -20,30 +20,48 @@ import {
 } from 'react-router-dom'
 
 const PrimaryContainer = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 3fr;
   height: 100vh;
 `
 
-const ImagePanel = styled.div`
+const BackdropPanel = styled.div`
+  position: relative;
   display: grid;
+  background-color: #2c2f33;
+  height: 100vh;
+  
+  & > div:nth-child(2)
+  {
+    background-color: rgba(0,0,0,0.2);
+  }
 `
 
-const SidePanelContent = styled.div`
-    display: grid;
-    grid-auto-rows: max-content;
-    grid-auto-columns: auto;
-    padding-top: 50px;
-    padding-left: 30px;
-    padding-right: 30px;
-    row-gap: 15px;
-    color: white;
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-    z-index: 2;
-    
-    & > svg { height: 42px; fill: white }
-    & > h1 { font-size: 2.5em }
+const PortalBackdropContainer = styled.div`
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  
+  display: grid;
+  place-content: center;
+  
+  /* Wrapper */
+  & > div
+  {
+    background-color: white;
+    height: auto;
+    width: 525px;
+    border-radius: 25px;
+  }
+`
+
+const CompanyLogoStyled = styled(CompanyLogo)`
+  width: 90px;
+  fill: white;
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
 `
 
 function AccountPortal()
@@ -59,26 +77,24 @@ function AccountPortal()
 
             <PrimaryContainer>
 
-                <ImagePanel>
+                <BackdropPanel>
 
-                    <SidePanelContent>
+                    <CompanyLogoStyled/>
 
-                        <CompanyLogo/>
-                        <h1>It's a lifestyle.</h1>
+                    <div/>
 
-                    </SidePanelContent>
+                </BackdropPanel>
 
-                    <div id="side-panel-color"/>
-
-                    <div id="side-panel-image"/>
-
-                </ImagePanel>
 
                 { /* Conditionally rendering the route specifically */ }
-                <Switch>
-                    <Route path="/account/create" exact component={CreateAccount}/>
-                    <Route path="/account/login" exact  component={LoginAccount}/>
-                </Switch>
+                <PortalBackdropContainer>
+                    <div>
+                        <Switch>
+                            <Route path="/account/create" exact component={CreateAccount}/>
+                            <Route path="/account/login" exact  component={LoginAccount}/>
+                        </Switch>
+                    </div>
+                </PortalBackdropContainer>
 
             </PrimaryContainer>
         </>
