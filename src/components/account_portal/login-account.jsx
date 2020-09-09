@@ -16,9 +16,8 @@ import {userLoggedIn} from "../../redux/actions";
 const LoginAccountContainer = styled.div`
   display: grid;
   place-items: center;
-  grid-template-rows: 15% 70% 15%;
-  min-width: 800px;
   position: relative;
+  padding: 30px 30px;
 `
 
 const ReCaptchaContainer = styled.div`
@@ -74,34 +73,75 @@ const SubmitButton = styled.div`
     }
 `
 
-const SwitchPanelContainer = styled.div`
-
-    position: relative;
-    width: 100%;
-    height: 100%;
-    
-    & > div 
-    {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-    }
-`
-
 const FormContainer = styled.div`
 
     display: grid;
-    grid-template-columns: repeat(2, minmax(min-content, 250px));
-    grid-auto-rows: max-content;
+    grid-template-columns: 1fr 1fr;
     place-content: center;
     row-gap: 20px;
     column-gap: 40px;
     
-    & > h1
-    
+    /* Sign In Text & Change Panels */
+    & > div:nth-child(1)
     {
-     grid-column: 1 / 3;
-     font-weight: 600;
+      grid-column: 1 / 3;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      
+      /* Signup Text */
+      & > div:nth-child(1)
+      {
+        font-weight: 600;
+        font-size: 26px;
+      }
+      
+      & > div:nth-child(2)
+      {
+        margin: auto 0;
+        text-align: right;
+      }
+    }
+    
+    & > a:nth-child(2), & > a:nth-child(3)
+    {
+      width: auto;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: max-content;
+      column-gap: 15px;
+      place-content: center;
+      font-family: Helvetica, Arial, sans-serif;
+      border-radius: 8px;
+      font-size: 16px;
+      place-items: center;
+      text-decoration: none;
+      color: white;
+      height: 50px;
+      background-color: black;
+      
+      & > svg
+      {
+        height: 16px;
+      }
+    }
+    
+    /* Or Divider */
+    & > div:nth-child(4)
+    {
+      display: grid;
+      grid-column: 1 / 3;
+      grid-auto-flow: column;
+      place-items: center;
+      grid-template-columns: 1fr 50px 1fr;
+      color: #A6C5BA;
+      font-weight: 600;
+      
+      & > div:nth-child(1), & > div:nth-child(3)
+      {
+        height: 1px;
+        width: 100%;
+        background-color: #2c2f33; 
+      }
     }
     
     & > a:nth-of-type(1) { background-color: black; }
@@ -148,6 +188,20 @@ const FormWrapper = styled.div`
     }
     
     
+`
+
+const CaptchaProtection = styled.div`
+    display: grid;
+    grid-template-columns: minmax(100px, 450px);
+    place-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 13px;
+    
+    & > a
+    {
+      color: blue;    
+    }
 `
 
 /* TODO: Fix the styling of the links on the page -> Remove the underline. */
@@ -361,18 +415,19 @@ class LoginAccount extends React.Component
                         </div>
                     </ReCaptchaContainer>
 
-                    <SwitchPanelContainer>
-                        <div>
-                            <p>
-                                New to Daily?&nbsp;
-                                <Link to="/account/create">Sign up</Link>
-                            </p>
-                        </div>
-                    </SwitchPanelContainer>
-
                     <FormContainer>
 
-                        <h1>Sign in</h1>
+
+                        <div>
+                            <div>Sign in</div>
+
+                            <div>
+                                <p>
+                                    New to Daily?&nbsp;
+                                    <Link to="/account/create">Sign up</Link>
+                                </p>
+                            </div>
+                        </div>
 
                         {/* Implement the sign in with Apple and Sign in with Google feature */}
                         <a className="platform-button" href="bepis.com">
@@ -385,10 +440,11 @@ class LoginAccount extends React.Component
                             <p>Sign in with Google</p>
                         </a>
 
-                        <div className="or-divider">
-                            <hr/>
-                            Or
-                            <hr/>
+                        {/* Or Divider */}
+                        <div>
+                            <div/>
+                            <div>or</div>
+                            <div/>
                         </div>
 
                         <FormWrapper errorStates={this.state.errorChecks}>
@@ -415,19 +471,19 @@ class LoginAccount extends React.Component
 
                             <SubmitButton onClick={this.handleSignIn}>Sign In</SubmitButton>
 
+                            <CaptchaProtection>
+                                <p>
+                                    This site is protected by reCAPTCHA and the Google&nbsp;
+                                    <a href="">Privacy Policy</a>&nbsp;
+                                    and&nbsp;
+                                    <a href="https://google.com/">Terms of Service</a>&nbsp;
+                                    apply.
+                                </p>
+                            </CaptchaProtection>
+
                         </FormWrapper>
 
                     </FormContainer>
-
-                    <div id="captcha-protection">
-                        <p>
-                            This site is protected by reCAPTCHA and the Google&nbsp;
-                            <a href="">Privacy Policy</a>&nbsp;
-                            and&nbsp;
-                            <a href="https://google.com/">Terms of Service</a>&nbsp;
-                            apply.
-                        </p>
-                    </div>
 
                 </LoginAccountContainer>
             </>

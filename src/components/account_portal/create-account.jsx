@@ -24,7 +24,6 @@ const InfoSectionContainer = styled.div`
     place-items: center;
     position: relative;
     padding: 30px 30px;
-    
 `
 
 const InfoSectionWrapper = styled.div`
@@ -55,7 +54,6 @@ const SubmitButton = styled.div`
 `
 
 const FormContainer = styled.div`
-
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: max-content;
