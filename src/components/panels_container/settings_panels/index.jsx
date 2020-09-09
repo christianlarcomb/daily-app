@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, Switch } from 'react-router-dom'
 
 /* SVG Imports */
 import { ReactComponent as AccountSvg }             from "../../../assets/svgs/settings_menu/Account.svg";
@@ -12,13 +12,14 @@ import { ReactComponent as AboutSvg }               from "../../../assets/svgs/s
 import { ReactComponent as LanguageAndRegionSvg }   from "../../../assets/svgs/settings_menu/Language and Region.svg";
 import { ReactComponent as LocationSvg }            from "../../../assets/svgs/settings_menu/Location.svg";
 import { ReactComponent as SupportSvg }             from "../../../assets/svgs/settings_menu/Support.svg";
+import AccountPanel from "./account_panel";
 
 const CoreGrid = styled.div`
 
   display: grid;
   width: 100%;
   height: 100vh;
-  grid-template-columns: 1fr 325px 650px 1fr;
+  grid-template-columns: 20% 300px 1fr;
   
   {/* Menu Parent Div */}
   & > div:nth-child(2)
@@ -27,8 +28,12 @@ const CoreGrid = styled.div`
   }
   
   /* Background Styling */
-  & > div:nth-child(3),& > div:nth-child(4){ background-color: ${props => props.theme.two}; }
+  & > div:nth-child(3){ background-color: ${props => props.theme.two}; }
   
+`
+
+const PanelsContainer = styled.div`
+  overflow-y: scroll;
 `
 
 const StyledMenuItems = styled.div`
@@ -301,20 +306,20 @@ function SettingsPanels()
             </StyledMenuItems>
 
             {/* Preference Panels */}
-            <div>
-                <Route exact strict to={"/app/settings/account"}/>
-                <Route exact strict to={"/app/settings/privacy"}/>
-                <Route exact strict to={"/app/settings/notifications"}/>
-                <Route exact strict to={"/app/settings/content-preferences"}/>
-                <Route exact strict to={"/app/settings/payments"}/>
-                <Route exact strict to={"/app/settings/about"}/>
-                <Route exact strict to={"/app/settings/language-and-region"}/>
-                <Route exact strict to={"/app/settings/location"}/>
-                <Route exact strict to={"/app/settings/support"}/>
-            </div>
+            <PanelsContainer>
+                <Switch>
+                    <Route path="/app/settings/account" exact component={AccountPanel}/>
+                    <Route exact strict path={"/app/settings/privacy"}/>
+                    <Route exact strict path={"/app/settings/notifications"}/>
+                    <Route exact strict path={"/app/settings/content-preferences"}/>
+                    <Route exact strict path={"/app/settings/payments"}/>
+                    <Route exact strict path={"/app/settings/about"}/>
+                    <Route exact strict path={"/app/settings/language-and-region"}/>
+                    <Route exact strict path={"/app/settings/location"}/>
+                    <Route exact strict path={"/app/settings/support"}/>
+                </Switch>
+            </PanelsContainer>
 
-            {/* Filler #2 */}
-            <div/>
         </CoreGrid>
     )
 

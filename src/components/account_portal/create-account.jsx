@@ -19,17 +19,11 @@ import { notify } from "../misc/Notifications";
 
 import SuccessSvg from '../../assets/svgs/notifications/icons/success.svg'
 
-const InfoSectionContainer = styled.div`
+const CreateAccountContainer = styled.div`
     display: grid;
     place-items: center;
     position: relative;
     padding: 30px 30px;
-`
-
-const InfoSectionWrapper = styled.div`
-    display: grid;
-    place-items: center;
-    position: relative;
 `
 
 const SubmitButton = styled.div`
@@ -54,13 +48,13 @@ const SubmitButton = styled.div`
 `
 
 const FormContainer = styled.div`
-    display: grid;
+    display: ${props => props.enabledState ? 'none' : 'grid'};
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: max-content;
     place-content: center;
     row-gap: 20px;
     column-gap: 40px;
-    
+    z-index: 4;
     /* Signup Text & Change Panels */
     & > div:nth-child(1)
     {
@@ -220,13 +214,13 @@ const FormWrapper = styled.div`
 
 const ReCaptchaContainer = styled.div`
 
-  position: absolute;
   width: 100%;
   height: 100%;
   background-color: white;
   opacity: ${props => props.enabledState ? '100' : '0'};
   z-index: ${props => props.enabledState ? '3' : '0'};
   transition: opacity 0.15s ease;
+  display: ${props => props.enabledState ? 'inline' : 'none'};
   
   & > div:nth-child(1)
   {
@@ -326,6 +320,8 @@ class SignupSection extends React.Component
     }
 
     handleCreateAccount = () => { this.errorChecking() }
+
+    handleCaptchaExpiration
 
     errorChecking = () =>
     {
@@ -476,7 +472,7 @@ class SignupSection extends React.Component
     {
         return (
             <>
-                <InfoSectionContainer>
+                <CreateAccountContainer>
 
                     <ReCaptchaContainer enabledState={this.state.captcha.enabled}>
                         <div>
@@ -502,9 +498,7 @@ class SignupSection extends React.Component
                         </div>
                     </ReCaptchaContainer>
 
-                    <InfoSectionWrapper>
-
-                        <FormContainer>
+                    <FormContainer enabledState={this.state.captcha.enabled}>
 
                             {/* Sign up message and panel change link */}
                             <div>
@@ -607,9 +601,7 @@ class SignupSection extends React.Component
 
                         </FormContainer>
 
-                    </InfoSectionWrapper>
-
-                </InfoSectionContainer>
+                </CreateAccountContainer>
             </>
         )
     }

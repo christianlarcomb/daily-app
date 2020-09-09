@@ -631,7 +631,7 @@ function PanelsContainer()
                     {/* TODO: Figure out how to prevent the Link tags from darkening upon hover. */}
 
                     {/* User or Login Section */}
-                    <Link to='/panels/settings/account'>
+                    <Link to='/app/settings/account'>
                         {/* Image Section */}
                         <div>
                             <div>
@@ -648,7 +648,7 @@ function PanelsContainer()
 
                     <MenuDivider/>
 
-                    <Link to='/panels/feedback'>
+                    <Link to='/app/feedback'>
                         {/* Icon Section */}
                         <div>
                             <div>
@@ -666,7 +666,7 @@ function PanelsContainer()
                     <MenuDivider/>
 
                     {/* TODO: Implement a Link router to settings */}
-                    <Link to='/panels/settings'>
+                    <Link to='/app/settings'>
                         {/* Icon Section */}
                         <div>
                             <div>
@@ -680,7 +680,7 @@ function PanelsContainer()
                         </div>
                     </Link>
 
-                    <Link to='/panels/settings/developers'>
+                    <Link to='/app/settings/developers'>
                         {/* Icon Section */}
                         <div>
                             <div>
@@ -694,7 +694,7 @@ function PanelsContainer()
                         </div>
                     </Link>
 
-                    <Link to='/panels/settings/help-and-support'>
+                    <Link to='/app/settings/help-and-support'>
                         {/* Icon Section */}
                         <div>
                             <div>
