@@ -21,12 +21,8 @@ const LoginAccountContainer = styled.div`
 `
 
 const ReCaptchaContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
   background-color: white;
-  opacity: ${props => props.enabledState ? '100' : '0'};
-  z-index: ${props => props.enabledState ? '3' : '-1'};
+  display: ${props => props.enabledState ? 'inline' : 'none'};
   transition: opacity 0.15s ease;
   
   & > div:nth-child(1)
@@ -75,7 +71,7 @@ const SubmitButton = styled.div`
 
 const FormContainer = styled.div`
 
-    display: grid;
+    display: ${props => props.enabledState ? 'none' : 'grid'};
     grid-template-columns: 1fr 1fr;
     place-content: center;
     row-gap: 20px;
@@ -415,8 +411,7 @@ class LoginAccount extends React.Component
                         </div>
                     </ReCaptchaContainer>
 
-                    <FormContainer>
-
+                    <FormContainer enabledState={this.state.captcha.enabled}>
 
                         <div>
                             <div>Sign in</div>
