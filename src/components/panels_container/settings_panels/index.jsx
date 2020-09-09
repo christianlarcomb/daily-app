@@ -21,19 +21,11 @@ const CoreGrid = styled.div`
   height: 100vh;
   grid-template-columns: 20% 300px 1fr;
   
-  {/* Menu Parent Div */}
-  & > div:nth-child(2)
-  {
-    
-  }
-  
-  /* Background Styling */
-  & > div:nth-child(3){ background-color: ${props => props.theme.two}; }
-  
 `
 
 const PanelsContainer = styled.div`
   overflow-y: scroll;
+  background-color: #F2F2F2;
 `
 
 const StyledMenuItems = styled.div`
