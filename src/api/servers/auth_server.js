@@ -36,6 +36,9 @@ mongoose.connect('mongodb+srv://admin:'+process.env.MONGODB_CLUSTER_PASS+'@clust
 const User = require('../models/user')
 const RefreshToken = require('../models/refresh-tokens')
 
+
+/* TODO: Implement server timeouts without breaking the endpoints... */
+
 app.get('/api/v1/authentication/gen/access-token', authenticateRefreshToken, (req, res) => {
 
     // Getting the reCAPTCHA token from the request

@@ -13,6 +13,8 @@ import axios from "axios";
 import store from "../../redux/store";
 import {userLoggedIn} from "../../redux/actions";
 
+import consoleColoredLogs from "../misc/functions/console-colored-logs";
+
 const LoginAccountContainer = styled.div`
   display: grid;
   place-items: center;
@@ -331,7 +333,8 @@ class LoginAccount extends React.Component
                     headers:
                         {
                             authorization: `basic ${value}`
-                        }
+                        },
+                    timeout: 5000
                 })
 
                 /* Upon Request Success */
@@ -376,14 +379,33 @@ class LoginAccount extends React.Component
                 /* Upon Request Error */
                 .catch(error =>
                 {
-                    /* Display the error to the user and reset the captcha */
+
+                    // Default error response
+                    var responseMessage = "Oops! Something went wrong... Refresh the page and try again.";
+
+                    // Try to get information from request, otherwise there was a network error...
+                    try {
+                        // Invalid Credentials
+                        if(error.response.status === 401)
+                            responseMessage = "The username or password you entered is incorrect."
+
+                        /* Implement more error status codes here... Possibly change to switch case statements */
+
+
+                    } catch (e) {
+                        responseMessage = "Oops! Network error detected. Please try again in a moment."
+
+                        consoleColoredLogs('Network Error', 'Connection could not be established to the authentication server.');
+                    }
+
+                    /* Rerender the captcha - Set the error box state to visible - update status of captcha */
                     this.setState({
 
                         renderCaptcha: true,
 
                         errorBox: {
                             render: true,
-                            contents: "The username or password entered is invalid."
+                            contents: responseMessage
                         },
 
                         captcha: {
@@ -391,31 +413,9 @@ class LoginAccount extends React.Component
                             failed: true
                         }
                     })
-
-                    /* Display the error in console */
-                    if (error.response) {
-                        // The request was made and the server responded with a status code
-                        // that falls out of the range of 2xx
-                        console.log(error.response.data)
-                        console.log(error.response.status)
-                        console.log(error.response.headers)
-                    } else if (error.request) {
-                        // The request was made but no response was received
-                        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                        // http.ClientRequest in node.js
-                        console.log(error.request);
-                    } else {
-                        // Something happened in setting up the request that triggered an Error
-                        console.log('Error', error.message);
-                    }
-
-                    console.log(error.config);
                 });
 
-        } catch (e)
-        {
-            console.log("Client-Server Async Request Error:", e)
-        }
+        } catch (e) { console.log("Client-Server Async Request Error:", e) }
 
     }
 
