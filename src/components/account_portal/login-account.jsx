@@ -493,6 +493,7 @@ class LoginAccount extends React.Component
                         }
 
                         <FormWrapper errorStates={this.state.errorChecks}>
+
                             <div>
                                 <label>Email</label>
                                 <input
@@ -501,6 +502,10 @@ class LoginAccount extends React.Component
                                     id="email"
                                     value={this.state.values.email}
                                     onChange={this.handleInput}
+                                    onKeyDown={e => {
+                                        if(e.key === 'Enter')
+                                            this.handleSignIn()
+                                    }}
                                 />
                             </div>
                             <div>
@@ -511,6 +516,10 @@ class LoginAccount extends React.Component
                                     id="password"
                                     value={this.state.values.password}
                                     onChange={this.handleInput}
+                                    onKeyDown={e => {
+                                        if(e.key === 'Enter')
+                                            this.handleSignIn()
+                                    }}
                                 />
                             </div>
 
