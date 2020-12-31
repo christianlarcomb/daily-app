@@ -18,7 +18,7 @@ const AccountContainer = styled.div`
 const AccountGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 173px 400px 600px;
+  grid-template-rows: 173px auto 600px;
   grid-gap: 15px;
   height: auto;
   width: 550px;
@@ -27,6 +27,7 @@ const AccountGrid = styled.div`
   {
     border-radius: 20px;
     background-color: #EBEBEB;
+    position: relative;
   }
   
   & > div:nth-child(2)
@@ -58,21 +59,20 @@ const PanelLabel = styled.div`
   }
 `
 
-/* Styling the individual widgets */
-const ProfileWidget = styled.div`
+const GeneralEditableWidget = styled.div`
   display: grid;
   place-items: center;
   position: relative;
   overflow: hidden;
   
+  /* Title Container */
   & > div:nth-child(1)
   {
     position: absolute;
     top: 10px;
     left: 12px;
-    color: white;
+    color: #121212;
     font-weight: 500;
-    text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
   }
   
   /* Button Container */
@@ -84,7 +84,7 @@ const ProfileWidget = styled.div`
     background-color: #1E1E1F;
     height: 34px;
     width: 60px;
-    border-radius: 8px;
+    border-radius: 10px;
     display: grid;
     place-content: center;
     
@@ -107,73 +107,137 @@ const ProfileWidget = styled.div`
     {
       cursor: pointer;
     }
+  }
+  
+  /* Content Container */
+  & > div:nth-child(3)
+  {
+    padding: 35px 0 55px 0;
+    height: 100%;
+    width: 100%;
   }
   
   & > img { height: 100%; }
 `
 
-const BannerWidget = styled.div`
+const GeneralUnEditableWidget = styled.div`
   display: grid;
   place-items: center;
   position: relative;
   overflow: hidden;
   
+  /* Title Container */
   & > div:nth-child(1)
   {
     position: absolute;
     top: 10px;
     left: 12px;
-    color: white;
+    color: #121212;
     font-weight: 500;
-    text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
   }
   
-  /* Button Container */
+  /* Content Container */
   & > div:nth-child(2)
   {
-    position: absolute;
-    bottom: 12px;
-    left: 12px;
-    background-color: #1E1E1F;
-    height: 34px;
-    width: 60px;
-    border-radius: 8px;
-    display: grid;
-    place-content: center;
-    
-    /* Button Wrapper */
-    & > div:nth-child(1)
-    {
-      display: grid;
-      grid-template-columns: auto auto;
-      place-items: center;
-      grid-gap: 8px;
-        
-      & > div:nth-child(2)
-      {
-        color: white;
-        font-size: 12px;
-      }
-    }
-    
-    &:hover
-    {
-      cursor: pointer;
-    }
+    padding-top: 35px;
+    height: 100%;
+    width: 100%;
+  }
+`
+
+/* Styling the individual widgets */
+const ProfileWidget = styled(GeneralEditableWidget)`
+  & > div:nth-child(1)
+  {
+    color: white;
+    text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
+  }
+`
+
+const BannerWidget = styled(GeneralEditableWidget)`
+  & > div:nth-child(1)
+  {
+    color: white;
+    text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
   }
   
   & > img { width: 100%; }
 `
-
-const AccountDetailsWidget = styled.div`
-
+// This is a comment....
+const AccountIDWidget = styled(GeneralEditableWidget)`
+  & > div:nth-child(3) > div:nth-child(1)
+  {
+      padding: 12px;
+      display: grid;
+      grid-template-rows: repeat(6, 1fr);
+      grid-gap: 15px;
+      height: 100%;
+      width: 100%;
+      
+      /* First Row */
+      & > div:nth-child(1),
+      & > div:nth-child(3),
+      & > div:nth-child(4),
+      & > div:nth-child(5),
+      & > div:nth-child(6)
+      {
+        display: grid;
+        grid-template-rows: repeat(2, 1fr);
+        font-size: 14px;
+        
+        & > div:nth-child(1)
+        {
+          font-weight: 500;
+        }
+      }
+      
+      /* Second Row */
+      & > div:nth-child(2)
+      {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+        
+        & > div
+        {
+          display: grid;
+          grid-template-rows: repeat(2, 1fr);
+          
+          font-size: 14px;
+          
+          & > div:nth-child(1)
+          {
+            font-weight: 500;
+          }
+        }
+      }
+  }
 `
 
-const TwoFactAuthWidget = styled.div`
-
+const TwoFactAuthWidget = styled(GeneralUnEditableWidget)`
+  background-color: #121212 !important;
+  
+  /* Styling the Text */
+  & > div:nth-child(1){ color: white }
+  
+  /* Contents */
+  & > div:nth-child(2)
+  {
+    display: grid;
+    grid-template-rows: 1fr 2px 1fr;
+    grid-gap: 30px;
+    
+    & > div:nth-child(2)
+    {
+      background-color: #242424;
+      border-radius: 10px;
+      margin: 0 30px;
+    }
+  }
 `
-const TerminateAccountWidget = styled.div`
 
+const TerminateAccountWidget = styled(GeneralUnEditableWidget)`
+  
 `
 
 function AccountPanel()
@@ -188,6 +252,7 @@ function AccountPanel()
                 </PanelLabel>
 
                 <AccountGrid>
+
                     <ProfileWidget>
                         <div>
                             Profile Image
@@ -202,6 +267,7 @@ function AccountPanel()
 
                         <img src={ImageOne} alt='' />
                     </ProfileWidget>
+
                     <BannerWidget>
                         <div>
                             Banner Image
@@ -216,14 +282,88 @@ function AccountPanel()
 
                         <img src={ImageTwo} alt='' />
                     </BannerWidget>
-                    <AccountDetailsWidget>
 
-                    </AccountDetailsWidget>
+                    <AccountIDWidget>
+                        {/* Name */}
+                        <div>
+                            Account ID
+                        </div>
+
+                        {/* Edit Button */}
+                        <div>
+                            <div>
+                                <EditVectorStyled/>
+                                <div>Edit</div>
+                            </div>
+                        </div>
+
+                        {/* Widget Contents */}
+                        <div>
+                            <div>
+                                <div>
+                                    <div>Email</div>
+                                    <div>christianlarcomb@gmail.com</div>
+                                </div>
+
+                                <div>
+                                    <div>
+                                        <div>First Name</div>
+                                        <div>Christian</div>
+                                    </div>
+                                    <div>
+                                        <div>Middle Name</div>
+                                        <div>Chase</div>
+                                    </div>
+                                    <div>
+                                        <div>Last Name</div>
+                                        <div>Larcomb</div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div>Username</div>
+                                    <div>clarcomb</div>
+                                </div>
+
+                                <div>
+                                    <div>Password</div>
+                                    <div>lololololol</div>
+                                </div>
+
+                                <div>
+                                    <div>Birthday</div>
+                                    <div>August 5th, 1997</div>
+                                </div>
+
+                                <div>
+                                    <div>Gender</div>
+                                    <div>Male</div>
+                                </div>
+                            </div>
+                        </div>
+                    </AccountIDWidget>
+
                     <TwoFactAuthWidget>
+                        <div>
+                            Two-Factor Authentication
+                        </div>
 
+                        <div>
+                            <div>
+
+                            </div>
+
+                            <div/>
+
+                            <div>
+
+                            </div>
+                        </div>
                     </TwoFactAuthWidget>
-                    <TerminateAccountWidget>
 
+                    <TerminateAccountWidget>
+                        <div>Advanced</div>
+                        <div></div>
                     </TerminateAccountWidget>
                 </AccountGrid>
 

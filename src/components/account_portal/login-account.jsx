@@ -129,14 +129,14 @@ const FormContainer = styled.div`
       grid-auto-flow: column;
       place-items: center;
       grid-template-columns: 1fr 50px 1fr;
-      color: #A6C5BA;
+      color: #8f8f8f;
       font-weight: 600;
       
       & > div:nth-child(1), & > div:nth-child(3)
       {
         height: 1px;
         width: 100%;
-        background-color: #2c2f33; 
+        background-color: #8f8f8f; 
       }
     }
     
@@ -200,6 +200,24 @@ const CaptchaProtection = styled.div`
     }
 `
 
+const ErrorBoxContainer = styled.div`
+  //background-color: rgba(222,47,50,0.8);
+  grid-column: 1/3;
+  height: 60px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: rgb(222,47,50);
+  border-width: 1px;
+`
+
+const ErrorBoxWrapper = styled.div`
+    height: 100%;
+    display: grid;
+    place-items: center;
+    color: rgb(222,47,50);
+    font-size: 14px;
+`
+
 /* TODO: Fix the styling of the links on the page -> Remove the underline. */
 class LoginAccount extends React.Component
 {
@@ -210,6 +228,11 @@ class LoginAccount extends React.Component
 
         this.state = {
             renderCaptcha: true,
+
+            errorBox: {
+              render: false,
+              contents: ""
+            },
 
             captcha: {
                 enabled: false,
@@ -231,29 +254,31 @@ class LoginAccount extends React.Component
 
     handleSignIn = () => { this.errorChecking() }
 
+    /* TODO: Optimize this code to look more familiar to errorPrevention */
     errorChecking = () =>
     {
         const objects = this.state.values
 
-        let email          = null
+        let emailCheck     = null
         let passwordCheck  = null
 
         /* Error Checking Inputs */
         for (let [key, value] of Object.entries(objects))
         {
-            if      (key === "email") { email = value === "" }
+            if      (key === "email")    { emailCheck = value === "" }
             else if (key === "password") { passwordCheck = value === "" }
         }
 
         /* After setting state, call error prevention function */
         this.setState({
             errorChecks: {
-                emailOrUsername: email,
+                emailOrUsername: emailCheck,
                 password: passwordCheck
             }
         }, this.errorPrevention)
     }
 
+    /* Good deal of syntactical sugar going on here... */
     errorPrevention = () =>
     {
         const { email, password } = this.state.errorChecks
@@ -288,9 +313,6 @@ class LoginAccount extends React.Component
 
     captchaSuccess = value =>
     {
-
-        /* TODAY'S TO-DO LIST */
-        /* TODO: Implement live username check either with socket or requests */
 
         /* DEBUG: Checking if the debug value is working */
         //console.log("Token Value:", value)
@@ -354,6 +376,23 @@ class LoginAccount extends React.Component
                 /* Upon Request Error */
                 .catch(error =>
                 {
+                    /* Display the error to the user and reset the captcha */
+                    this.setState({
+
+                        renderCaptcha: true,
+
+                        errorBox: {
+                            render: true,
+                            contents: "The username or password entered is invalid."
+                        },
+
+                        captcha: {
+                            render: false,
+                            failed: true
+                        }
+                    })
+
+                    /* Display the error in console */
                     if (error.response) {
                         // The request was made and the server responded with a status code
                         // that falls out of the range of 2xx
@@ -369,6 +408,7 @@ class LoginAccount extends React.Component
                         // Something happened in setting up the request that triggered an Error
                         console.log('Error', error.message);
                     }
+
                     console.log(error.config);
                 });
 
@@ -441,6 +481,16 @@ class LoginAccount extends React.Component
                             <div>or</div>
                             <div/>
                         </div>
+
+                        {/* Error Message Container */}
+                        {
+                            this.state.errorBox.render ?
+                                <ErrorBoxContainer>
+                                    <ErrorBoxWrapper>
+                                        {this.state.errorBox.contents}
+                                    </ErrorBoxWrapper>
+                                </ErrorBoxContainer> : <></>
+                        }
 
                         <FormWrapper errorStates={this.state.errorChecks}>
                             <div>
