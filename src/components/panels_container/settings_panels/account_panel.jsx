@@ -5,10 +5,15 @@ import ImageOne from '../../../assets/imgs/sample_photos/2.jpg'
 import ImageTwo from '../../../assets/imgs/sample_photos/10.jpg'
 
 import { ReactComponent as EditVector} from '../../../assets/svgs/ui/edit_vector.svg';
+import { ReactComponent as SuccessVector } from '../../../assets/svgs/settings_menu/misc/2fa_check.svg'
 
 const EditVectorStyled = styled(EditVector)`
   height: 10px;
   width:  10px;
+`
+
+const SuccessVectorStyled = styled(SuccessVector)`
+    height: 55px;
 `
 
 const AccountContainer = styled.div`
@@ -69,8 +74,8 @@ const GeneralEditableWidget = styled.div`
   & > div:nth-child(1)
   {
     position: absolute;
-    top: 10px;
-    left: 12px;
+    top: 12px;
+    left: 14px;
     color: #121212;
     font-weight: 500;
   }
@@ -79,8 +84,8 @@ const GeneralEditableWidget = styled.div`
   & > div:nth-child(2)
   {
     position: absolute;
-    bottom: 12px;
-    left: 12px;
+    bottom: 14px;
+    left: 14px;
     background-color: #1E1E1F;
     height: 34px;
     width: 60px;
@@ -112,7 +117,7 @@ const GeneralEditableWidget = styled.div`
   /* Content Container */
   & > div:nth-child(3)
   {
-    padding: 35px 0 55px 0;
+    padding: 40px 0 55px 0;
     height: 100%;
     width: 100%;
   }
@@ -130,8 +135,8 @@ const GeneralUnEditableWidget = styled.div`
   & > div:nth-child(1)
   {
     position: absolute;
-    top: 10px;
-    left: 12px;
+    top: 12px;
+    left: 14px;
     color: #121212;
     font-weight: 500;
   }
@@ -139,9 +144,9 @@ const GeneralUnEditableWidget = styled.div`
   /* Content Container */
   & > div:nth-child(2)
   {
-    padding-top: 35px;
     height: 100%;
     width: 100%;
+    padding: 40px 14px 14px 14px;
   }
 `
 
@@ -167,7 +172,7 @@ const BannerWidget = styled(GeneralEditableWidget)`
 const AccountIDWidget = styled(GeneralEditableWidget)`
   & > div:nth-child(3) > div:nth-child(1)
   {
-      padding: 12px;
+      padding: 14px;
       display: grid;
       grid-template-rows: repeat(6, 1fr);
       grid-gap: 15px;
@@ -224,15 +229,54 @@ const TwoFactAuthWidget = styled(GeneralUnEditableWidget)`
   & > div:nth-child(2)
   {
     display: grid;
-    grid-template-rows: 1fr 2px 1fr;
-    grid-gap: 30px;
+    grid-template-rows: 1fr 2px 225px;
+    grid-gap: 15px;
+
+    /* Top */
+    & > div:nth-child(1)
+    {
+      //background-color: #242424;
+      display: grid;
+      grid-gap: 15px;
+      grid-template-rows: 80px auto 50px;
+      padding: 10px 0;
+      
+      /* Logo Section */
+      & > div:nth-child(1)
+      {
+        display: grid;
+        grid-template-rows: 1fr 18px;
+        color: #00FF6F;
+        place-content: center;
+        place-items: center;
+        align-items: center;
+        align-content: center;
+        font-size: small;
+      }
+      
+      /* Checkbox Section */
+      & > div:nth-child(2)
+      {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-gap: 5px;
+      }
+    }
     
+    /* Divider */
     & > div:nth-child(2)
     {
       background-color: #242424;
       border-radius: 10px;
       margin: 0 30px;
     }
+
+    /* Bottom */
+    & > div:nth-child(3)
+    {
+      //background-color: #242424;
+    }
+    
   }
 `
 
@@ -349,12 +393,26 @@ function AccountPanel()
                         </div>
 
                         <div>
+                            {/* Top */}
                             <div>
+                                <div>
+                                    <SuccessVectorStyled/>
+                                    <div>2FA Enabled</div>
+                                </div>
+                                <div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                                <div>
 
+                                </div>
                             </div>
 
+                            {/* Divider */}
                             <div/>
 
+                            {/* Top */}
                             <div>
 
                             </div>
