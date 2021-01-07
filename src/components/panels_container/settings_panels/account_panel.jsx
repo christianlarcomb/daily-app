@@ -4,9 +4,11 @@ import styled from 'styled-components'
 import ImageOne from '../../../assets/imgs/sample_photos/2.jpg'
 import ImageTwo from '../../../assets/imgs/sample_photos/10.jpg'
 
-import { ReactComponent as EditVector} from '../../../assets/svgs/ui/edit_vector.svg';
+import { ReactComponent as EditVector} from '../../../assets/svgs/ui/edit_vector.svg'
 import { ReactComponent as SuccessVector } from '../../../assets/svgs/settings_menu/misc/2fa_check.svg'
+import { ReactComponent as HashtagVector } from '../../../assets/svgs/settings_menu/misc/hashtag.svg'
 
+/* Styling SVGs */
 const EditVectorStyled = styled(EditVector)`
   height: 10px;
   width:  10px;
@@ -16,14 +18,20 @@ const SuccessVectorStyled = styled(SuccessVector)`
     height: 55px;
 `
 
-const AccountContainer = styled.div`
+const HashtagVectorStyled = styled(HashtagVector)`
+    height: 20px;
+    width: 20px;
+`
+
+/* Styling the Containers */
+const CoreContainer = styled.div`
   padding-left: 15px;
 `
 
 const AccountGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 173px auto 600px;
+  grid-template-rows: 173px auto 610px;
   grid-gap: 15px;
   height: auto;
   width: 550px;
@@ -61,6 +69,7 @@ const PanelLabel = styled.div`
   {
     font-weight: 600;
     color: #121212;
+    font-size: 18px;
   }
 `
 
@@ -168,7 +177,7 @@ const BannerWidget = styled(GeneralEditableWidget)`
   
   & > img { width: 100%; }
 `
-// This is a comment....
+
 const AccountIDWidget = styled(GeneralEditableWidget)`
   & > div:nth-child(3) > div:nth-child(1)
   {
@@ -220,7 +229,7 @@ const AccountIDWidget = styled(GeneralEditableWidget)`
 `
 
 const TwoFactAuthWidget = styled(GeneralUnEditableWidget)`
-  background-color: #121212 !important;
+  background-color: #212121 !important;
   
   /* Styling the Text */
   & > div:nth-child(1){ color: white }
@@ -229,22 +238,23 @@ const TwoFactAuthWidget = styled(GeneralUnEditableWidget)`
   & > div:nth-child(2)
   {
     display: grid;
-    grid-template-rows: 1fr 2px 225px;
-    grid-gap: 15px;
+    grid-template-rows: 1fr 2px 200px;
+    grid-gap: 20px;
 
     /* Top */
     & > div:nth-child(1)
     {
       //background-color: #242424;
       display: grid;
-      grid-gap: 15px;
-      grid-template-rows: 80px auto 50px;
-      padding: 10px 0;
+      grid-gap: 25px;
+      grid-template-rows: 80px auto 46px;
+      margin: 10px 0;
       
       /* Logo Section */
       & > div:nth-child(1)
       {
         display: grid;
+        grid-gap: 5px;
         grid-template-rows: 1fr 18px;
         color: #00FF6F;
         place-content: center;
@@ -259,36 +269,281 @@ const TwoFactAuthWidget = styled(GeneralUnEditableWidget)`
       {
         display: grid;
         grid-template-rows: 1fr 1fr 1fr;
-        grid-gap: 5px;
+        grid-gap: 14px;
+        
+        // Individual Check
+        & > div
+        {
+          display: grid;
+          width: 273px;
+          grid-template-columns: 33px 225px;
+          align-content: center;
+          grid-gap: 7px;
+          margin: 0 auto;
+          
+          // Check
+          & > div:nth-child(1)
+          {
+            background-color: #00FF6F;
+            border-radius: 100%;
+            height: 27px;
+            width: 27px;
+            margin-right: auto;
+          }
+          
+          // Text
+          & > div:nth-child(2)
+          {
+            margin-top: 3px;
+            color: #d5d5d5;
+            font-size: 14px;
+          }
+        }
+      }
+      
+      /* Options Buttons Container */
+      & > div:nth-child(3)
+      {
+        display: grid;
+        grid-gap: 15px;
+        grid-template-columns: 1fr 1fr;
+        width: 273px;
+        margin: 0 auto;
+        
+        /* Text Container General */
+        & > div
+        {
+          display: grid;
+          place-items: center;
+          
+          /* Text Wrapper */
+          & > div
+          {
+            color: white;
+            font-size: 12px;
+            width: 80px;
+            text-align: center;
+          }
+        }
+        
+        & > div:hover
+        {
+          cursor: pointer;
+        }
+        
+        /* Individual Button General */
+        & > div:nth-child(1)
+        {
+          background-color: #2C2C2C;
+          border-radius: 10px;
+        }
+
+        /* Individual Button General */
+        & > div:nth-child(2)
+        {
+          background-color: #F14F4F;
+          border-radius: 8px;
+        }
       }
     }
     
     /* Divider */
     & > div:nth-child(2)
     {
-      background-color: #242424;
+      background-color: #2D2D2D;
       border-radius: 10px;
       margin: 0 30px;
     }
 
     /* Bottom */
-    & > div:nth-child(3)
+    & > div:nth-child(3) 
     {
-      //background-color: #242424;
+      display: grid;
+      grid-gap: 20px;
+      grid-template-rows: 60px auto 46px;
+      padding-bottom: 10px;
+      
+      /* Information Section */
+      & > div:nth-child(1)
+      {
+        width: 273px;
+        display: grid;
+        grid-gap: 4px;
+        margin: 0 auto;
+        
+        /* Title */
+        & > div:nth-child(1)
+        {
+          color: white;
+          font-size: 14px;
+          text-align: center;
+        }
+        
+        /* Paragraphs */
+        & > div:nth-child(2)
+        {
+          color: #b5b5b5;
+          font-size: 12px;
+          text-align: center;
+        }
+      }
+      
+      /* Number Section */
+      & > div:nth-child(2)
+      {
+        display: grid;
+        grid-template-rows: 1fr 20px;
+        
+        /* hashtag w/ number */
+        & > div:nth-child(1)
+        {
+          display: grid;
+          grid-template-columns: auto auto;
+          grid-gap: 10px;
+          margin: 0 auto;
+          place-content: center;
+          
+          /* SVG Container */
+          & > div:nth-child(1)
+          {
+            margin-top: 2px;
+            height: 20px;
+            width: 20px;
+          }
+          
+          /* Number Container */
+          & > div:nth-child(2)
+          {
+            color: white;
+            font-size: 17px;
+          }
+        }
+        
+        /* Text */
+        & > div:nth-child(2)
+        {
+          color: white;
+          font-size: 13px;
+          height: auto;
+          text-align: center;
+        }
+      }
+      
+      /* Options Buttons Container */
+      & > div:nth-child(3)
+      {
+        display: grid;
+        grid-gap: 15px;
+        grid-template-columns: 1fr 1fr;
+        width: 273px;
+        margin: 0 auto;
+
+        /* Text Container General */
+        & > div
+        {
+          display: grid;
+          place-items: center;
+
+          /* Text Wrapper */
+          & > div
+          {
+            font-size: 12px;
+            width: 80px;
+            text-align: center;
+          }
+        }
+
+        & > div:hover
+        {
+          cursor: pointer;
+        }
+
+        /* Individual Button */
+        & > div:nth-child(1)
+        {
+          background-color: #00FF6F;
+          border-radius: 10px;
+          
+          & > div
+          {
+            color: #2c2f33;
+          }
+        }
+
+        /* Individual Button */
+        & > div:nth-child(2)
+        {
+          background-color: #2C2C2C;
+          border-radius: 8px;
+
+          & > div
+          {
+            color: white;
+          }
+        }
+      }
     }
-    
   }
 `
 
 const TerminateAccountWidget = styled(GeneralUnEditableWidget)`
-  
+  & > div:nth-child(2)
+  {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    grid-gap: 6px;
+    
+    /* First passage */
+    & > div:nth-child(1)
+    {
+      display: grid;
+      grid-template-rows: 20px auto;
+      grid-gap: 5px;
+      margin: auto 0;
+      
+      /* Title */
+      & > div:nth-child(1)
+      {
+        font-size: 14px;
+      }
+      
+      & > div:nth-child(2)
+      {
+        font-size: 12px;
+      }
+    }
+
+    /* First passage */
+    & > div:nth-child(2)
+    {
+      display: grid;
+      grid-template-rows: 20px auto;
+      grid-gap: 5px;
+      margin: auto 0;
+
+      /* Title */
+      & > div:nth-child(1)
+      {
+        font-size: 14px;
+      }
+
+      /* Restrictions */
+      & > ul
+      {
+        font-size: 12px;
+      }
+    }
+  }
 `
 
-function AccountPanel()
+export default function AccountPanel()
 {
     return(
         <>
-            <AccountContainer>
+            <CoreContainer>
+
+                <br/>
+
                 <PanelLabel>
                     <div>
                         My Account
@@ -388,47 +643,122 @@ function AccountPanel()
                     </AccountIDWidget>
 
                     <TwoFactAuthWidget>
-                        <div>
-                            Two-Factor Authentication
-                        </div>
+
+                        <div>Two-Factor Authentication</div>
 
                         <div>
                             {/* Top */}
                             <div>
+                                {/* Logo w/ Text */}
                                 <div>
                                     <SuccessVectorStyled/>
                                     <div>2FA Enabled</div>
                                 </div>
-                                <div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                                <div>
 
+                                {/* 2FA CheckList */}
+                                <div>
+                                    <div>
+                                        <div></div>
+                                        <div>Increased account security.</div>
+                                    </div>
+                                    <div>
+                                        <div></div>
+                                        <div>Prevent suspicious logins.</div>
+                                    </div>
+                                    <div>
+                                        <div></div>
+                                        <div>Define account-accessible devices.</div>
+                                    </div>
+                                </div>
+
+                                {/* Button Selections */}
+                                <div>
+                                    <div>
+                                        <div>View Backup Codes</div>
+                                    </div>
+                                    <div>
+                                        <div>Remove 2FA</div>
+                                    </div>
                                 </div>
                             </div>
 
                             {/* Divider */}
                             <div/>
 
-                            {/* Top */}
+                            {/* Bottom */}
                             <div>
+                                {/* SMSA Information */}
+                                <div>
+                                    <div>
+                                        SMS Backup Authentication
+                                    </div>
+                                    <div>
+                                        Add a phone as a backup Two-Factor Authentication method in case you lose your authentication app or backup codes.
+                                    </div>
+                                </div>
 
+                                {/* SMSA Credentials */}
+                                <div>
+                                    {/* Hashtag and number */}
+                                    <div>
+                                        <div>
+                                            <HashtagVectorStyled/>
+                                        </div>
+                                        <div>1 (330) 235-3955</div>
+                                    </div>
+
+                                    {/* Current number */}
+                                    <div>
+                                        Current Number
+                                    </div>
+                                </div>
+
+                                {/* SMSA Buttons */}
+                                <div>
+                                    <div>
+                                        <div>Enabled SMSA</div>
+                                    </div>
+                                    <div>
+                                        <div>Change Number</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </TwoFactAuthWidget>
 
                     <TerminateAccountWidget>
                         <div>Advanced</div>
-                        <div></div>
+                        <div>
+                            <div>
+                                <div>
+                                    DELETING ACCOUNT
+                                </div>
+                                <div>
+                                    Under the circumstances listed below, you may not delete or suspend your account on our platform. This is
+                                    important to ensure our users do not abuse our platform and take advantage of unknowing individuals.
+                                    Furthermore, it is critical that our users maintain responsibility for their actions. By implementing these
+                                    restrictions, we encourage people to remain in good faith and have a sense of integrity.
+                                </div>
+                            </div>
+                            <div>
+                                <div>RESTRICTIONS</div>
+                                <ul>
+                                    <li>You have an order pending.</li>
+                                    <li>You have a payment pending.</li>
+                                    <li>Your account is banned.</li>
+                                    <li>Your account is suspended.</li>
+                                    <li>Your account has overwhelmingly customer verified negative reviews.</li>
+                                    <li>Your account is under review due to suspicious activity.</li>
+                                </ul>
+                            </div>
+                            <div></div>
+                        </div>
                     </TerminateAccountWidget>
+
                 </AccountGrid>
 
                 <br/>
-            </AccountContainer>
+            </CoreContainer>
         </>
     )
 }
-
-export default AccountPanel

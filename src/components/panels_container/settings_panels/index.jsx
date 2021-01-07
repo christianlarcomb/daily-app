@@ -12,15 +12,18 @@ import { ReactComponent as AboutSvg }               from "../../../assets/svgs/s
 import { ReactComponent as LanguageAndRegionSvg }   from "../../../assets/svgs/settings_menu/Language and Region.svg";
 import { ReactComponent as LocationSvg }            from "../../../assets/svgs/settings_menu/Location.svg";
 import { ReactComponent as SupportSvg }             from "../../../assets/svgs/settings_menu/Support.svg";
+
+/* Panels Imports */
 import AccountPanel from "./account_panel";
+import AccountPrivacy from "./account_privacy";
+import AccountNotifications from "./account_notifications";
+import AccountContentPreferences from './account_content-preferences'
 
 const CoreGrid = styled.div`
-
   display: grid;
   width: 100%;
   height: 100vh;
   grid-template-columns: 20% 300px 1fr;
-  
 `
 
 const PanelsContainer = styled.div`
@@ -300,10 +303,14 @@ function SettingsPanels()
             {/* Preference Panels */}
             <PanelsContainer>
                 <Switch>
-                    <Route path="/app/settings/account" exact component={AccountPanel}/>
-                    <Route exact strict path={"/app/settings/privacy"}/>
-                    <Route exact strict path={"/app/settings/notifications"}/>
-                    <Route exact strict path={"/app/settings/content-preferences"}/>
+                    <Route path="/app/settings/account" exact
+                           component={AccountPanel}/>
+                    <Route path="/app/settings/privacy" exact
+                           component={AccountPrivacy}/>
+                    <Route path="/app/settings/notifications" exact
+                           component={AccountNotifications}/>
+                    <Route path="/app/settings/content-preferences" exact
+                           component={AccountContentPreferences}/>
                     <Route exact strict path={"/app/settings/payments"}/>
                     <Route exact strict path={"/app/settings/about"}/>
                     <Route exact strict path={"/app/settings/language-and-region"}/>
